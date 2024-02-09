@@ -28,16 +28,16 @@ const MapComponent = () => {
       const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
       const dataset = 'gfs/wind_10m_above_ground';
       const {datetimes} = await client.loadDatasetSlice(dataset, datetimeRange);
-      const datetime = datetimes[0]; // Use the first datetime for simplicity
+      const datetime = datetimes[0]; 
       const {image, bounds} = await client.loadDatasetData(dataset, datetime);
 
       const deckOverlay = new MapboxOverlay({
         layers: [
           new WeatherLayers.ParticleLayer({
             id: 'wind-particle',
-            data: null, // No data property needed for this layer type
+            data: null,
             image: image,
-            bounds: [-180, -90, 180, 90], // Global bounds for the wind data
+            bounds: [-180, -90, 180, 90],
             visible: true,
             opacity: 0.8,
             width: 10,
@@ -46,7 +46,6 @@ const MapComponent = () => {
         ],
       });
 
-      // Ensure the overlay is correctly added to the Mapbox instance
       map.addControl(deckOverlay);
     });
 
