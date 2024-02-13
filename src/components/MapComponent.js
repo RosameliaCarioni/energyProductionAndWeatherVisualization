@@ -12,10 +12,16 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import * as WeatherLayersClient from 'weatherlayers-gl/client';
 import * as WeatherLayers from 'weatherlayers-gl';
 import { MapboxOverlay } from '@deck.gl/mapbox';
+<<<<<<< HEAD:src/components/MapComponent.client.js
 >>>>>>> 449b5edad0049270ab73170833a6a127b2cb8525
+=======
+import {getFarmsLatitude, getFarmsLongitude} from "@/utils/getFarmsLocation"
+>>>>>>> 319200dafa86cf925e4dc5e5013fee7a2e27e7b5:src/components/MapComponent.js
 
-const MapComponent = () => {
+
+function mapComponent() {
   const mapContainerRef = useRef(null);
+
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -91,6 +97,7 @@ const MapComponent = () => {
     map.on('load', addWeatherLayer)
 =======
     map.on('load', async () => {
+      const latitudes = await getFarmsLongitude()
       const client = new WeatherLayersClient.Client({
         accessToken: process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN,
       });
@@ -128,4 +135,4 @@ const MapComponent = () => {
   );
 };
 
-export default MapComponent;
+export default mapComponent; 

@@ -1,0 +1,179 @@
+{ 
+    "data": [
+        {
+            "id": "1",
+            "name_plant": "Bessakerfjellet",
+            "latitude": "64.2248110423901",
+            "longitude": "10.3746175670882",
+            "capacity_kw": "57500.0"
+        },
+        {
+            "id": "2",
+            "name_plant": "Egersund",
+            "latitude": "58.4261869797015",
+            "longitude": "6.08410711857729",
+            "capacity_kw": "110000.0"
+        },
+        {
+            "id": "3",
+            "name_plant": "Fr\u00f8ya",
+            "latitude": "63.6941135802704",
+            "longitude": "8.65607347705158",
+            "capacity_kw": "60000.0"
+        },
+        {
+            "id": "4",
+            "name_plant": "Guleslettene",
+            "latitude": "61.6843104588481",
+            "longitude": "5.07449148859401",
+            "capacity_kw": "197400.0"
+        },
+        {
+            "id": "5",
+            "name_plant": "Haram",
+            "latitude": "62.6659432968161",
+            "longitude": "6.19785325548378",
+            "capacity_kw": "66000.0"
+        },
+        {
+            "id": "6",
+            "name_plant": "Harbaksfjellet",
+            "latitude": "64.0725850054017",
+            "longitude": "10.0926550777716",
+            "capacity_kw": "126000.0"
+        },
+        {
+            "id": "7",
+            "name_plant": "H\u00f8g-J\u00e6ren",
+            "latitude": "58.646444712433",
+            "longitude": "5.75402474442691",
+            "capacity_kw": "80000.0"
+        },
+        {
+            "id": "8",
+            "name_plant": "Karm\u00f8y Hywind",
+            "latitude": "59.140123076773",
+            "longitude": "5.02974688433385",
+            "capacity_kw": "2300.0"
+        },
+        {
+            "id": "9",
+            "name_plant": "Kj\u00f8lberget",
+            "latitude": "61.0241468090647",
+            "longitude": "12.1939496922096",
+            "capacity_kw": "60000.0"
+        },
+        {
+            "id": "10",
+            "name_plant": "Kvitfjell",
+            "latitude": "69.5880577856396",
+            "longitude": "18.1336048055728",
+            "capacity_kw": "202100.0"
+        },
+        {
+            "id": "11",
+            "name_plant": "Lutelandet",
+            "latitude": "61.2509797769108",
+            "longitude": "4.96154568523943",
+            "capacity_kw": "56000.0"
+        },
+        {
+            "id": "12",
+            "name_plant": "Marker",
+            "latitude": "59.4870266248965",
+            "longitude": "11.7276606930391",
+            "capacity_kw": "75000.0"
+        },
+        {
+            "id": "13",
+            "name_plant": "Mehuken",
+            "latitude": "62.0153437073761",
+            "longitude": "5.00299277677007",
+            "capacity_kw": "7000.0"
+        },
+        {
+            "id": "14",
+            "name_plant": "Midtfjellet",
+            "latitude": "59.9292963959985",
+            "longitude": "5.37978343235527",
+            "capacity_kw": "150000.0"
+        },
+        {
+            "id": "15",
+            "name_plant": "Raudfjell",
+            "latitude": "69.5909672482662",
+            "longitude": "18.2207280200681",
+            "capacity_kw": "100000.0"
+        },
+        {
+            "id": "16",
+            "name_plant": "Roan",
+            "latitude": "64.1392206628938",
+            "longitude": "10.2986541492068",
+            "capacity_kw": "255600.0"
+        },
+        {
+            "id": "17",
+            "name_plant": "Sand\u00f8y",
+            "latitude": "62.7638827744085",
+            "longitude": "6.44365515840266",
+            "capacity_kw": "4250.0"
+        },
+        {
+            "id": "18",
+            "name_plant": "Skomakerfjellet",
+            "latitude": "64.2154761245032",
+            "longitude": "10.4167381234805",
+            "capacity_kw": "14000.0"
+        },
+        {
+            "id": "19",
+            "name_plant": "S\u00f8rfjord",
+            "latitude": "68.032483621355",
+            "longitude": "16.6676699773294",
+            "capacity_kw": "100000.0"
+        },
+        {
+            "id": "20",
+            "name_plant": "S\u00f8rmarkfjellet",
+            "latitude": "64.3945864446153",
+            "longitude": "10.7063796670446",
+            "capacity_kw": "130200.0"
+        },
+        {
+            "id": "21",
+            "name_plant": "Tellenes",
+            "latitude": "58.3435871442828",
+            "longitude": "6.43569153220996",
+            "capacity_kw": "200000.0"
+        },
+        {
+            "id": "22",
+            "name_plant": "Tindafjellet",
+            "latitude": "58.7303574490709",
+            "longitude": "5.94811171754861",
+            "capacity_kw": "10000.0"
+        },
+        {
+            "id": "23",
+            "name_plant": "Utsira",
+            "latitude": "59.3156965510178",
+            "longitude": "4.90482538290929",
+            "capacity_kw": "1200.0"
+        },
+        {
+            "id": "24",
+            "name_plant": "Valsneset",
+            "latitude": "63.8198165318001",
+            "longitude": "9.62998510626876",
+            "capacity_kw": "12000.0"
+        },
+        {
+            "id": "25",
+            "name_plant": "\u00c5sen II",
+            "latitude": "58.7370116595752",
+            "longitude": "5.75356846038074",
+            "capacity_kw": "1600.0"
+        }
+    ]
+}
