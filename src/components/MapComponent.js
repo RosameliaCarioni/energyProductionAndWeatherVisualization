@@ -10,6 +10,7 @@ import { ClipExtension } from '@deck.gl/extensions';
 
 
 
+
 function mapComponent() {
   const mapContainerRef = useRef(null);
 
