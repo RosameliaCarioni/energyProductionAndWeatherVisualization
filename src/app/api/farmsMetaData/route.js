@@ -1,6 +1,6 @@
 /**
- * Retrieves a list of characters from the characters.json file.
- * @returns {Promise<Object>} A promise that resolves to an object containing the characters data.
+ * Retrieves a list of farms from the farms_meta_data.json file.
+ * @returns {Promise<Object>} A promise that resolves to an object containing the farm data.
  */
 
 import farms_meta_data from '@/data/farms_meta_data.json'
