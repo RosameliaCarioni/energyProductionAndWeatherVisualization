@@ -7,7 +7,6 @@ import * as WeatherLayersClient from 'weatherlayers-gl/client';
 import * as WeatherLayers from 'weatherlayers-gl';
 import { MapboxOverlay } from '@deck.gl/mapbox';
 import { ClipExtension } from '@deck.gl/extensions';
-import {getFarmsLatitude, getFarmsLongitude} from "@/utils/getFarmsLocation"
 
 
 
@@ -27,7 +26,6 @@ function mapComponent() {
     });
 
     map.on('load', async () => {
-      const latitudes = await getFarmsLongitude()
       const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
       const client = new WeatherLayersClient.Client({
         accessToken: process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN,
