@@ -1,5 +1,4 @@
 "use client";
-import { Tesselator } from "@deck.gl/core/typed";
 import Link from "next/link"; 
 
 export default function SideBarComponent(){
