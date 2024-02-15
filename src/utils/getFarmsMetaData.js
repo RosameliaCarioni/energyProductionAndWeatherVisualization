@@ -16,8 +16,20 @@ export async function getFarmsMeta() {
     const ids = await getFarmsID()
     const names = await getFarmsName()
     const capacities = await getFarmsCapacity()
-    let metaInfo = {id: ids, name_plant: names, longitude: longitudes, latitude: latitudes, capacity_kw: capacities}
-    return metaInfo
+
+    let farmsMetaArray = [];
+
+    for (let i = 0; i < ids.length; i++) {
+        farmsMetaArray.push({
+            id: ids[i],
+            name: names[i],
+            longitude: longitudes[i],
+            latitude: latitudes[i],
+            capacity_kw: capacities[i]
+        });
+    }
+
+    return farmsMetaArray;
 }
 
 export async function getFarmsLatitude() {
