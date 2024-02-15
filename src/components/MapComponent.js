@@ -7,6 +7,7 @@ import * as WeatherLayersClient from 'weatherlayers-gl/client';
 import * as WeatherLayers from 'weatherlayers-gl';
 import { MapboxOverlay } from '@deck.gl/mapbox';
 import { ClipExtension } from '@deck.gl/extensions';
+import {getFarmsMeta} from "@/utils/getFarmsMetaData"
 
 function mapComponent() {
   const mapContainerRef = useRef(null);
@@ -18,7 +19,7 @@ function mapComponent() {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/dark-v11",
-      center: [60.4720, 8.4689],
+      center: [8.4689, 60.4720],
       zoom: 3,
       projection: 'mercator'
     });
@@ -29,8 +30,23 @@ function mapComponent() {
         accessToken: process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN,
       });
 
+      const plants = await getFarmsMeta();
+      plants.forEach(plant => {
+        
+        const marker = document.createElement('div');
+        marker.className = 'custom-marker';
+        marker.style.backgroundImage = 'url(/assets/pin.svg)';
+        marker.style.width = '50px';
+        marker.style.height = '50px';
+        marker.style.backgroundSize = '100%';
+
+        new mapboxgl.Marker(marker)
+          .setLngLat([plant.longitude, plant.latitude])
+          .addTo(map);
+      });
+
       // load dataset slice, load data in the first available datetime
-      const dataset = 'gfs/wind_10m_above_ground';
+      const dataset = 'gfs/wind_100m_above_ground';
       const {title, unitFormat, attribution, referenceDatetimeRange, palette} = await client.loadDataset(dataset);
       const {datetimes} = await client.loadDatasetSlice(dataset, datetimeRange);
       const datetime = datetimes[0];
