@@ -8,6 +8,7 @@ export default function SideBarComponent(){
             <Link href = "/map"> Map</Link>
             <Link href = "/about"> About</Link>
             <Link href = "/listFarmsInformation"> ListFarmsInformation</Link>
+            <Link href = "/graphs"> Graphs</Link>
 
         </div>
     );
