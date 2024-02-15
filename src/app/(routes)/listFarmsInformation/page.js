@@ -1,5 +1,3 @@
-import ListOfFarms from "@/components/ListOfFarms"
-
 export default function ListFarmsInformation(){
     return(
         <div>

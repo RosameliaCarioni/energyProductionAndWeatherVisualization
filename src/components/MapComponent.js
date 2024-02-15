@@ -7,6 +7,7 @@ import * as WeatherLayersClient from 'weatherlayers-gl/client';
 import * as WeatherLayers from 'weatherlayers-gl';
 import { MapboxOverlay } from '@deck.gl/mapbox';
 import { ClipExtension } from '@deck.gl/extensions';
+import { getProduction, getProductionDataSet } from "@/utils/getFarmsProduction";
 
 
 
@@ -27,6 +28,10 @@ function mapComponent() {
     });
 
     map.on('load', async () => {
+      const data = await getProductionDataSet(6,2021,6,19)
+      //const energyProductions = data.map(item => item.EnergyProduction);
+      console.log('data ',data)
+
       const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
       const client = new WeatherLayersClient.Client({
         accessToken: process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN,
