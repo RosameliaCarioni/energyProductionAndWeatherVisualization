@@ -1,0 +1,34 @@
+{ 
+    "data": [
+        {
+            "id": "1",
+            "name": "Rosamelia Carioni",
+            "role": "Role",
+            "image": "/assets/images/meli-bw.png"
+        },
+        {
+            "id": "2",
+            "name": "Mischa Tomasz Rauch",
+            "role": "Role",
+            "image": "/assets/images/mischa-bw.png"
+        },
+        {
+            "id": "3",
+            "name": "Samuel Söderberg",
+            "role": "Role",
+            "image": "/assets/images/samuel-bw.png"
+        },
+        {
+            "id": "4",
+            "name": "Elin Lundqvist",
+            "role": "Role",
+            "image": "/assets/images/elin-bw.png"
+        },
+        {
+            "id": "5",
+            "name": "Danina Jansson",
+            "role": "Role",
+            "image": "/assets/images/danina-bw.png"
+        }
+    ]
+}
