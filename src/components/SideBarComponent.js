@@ -9,6 +9,7 @@ export default function SideBarComponent(){
             <Link href = "/about"> About</Link>
             <Link href = "/listFarmsInformation"> ListFarmsInformation</Link>
             <Link href = "/graphs"> Graphs</Link>
+            <Link href = "/timeSlider"> TimeSlider</Link>
 
         </div>
     );
