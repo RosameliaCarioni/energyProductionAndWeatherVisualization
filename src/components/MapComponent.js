@@ -9,19 +9,51 @@ import { MapboxOverlay } from '@deck.gl/mapbox';
 import { ClipExtension } from '@deck.gl/extensions';
 import {getFarmsMeta} from "@/utils/getFarmsMetaData"
 
-function mapComponent() {
+function MapComponent() {
   const mapContainerRef = useRef(null);
+  
+  const windSpeedPalette = [
+    [0, '#ffffff'], // white
+    [10, '#85ff73'], // green
+    [15, '#f6ff73'], // yellow
+    [20, '#ffde73'], // orange
+    [30, '#f76060'] // red
+  ];
+  const mapConfig = {
+    // mapbox config
+    mapStyle: "mapbox://styles/mapbox/dark-v11",
+    mapCenter: [8.4689, 60.4720],
+    mapZoom: 3,
+    mapProjection: 'mercator',
+    // particle layer
+    particleWidth: 2,
+    particleMaxAge: 25,
+    particlePalette: windSpeedPalette,
+    particleOpacity: 0.8,
+    patricleSpeedFactor: 3,
+    // raster layer
+    rasterOpacity: 0.2,
+    // common properties for all layers
+    extensions: [new ClipExtension()],
+    clipBounds: [-181, -85.051129, 181, 85.051129],
+    // markers
+    markerClassName: 'custom-marker',
+    markerBgImgUrl: 'url(/assets/pin.svg)',
+    markerWidth: '30px',
+    markerHeight: '30px',
+    markerBgSize: '100%',
+  }
 
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
-
+    console.log(mapConfig.mapContainer)
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/dark-v11",
-      center: [8.4689, 60.4720],
-      zoom: 3,
-      projection: 'mercator'
+      style: mapConfig.mapStyle,
+      center: mapConfig.mapCenter,
+      zoom: mapConfig.mapZoom,
+      projection: mapConfig.mapProjection
     });
 
     map.on('load', async () => {
@@ -30,37 +62,20 @@ function mapComponent() {
         accessToken: process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN,
       });
 
-      const plants = await getFarmsMeta();
-      plants.forEach(plant => {
-        
-        const marker = document.createElement('div');
-        marker.className = 'custom-marker';
-        marker.style.backgroundImage = 'url(/assets/pin.svg)';
-        marker.style.width = '50px';
-        marker.style.height = '50px';
-        marker.style.backgroundSize = '100%';
-
-        new mapboxgl.Marker(marker)
-          .setLngLat([plant.longitude, plant.latitude])
-          .addTo(map);
-      });
-
-      // load dataset slice, load data in the first available datetime
+      let plants, title, unitFormat, attribution, referenceDatetimeRange, palette, datetimes, datetime, image, image2, imageWeight, imageType, imageUnscale, bounds;
       const dataset = 'gfs/wind_100m_above_ground';
-      const {title, unitFormat, attribution, referenceDatetimeRange, palette} = await client.loadDataset(dataset);
-      const {datetimes} = await client.loadDatasetSlice(dataset, datetimeRange);
-      const datetime = datetimes[0];
-      const {image, image2, imageWeight, imageType, imageUnscale, bounds} = await client.loadDatasetData(dataset, datetime);
+      try {
+        // load dataset slice, load data in the first available datetime
+        plants = await getFarmsMeta();
+        ({title, unitFormat, attribution, referenceDatetimeRange, palette} = await client.loadDataset(dataset));
+        datetimes = await client.loadDatasetSlice(dataset, datetimeRange);
+        datetime = datetimes[0];
+        ({image, image2, imageWeight, imageType, imageUnscale, bounds} = await client.loadDatasetData(dataset, datetime));
+      } catch (error) {
+        console.error(error);
+      }
 
-      const windSpeedPalette = [
-        [0, '#ffffff'], // white
-        [10, '#85ff73'], // green
-        [15, '#f6ff73'], // yellow
-        [20, '#ffde73'], // orange
-        [30, '#f76060'] // red
-      ];
-      
-
+    
       const deckOverlay = new MapboxOverlay({
         layers: [
           new WeatherLayers.ParticleLayer({
@@ -68,24 +83,17 @@ function mapComponent() {
             // data properties
             image,
             image2,
-            // imageSmoothing: config.imageSmoothing,
-            // imageInterpolation: config.imageInterpolation,
             imageWeight,
             imageType,
             imageUnscale,
-            // imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
-            // imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
             bounds,
-            // style properties
-            // animate: config.particle.animate,
-            width: 2,
-            maxAge: 25,
-            palette: windSpeedPalette,
-            opacity: 0.8,
-            // animate: true,
-            speedFactor: 3,
-            extensions: [new ClipExtension()],
-            clipBounds: [-181, -85.051129, 181, 85.051129],
+            width: mapConfig.particleWidth,
+            maxAge: mapConfig.particleMaxAge,
+            palette: mapConfig.particlePalette,
+            opacity: mapConfig.particleOpacity,
+            speedFactor: mapConfig.patricleSpeedFactor,
+            extensions: mapConfig.extensions,
+            clipBounds: mapConfig.clipBounds,
           }),
           new WeatherLayers.RasterLayer({
             id: 'raster',
@@ -98,15 +106,28 @@ function mapComponent() {
             bounds,
             // style properties
             palette,
-            opacity: 0.2,
-            extensions: [new ClipExtension()],
-            clipBounds: [-181, -85.051129, 181, 85.051129],
+            opacity: mapConfig.rasterOpacity,
+            extensions: mapConfig.extensions,
+            clipBounds: mapConfig.clipBounds,
           }),
         ],
 
       });
 
       map.addControl(deckOverlay);
+      plants.forEach(plant => {
+        
+        const marker = document.createElement('div');
+        marker.className = mapConfig.markerClassName;
+        marker.style.backgroundImage = mapConfig.markerBgImgUrl;
+        marker.style.width = mapConfig.markerWidth;
+        marker.style.height = mapConfig.markerHeight;
+        marker.style.backgroundSize = mapConfig.markerBgSize;
+
+        new mapboxgl.Marker(marker)
+          .setLngLat([plant.longitude, plant.latitude])
+          .addTo(map);
+      });
     });
 
     return () => map.remove();
@@ -117,4 +138,4 @@ function mapComponent() {
   );
 };
 
-export default mapComponent; 
+export default MapComponent; 
