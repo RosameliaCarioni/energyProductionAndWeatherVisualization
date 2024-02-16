@@ -1,5 +1,7 @@
 "use client";
-import React from "react";
+//import { getProduction } from "@/utils/getFarmsProduction";
+import React, { useState, useEffect } from "react";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,32 +26,47 @@ ChartJS.register(
   Legend
 );
 
-const chartData = {
-  //x-axis:
-  labels: [
-    "00.00",
-    "01.00",
-    "02.00",
-    "03.00",
-    "04.00",
-    "05.00",
-    "06.00",
-    "07.00",
-    "08.00",
-  ],
+function GraphComponent(props) {
+  console.log(props.graphValues);
+  const chartData = {
+    //x-axis:
+    labels: [
+      "00.00",
+      "01.00",
+      "02.00",
+      "03.00",
+      "04.00",
+      "05.00",
+      "06.00",
+      "07.00",
+      "08.00",
+      "09.00",
+      "10.00",
+      "11.00",
+      "12.00",
+      "13.00",
+      "14.00",
+      "15.00",
+      "16.00",
+      "17.00",
+      "18.00",
+      "19.00",
+      "20.00",
+      "21.00",
+      "22.00",
+      "23.00",
+      "24.00",
+    ],
 
-  //y-values:
-  datasets: [
-    {
-      label: "Energy prediction",
-      data: [4, 5, 6, 7, 3, 5, 3, 2, 5],
-      borderColor: "rgb(135, 211, 184)",
-    },
-  ],
-};
-
-//
-function GraphComponent() {
+    //y-values:
+    datasets: [
+      {
+        label: props.chartTitle,
+        data: props.graphValues,
+        borderColor: "rgb(135, 211, 184)",
+      },
+    ],
+  };
   return (
     <div>
       <Line data={chartData} />
