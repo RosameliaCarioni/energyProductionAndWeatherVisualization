@@ -68,8 +68,8 @@ function GraphComponent(props) {
     ],
   };
   return (
-    <div>
-      <Line data={chartData} />
+    <div style={{ width: '400px', height: '200px' }}>
+      <Line data={chartData} options={{ maintainAspectRatio: false }}/>
     </div>
   );
 }

@@ -9,14 +9,13 @@ import { ClipExtension } from '@deck.gl/extensions';
 import MapGL, { Popup, Marker } from 'react-map-gl';
 import {getFarmsMeta} from "@/utils/getFarmsMetaData"
 
-function MapComponent() {
+function MapComponent({onSelectPlant}) {
   const [viewState, setViewState] = useState({
     latitude: 60.4720,
     longitude: 8.4689,
     zoom: 3,
   });
   const popupRef = useRef(null);
-  const [selectedPlant, setSelectedPlant] = useState(undefined);
   const [hoverInfo, setHoverInfo] = useState(false)
   const [plantsArray, setPlants] = useState([]);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -49,7 +48,8 @@ function MapComponent() {
   }
 
   const handleMarkerClick = (plant) => {
-    setSelectedPlant(plant);
+    // call parent component
+    onSelectPlant(plant);
   }
 
   const onMapLoad = useCallback(async (event) => {
@@ -134,7 +134,7 @@ function MapComponent() {
     <MapGL
     {...viewState}
       onMove={evt => setViewState(evt.viewState)}
-      style={{width: '50%', height: '750px'}}
+      style={{width: '100%', height: '750px'}}
       mapStyle="mapbox://styles/mapbox/dark-v11"
       projection={"mercator"}
       mapboxAccessToken={mapboxToken}
