@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import * as WeatherLayersClient from 'weatherlayers-gl/client';
@@ -10,13 +10,14 @@ import { ClipExtension } from '@deck.gl/extensions';
 import {getFarmsMeta} from "@/utils/getFarmsMetaData"
 
 function MapComponent() {
+  const [activePlant, setActivePlant] = useState(undefined);
   const mapContainerRef = useRef(null);
   
   const windSpeedPalette = [
     [0, '#ffffff'], // white
     [10, '#85ff73'], // green
-    [15, '#f6ff73'], // yellow
-    [20, '#ffde73'], // orange
+    [12, '#f6ff73'], // yellow
+    [17, '#ffde73'], // orange
     [30, '#f76060'] // red
   ];
   const mapConfig = {
@@ -42,6 +43,10 @@ function MapComponent() {
     markerWidth: '30px',
     markerHeight: '30px',
     markerBgSize: '100%',
+  }
+
+  const handlePlantClick = () => {
+    setActivePlant()
   }
 
 
@@ -77,6 +82,7 @@ function MapComponent() {
 
     
       const deckOverlay = new MapboxOverlay({
+        interleaved: true,
         layers: [
           new WeatherLayers.ParticleLayer({
             id: 'particle',
@@ -111,7 +117,6 @@ function MapComponent() {
             clipBounds: mapConfig.clipBounds,
           }),
         ],
-
       });
 
       map.addControl(deckOverlay);
