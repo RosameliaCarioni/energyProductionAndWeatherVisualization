@@ -43,7 +43,7 @@ export default function Map() {
 
         <div>
             {selectedPlant && <h1>Selected plant is {selectedPlant.name}</h1>}
-            <MapComponent onSelectPlant={handleSelectPlant}/>
+            <MapComponent onSelectPlant={handleSelectPlant} selectedPlant={selectedPlant}/>
         </div>
     </div>
   );
