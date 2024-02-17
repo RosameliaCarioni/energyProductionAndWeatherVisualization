@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import TimeSlider from '@/components/TimeSlider'; // Adjust the import path based on your file structure
+import TimeSlider from '@/components/TimeSliderComponent'; // Adjust the import path based on your file structure
 
 export default function TimeSliderPage() {
   const [selectedTime, setSelectedTime] = useState(12);
