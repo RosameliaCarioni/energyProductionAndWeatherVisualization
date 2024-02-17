@@ -18,15 +18,15 @@ export default function Map() {
 
     useEffect(() => {
       async function fetchData() {
-          const energy = await getProduction(6, 2021, 6, 19);
+          const energy = await getProduction(selectedPlant.id, 2021, 6, 19);
           setEnergyData(energy);
 
-          const wind = await getWindSpeed(6, 2021, 6, 19);
+          const wind = await getWindSpeed(selectedPlant.id, 2021, 6, 19);
           setWindData(wind);
       }
       
       fetchData();
-  }, []);
+  }, [selectedPlant]);
 
   return (
     <div className="grid grid-cols-2 gap-4">
