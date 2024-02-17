@@ -9,7 +9,7 @@ import { ClipExtension } from '@deck.gl/extensions';
 import MapGL, { Popup, Marker } from 'react-map-gl';
 import {getFarmsMeta} from "@/utils/getFarmsMetaData"
 
-function MapComponent({onSelectPlant}) {
+function MapComponent({onSelectPlant, selectedPlant}) {
   const [viewState, setViewState] = useState({
     latitude: 60.4720,
     longitude: 8.4689,
@@ -22,9 +22,9 @@ function MapComponent({onSelectPlant}) {
   
   const windSpeedPalette = [
     [0, '#ffffff'], // white
-    [10, '#85ff73'], // green
-    [12, '#f6ff73'], // yellow
-    [17, '#ffde73'], // orange
+    // [10, '#85ff73'], // green
+    // [12, '#f6ff73'], // yellow
+    // [17, '#ffde73'], // orange
     [30, '#f76060'] // red
   ];
   const WLConfig = {
@@ -96,21 +96,21 @@ function MapComponent({onSelectPlant}) {
             extensions: WLConfig.extensions,
             clipBounds: WLConfig.clipBounds,
           }),
-          new WeatherLayers.RasterLayer({
-            id: 'raster',
-            // data properties
-            image,
-            image2,
-            imageWeight,
-            imageType,
-            imageUnscale,
-            bounds,
-            // style properties
-            palette,
-            opacity: WLConfig.rasterOpacity,
-            extensions: WLConfig.extensions,
-            clipBounds: WLConfig.clipBounds,
-          }),
+          // new WeatherLayers.RasterLayer({
+          //   id: 'raster',
+          //   // data properties
+          //   image,
+          //   image2,
+          //   imageWeight,
+          //   imageType,
+          //   imageUnscale,
+          //   bounds,
+          //   // style properties
+          //   palette,
+          //   opacity: WLConfig.rasterOpacity,
+          //   extensions: WLConfig.extensions,
+          //   clipBounds: WLConfig.clipBounds,
+          // }),
         ],
       });
 
@@ -135,7 +135,7 @@ function MapComponent({onSelectPlant}) {
     {...viewState}
       onMove={evt => setViewState(evt.viewState)}
       style={{width: '100%', height: '750px'}}
-      mapStyle="mapbox://styles/mapbox/dark-v11"
+      mapStyle="mapbox://styles/iv24/clsq58r47006b01pk05dpavbj"
       projection={"mercator"}
       mapboxAccessToken={mapboxToken}
       onViewportChange={nextViewport => setViewport(nextViewport)}
@@ -146,7 +146,7 @@ function MapComponent({onSelectPlant}) {
           key={plant.id}
           latitude={plant.latitude}
           longitude={plant.longitude}
-          // anchor="bottom"
+          anchor="bottom"
         >
           <div
             onMouseEnter={() =>{
@@ -157,7 +157,7 @@ function MapComponent({onSelectPlant}) {
             onClick={() => handleMarkerClick(plant)}
             style={{ cursor: 'pointer' }}
           >
-            <img src ="assets/pin.svg" alt="Marker" style={{ width: '30px', height: '30px'}}/>
+            <img src ={(selectedPlant && selectedPlant.id == plant.id) || (hoverInfo && hoverInfo.id == plant.id) ? "/assets/pin_selected.svg" : "/assets/pin.svg"} alt="Marker" style={{ width: '30px', height: '30px'}}/>
           </div>
         </Marker>
       ))}
@@ -171,6 +171,8 @@ function MapComponent({onSelectPlant}) {
           ref={popupRef}
           anchor="bottom"
           className="z-50"
+          offset={30}
+          maxWidth="500px"
         >
           <div className="p-4 bg-white shadow-lg rounded-lg max-w-xs text-sm">
             <h1 className="text-lg font-bold mb-2">{hoverInfo.name}</h1>
