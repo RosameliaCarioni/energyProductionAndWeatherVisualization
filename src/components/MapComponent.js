@@ -146,7 +146,6 @@ function MapComponent({onSelectPlant, selectedPlant, children}) {
             <div
               onMouseEnter={() =>{
                 setHoverInfo(plant)
-                console.log(plant)
               }}
               onMouseLeave={() => setHoverInfo(undefined)}
               onClick={() => handleMarkerClick(plant)}

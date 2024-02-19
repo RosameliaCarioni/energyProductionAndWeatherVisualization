@@ -18,25 +18,27 @@ export default function Map() {
   const handleTimeChange = (newTime) => {
     setSelectedTime(newTime);
   };
-  const handleDayChange = (newDay) => {
-    setSelectedDate(newDay);
+  const handleDateChange = (newDate) => {
+    const date = new Date(newDate);
+    setSelectedDate(date);
   };
   const handleSelectPlant = (plant) => {
     setSelectedPlant(plant);
   };
 
+
   useEffect(() => {
     async function fetchData() {
-      if (!selectedPlant) return;
-      const energy = await getProduction(selectedPlant.id, 2021, 6, 19);
+      if (!selectedPlant || !selectedDate) return;
+      const energy = await getProduction(selectedPlant.id, selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
       setEnergyData(energy);
 
-      const wind = await getWindSpeed(selectedPlant.id, 2021, 6, 19);
+      const wind = await getWindSpeed(selectedPlant.id, selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
       setWindData(wind);
     }
 
     fetchData();
-  }, [selectedPlant]);
+  }, [selectedPlant, selectedDate]);
 
   return (
     <div>
@@ -70,7 +72,7 @@ export default function Map() {
           >
             <TimeSliderComponent
               onTimeChange={handleTimeChange}
-              onDateChange={handleDayChange}
+              onDateChange={handleDateChange}
             />
           </MapComponent>
         </div>
