@@ -88,6 +88,7 @@ function GraphComponent({
         ticks: {
           color: "rgb(214,214,214)",
         },
+        beginAtZero: true
       },
       x: {
         grid: {
@@ -110,10 +111,7 @@ function GraphComponent({
           line1: {
             type: "line",
             yMin: 0,
-            yMax: chartData.datasets[0].data.reduce(
-              (a, b) => Math.max(a, b),
-              0
-            ),
+            yMax: 'max',
             xMin: chartData.labels.indexOf(selectedLabel),
             xMax: chartData.labels.indexOf(selectedLabel),
             //colors controlling the timeslider
