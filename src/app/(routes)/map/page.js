@@ -40,11 +40,11 @@ export default function Map() {
 
   return (
     <div>
-      {selectedPlant && <h1>Selected plant is {selectedPlant.name}</h1>}
-      <div className="grid grid-cols-2 gap-4">
-        <div class="flex flex-col space-y-4">
+      <div className="map-page-container">
+        <div class="nav-margin flex column">
+          {selectedPlant && <h1>{selectedPlant.name}</h1>}
           <div className="mb-8">
-            <h1 className="text-xl font-bold mb-4">Energy Output</h1>
+            <h2 className="text-xl font-bold mb-4">Energy Output</h2>
             <GraphComponent
               graphValues={energyData}
               chartTitle="Energy Output [MW]"
@@ -53,7 +53,7 @@ export default function Map() {
             />
           </div>
           <div>
-            <h1 className="text-xl font-bold mb-4">Windspeed</h1>
+            <h2 className="text-xl font-bold mb-4">Windspeed</h2>
             <GraphComponent
               graphValues={windData}
               chartTitle="Windspeed [m/s]"
