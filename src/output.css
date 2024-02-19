@@ -682,3 +682,54 @@ video {
 .width-100p {
   width: 100%;
 }
+
+/* Sidebar component classes */
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #272727;
+  /* Add any other styles you want */
+}
+
+.nav-icon {
+  width: 30px; 
+  height: 30px; 
+  margin-bottom: 30px; 
+}
+
+/* Hover pop-up */
+
+.popup-container {
+  border-color: #272727;
+}
+
+.popup-content {
+  background-color: #272727;
+}
+
+.popup-heading {
+  text-transform: none;
+}
+
+/* Map page */
+.map-page-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns with equal width */
+  gap: 16px; /* Adjust the gap between columns if needed */
+}
+
+.nav-margin {
+  margin-left: 80px;
+}
+
+.timeslider-container {
+  position:fixed;
+  bottom: 30px; 
+}
