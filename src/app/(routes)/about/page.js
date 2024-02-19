@@ -1,4 +1,3 @@
-import '../../../output.css';
 import Image from 'next/image';
 import team_data from '@/data/team_data.json'
 

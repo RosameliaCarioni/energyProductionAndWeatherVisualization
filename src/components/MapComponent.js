@@ -7,17 +7,15 @@ import * as WeatherLayers from 'weatherlayers-gl';
 import { MapboxOverlay } from '@deck.gl/mapbox';
 import { ClipExtension } from '@deck.gl/extensions';
 import MapGL, { Popup, Marker } from 'react-map-gl';
-import {getFarmsMeta} from "@/utils/getFarmsMetaData"
 
-function MapComponent({onSelectPlant, selectedPlant, children}) {
+
+function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHoverPlant, hoverInfo}) {
   const [viewState, setViewState] = useState({
     latitude: 60.4720,
     longitude: 8.4689,
     zoom: 3,
   });
   const popupRef = useRef(null);
-  const [hoverInfo, setHoverInfo] = useState(false)
-  const [plantsArray, setPlants] = useState([]);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   
   const windSpeedPalette = [
@@ -48,9 +46,19 @@ function MapComponent({onSelectPlant, selectedPlant, children}) {
   }
 
   const handleMarkerClick = (plant) => {
-    // call parent component
-    onSelectPlant(plant);
+    if (selectedPlant && plant.id === selectedPlant.id) {
+      // Deselect the currently selected plant
+      onSelectPlant(undefined);
+    } else {
+      // Select the clicked plant
+      onSelectPlant(plant);
+    }
+  };
+
+  const handlePlantHover = (plant) => {
+    onHoverPlant(plant);
   }
+  
 
   const onMapLoad = useCallback(async (event) => {
     const map = event.target;
@@ -116,11 +124,6 @@ function MapComponent({onSelectPlant, selectedPlant, children}) {
 
   useEffect(() => {
     popupRef.current?.trackPointer();
-    const fetchPlants = async () => {
-      const plants = await getFarmsMeta();
-      setPlants(plants);
-    };
-    fetchPlants();
   }, []);
     
 
@@ -145,9 +148,9 @@ function MapComponent({onSelectPlant, selectedPlant, children}) {
           >
             <div
               onMouseEnter={() =>{
-                setHoverInfo(plant)
+                handlePlantHover(plant)
               }}
-              onMouseLeave={() => setHoverInfo(undefined)}
+              onMouseLeave={() => handlePlantHover(undefined)}
               onClick={() => handleMarkerClick(plant)}
               style={{ cursor: 'pointer' }}
             >
