@@ -16,7 +16,7 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, hoverInfo, onHo
                 {plantsArray?.map((plant) => (
                     <li
                         key={plant.id}
-                        className={`flex justify-between items-center p-3 rounded-md transition duration-150 ease-in-out ${
+                        className={`flex justify-between items-center p-3 transition duration-150 ease-in-out cursor-pointer ${
                             hoverInfo && (plant.id === hoverInfo.id) ? "bg-blue-50 border border-blue-200" : "hover:bg-gray-50"
                         }`}
                         onClick={() => handlePlantClick(plant)}
