@@ -1,4 +1,5 @@
 import '../../../output.css';
+import Image from 'next/image';
 import team_data from '@/data/team_data.json'
 
 export default function About(){
@@ -29,7 +30,7 @@ export default function About(){
                     </div>
                 </div>
                 {/*FOOTER*/}
-                <img width="100%" src="/assets/images/lineImg.svg" alt="line background"/>
+                <Image width={0} height={0} sizes="100vw" src="/assets/images/lineImg.svg" alt="line background"/>
                 <p>IVIS 2024</p>
             </div>
         </div>
