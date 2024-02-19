@@ -1,5 +1,4 @@
 "use client";
-
 import ListOfFarms from "@/components/ListOfFarmsComponent"
 import DatePickerComponent from "@/components/DatePickerComponent";
 import React, { useState } from 'react';
@@ -14,8 +13,8 @@ export default function ListFarmsInformation(){
 
 
     return(
-        <div>
-            <h1> This is the information from the farms </h1>
+        <div className="nav-margin">
+            <h1> List of farms </h1>
             <DatePickerComponent onDateChange={handleDayChange}/>
             <ListOfFarms date={selectedDate}/>
         </div>
