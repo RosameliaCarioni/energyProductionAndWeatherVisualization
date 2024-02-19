@@ -1,5 +1,5 @@
 "use client";
-import ListOfFarms from "@/components/ListOfFarmsComponent"
+import ListOfFarms from "@/components/ListOfFarmsComponent";
 import DatePickerComponent from "@/components/DatePickerComponent";
 import React, { useState } from 'react';
 
