@@ -56,8 +56,8 @@ export default function Map() {
 
   return (
     <div>
-      <div className="ml-24 grid grid-col-2">
-        <div>
+      <div className="ml-24 grid grid-col-2 vh-100">
+        <div className="overflow-y">
           {selectedPlant && (
             <div className="py-5">
               <p>DETAIL VIEW</p>
