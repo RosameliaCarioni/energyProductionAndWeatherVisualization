@@ -73,7 +73,7 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
     const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
 
     try {
-      const { title, unitFormat, attribution, referenceDatetimeRange, palette } = await client.loadDataset(dataset);
+      // const { title, unitFormat, attribution, referenceDatetimeRange, palette } = await client.loadDataset(dataset);
       const datetimes = await client.loadDatasetSlice(dataset, datetimeRange);
       const datetime = datetimes[0];
       const { image, image2, imageWeight, imageType, imageUnscale, bounds } = await client.loadDatasetData(dataset, datetime);
@@ -97,6 +97,7 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
             speedFactor: WLConfig.patricleSpeedFactor,
             extensions: WLConfig.extensions,
             clipBounds: WLConfig.clipBounds,
+            imageSmoothing: 10
           }),
           // new WeatherLayers.RasterLayer({
           //   id: 'raster',
@@ -132,7 +133,7 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
       <MapGL
       {...viewState}
         onMove={evt => setViewState(evt.viewState)}
-        style={{width: '100%', height: '750px'}}
+        style={{width: '100%', height: '100%'}}
         mapStyle="mapbox://styles/iv24/clsq58r47006b01pk05dpavbj"
         projection={"mercator"}
         mapboxAccessToken={mapboxToken}
