@@ -11,7 +11,7 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, hoverInfo, onHo
     }
     return (
         <div className="list-container mx-auto max-w-4xl rounded-lg shadow mr-4">
-            <h2 className="text-xl font-semibold mb-4">All Farms</h2>
+            <h1>All Farms</h1>
             <ul className="divide-y divide-gray-200">
                 {plantsArray?.map((plant) => (
                     <li
