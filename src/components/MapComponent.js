@@ -71,9 +71,6 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
 
     const dataset = 'gfs/wind_100m_above_ground';
     const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
-    console.log("TOken ",weatherLayersToken)
-    console.log("Dataset ",dataset)
-    console.log("datetimerange ",datetimeRange)
 
     try {
       // const { title, unitFormat, attribution, referenceDatetimeRange, palette } = await client.loadDataset(dataset);
