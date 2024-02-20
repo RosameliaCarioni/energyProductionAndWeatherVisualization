@@ -1,4 +1,5 @@
 "use client";
+import '../../src/output.css';
 
 import React, { useEffect, useState } from 'react';
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
@@ -62,27 +63,29 @@ export default function ListOfFarms(props) {
     console.log("Energy Array",energyData)
 
     return (
-      <Container className="flex flex-col gap-5 py-5" as="main">
+      <div className="flex flex-col gap-5 py-5" as="main">
           {data?.map((item, index) => (
-              <div key={item.id} className="overflow-hidden rounded-md p-4"> {/* Use item.id as key if it's unique */}
+              <div key={item.id} className="overflow-hidden"> {/* Use item.id as key if it's unique */}
                   {/* Display the name in a text box */}
-                  <input type="text" value={item.name} readOnly className="text-box-class" />
-                  
-                  {/* Energy Output Graph */}
-                  {console.log("DATA ",energyData)}
-                  <GraphComponent 
-                      graphValues={energyData && energyData[index] ? energyData[index] : new Array(24).fill(0)} 
-                      chartTitle="Energy Output"
-                  />
-  
-                  {/* Wind Data Graph */}
-                  <GraphComponent 
-                      graphValues={windData && windData[index] ? windData[index] : new Array(24).fill(0)} 
-                      chartTitle="Wind Data"
-                  />
+                  <h2 className='text-none font-normal'>{item.name}</h2>
+
+                  <div className='flex '>
+                    {/* Energy Output Graph */}
+                    {console.log("DATA ",energyData)}
+                    <GraphComponent 
+                        graphValues={energyData && energyData[index] ? energyData[index] : new Array(24).fill(0)} 
+                        chartTitle="Energy Output"
+                    />
+    
+                    {/* Wind Data Graph */}
+                    <GraphComponent 
+                        graphValues={windData && windData[index] ? windData[index] : new Array(24).fill(0)} 
+                        chartTitle="Wind Data"
+                    />
+                  </div>
               </div>
           ))}
-      </Container>
+      </div>
   );
   
 }

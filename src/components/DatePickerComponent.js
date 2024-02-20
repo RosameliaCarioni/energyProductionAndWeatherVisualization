@@ -12,10 +12,10 @@ function DatePickerComponent({ onDateChange }) {
   }
 
   return (
-    <div className="datepicker-container" style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
+    <div className="rounded-lg" style={{ display: 'flex', alignItems: 'center'}}>
       {/* Date Picker */}
       <input
-        className='datepicker-input'
+        className='datepicker-input rounded-md'
         type="date"
         value={selectedDate}
         onChange={handleDateChange}

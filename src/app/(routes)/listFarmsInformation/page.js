@@ -13,8 +13,9 @@ export default function ListFarmsInformation(){
 
 
     return(
-        <div className="nav-margin">
-            <h1> List of farms </h1>
+        <div className="ml-24 py-5">
+            <p>LIST VIEW</p>
+            <h1> Name of Client </h1>
             <DatePickerComponent onDateChange={handleDayChange}/>
             <ListOfFarms date={selectedDate}/>
         </div>
