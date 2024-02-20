@@ -13,9 +13,9 @@ export default async function Graphs() {
   return (
     <div>
       <h1>First graph</h1>
-      <GraphComponent graphValues={energyData} chartTitle="Energy Output" />
+      {/* <GraphComponent graphValues={energyData} chartTitle="Energy Output" /> */}
       <h1>Second graph</h1>
-      <GraphComponent graphValues={windData} chartTitle="Windspeed" />
+      {/* <GraphComponent graphValues={windData} chartTitle="Windspeed" /> */}
     </div>
-  );
+  );  
 }
