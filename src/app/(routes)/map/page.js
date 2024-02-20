@@ -1,6 +1,10 @@
 "use client";
 
-import MapComponent from "@/components/MapComponent";
+//import MapComponent from "@/components/MapComponent";
+// Dynamically import the MapComponent with SSR disabled
+const MapComponentWithNoSSR = dynamic(() => import('@/components/MapComponent'), {
+  ssr: false, // This line is key to making sure the import is client-side only
+});
 import GraphComponent from "@/components/GraphComponent";
 import { getProduction } from "@/utils/getFarmsProduction";
 import { getWindSpeed } from "@/utils/getWindSpeed";
@@ -96,19 +100,19 @@ export default function Map() {
         </div>
 
         <div>
-          <MapComponent
-            className="mr-2"
-            onSelectPlant={handlePlantSelect}
-            selectedPlant={selectedPlant}
-            plantsArray={plantsArray}
-            onHoverPlant={handlePlantHover}
-            hoverInfo={hoverInfo}
-          >
-            <TimeSliderComponent
-              onTimeChange={handleTimeChange}
-              onDateChange={handleDateChange}
-            />
-          </MapComponent>
+          <MapComponentWithNoSSR
+              className="mr-2"
+              onSelectPlant={handlePlantSelect}
+              selectedPlant={selectedPlant}
+              plantsArray={plantsArray}
+              onHoverPlant={handlePlantHover}
+              hoverInfo={hoverInfo}
+            >
+              <TimeSliderComponent
+                onTimeChange={handleTimeChange}
+                onDateChange={handleDateChange}
+              />
+            </MapComponentWithNoSSR>
         </div>
       </div>
     </div>
