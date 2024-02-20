@@ -10,14 +10,14 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, hoverInfo, onHo
         onHoverPlant(plant);
     }
     return (
-        <div className="list-container mx-auto max-w-4xl p-4 bg-white rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">All Farms</h2>
+        <div className="list-container mx-auto max-w-4xl rounded-lg shadow mr-4">
+            <h1>All Farms</h1>
             <ul className="divide-y divide-gray-200">
                 {plantsArray?.map((plant) => (
                     <li
                         key={plant.id}
                         className={`flex justify-between items-center p-3 transition duration-150 ease-in-out cursor-pointer ${
-                            hoverInfo && (plant.id === hoverInfo.id) ? "bg-blue-50 border border-blue-200" : "hover:bg-gray-50"
+                            hoverInfo && (plant.id === hoverInfo.id) ? "bg-blue-10" : "hover:bg-blue-10"
                         }`}
                         onClick={() => handlePlantClick(plant)}
                         onMouseEnter={() =>{
@@ -25,7 +25,7 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, hoverInfo, onHo
                           }}
                           onMouseLeave={() => handlePlantHover(undefined)}
                     >
-                        <span className="font-medium text-gray-700">{plant.name}{' '}</span>
+                        <span className="font-medium">{plant.name}{' '}</span>
                         <span className="text-gray-500">{' '}{plant.capacity_kw} KW</span>
                     </li>
                 ))}

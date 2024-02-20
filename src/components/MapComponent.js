@@ -171,7 +171,7 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
             offset={30}
             maxWidth="500px"
           >
-            <div className="p-4 bg-white shadow-lg rounded-lg max-w-xs text-sm">
+            <div className="p-4 rounded-lg max-w-xs text-sm" style={{ backgroundColor: '#272727' }}>
               <h1 className="text-lg font-bold mb-2">{hoverInfo.name}</h1>
               <p className="mb-1">Capacity: <span className="font-semibold">{hoverInfo.capacity_kw} kw</span></p>
               <p className="mb-1">Latitude: <span className="font-semibold">{hoverInfo.latitude}</span></p>
