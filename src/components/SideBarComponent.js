@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function SideBarComponent(){
     return (
-        <div className="absolute h-full ">
+        <div className="absolute h-full z-50">
             
             <Link href = "/">
                 <img
