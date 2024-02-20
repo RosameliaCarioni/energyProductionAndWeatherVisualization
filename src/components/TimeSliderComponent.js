@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function TimeSlider({ onTimeChange, onDateChange }) {
   const [value, setValue] = useState(12);
   const [selectedDate, setSelectedDate] = useState('2021-06-19'); // State to manage the selected date
-  const sliderWidth = '25%';
+  const sliderWidth = '500px';
 
   function handleChange(event) {
     const newValue = event.target.value;
@@ -23,9 +23,8 @@ function TimeSlider({ onTimeChange, onDateChange }) {
 
   // Generate labels for every third hour
   const labels = Array.from({ length: 8 }, (_, i) => i * 3);
-
   return (
-    <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
+    <div className='bg-dark p-4 rounded-md mr-4 ml-4 flex h-70p'>
       {/* Date Picker */}
       <input
         type="date"
@@ -38,8 +37,8 @@ function TimeSlider({ onTimeChange, onDateChange }) {
       <div style={{ position: 'relative', width: sliderWidth }}>
         <input
           type="range"
-          min="0"
-          max="23"
+          min="1"
+          max="24"
           value={value}
           onChange={handleChange}
           style={{ width: '100%' }}
@@ -47,11 +46,10 @@ function TimeSlider({ onTimeChange, onDateChange }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5px', position: 'absolute', width: '100%', left: 0 }}>
           {labels.map(label => (
             <span key={label} style={{ userSelect: 'none', position: 'absolute', left: `calc(${(label / 24) * 100}% + 10px)`, transform: 'translateX(-50%)' }}>
-              {label}
+              PH{label+1}
             </span>
           ))}
         </div>
-        <div style={{ marginTop: '40px' }}>Selected Hour: {value}</div>
       </div>
     </div>
   );

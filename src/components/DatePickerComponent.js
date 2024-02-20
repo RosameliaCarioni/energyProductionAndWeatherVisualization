@@ -12,13 +12,13 @@ function DatePickerComponent({ onDateChange }) {
   }
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
+    <div className="rounded-lg" style={{ display: 'flex', alignItems: 'center'}}>
       {/* Date Picker */}
       <input
+        className='datepicker-input rounded-md'
         type="date"
         value={selectedDate}
         onChange={handleDateChange}
-        style={{ marginRight: '20px' }} // Add some spacing between the date picker and the slider
       />
 
     </div>

@@ -12,6 +12,7 @@
     "@deck.gl/core": "^8.9.34",
     "@deck.gl/extensions": "^8.9.34",
     "chart.js": "^4.4.1",
+    "chartjs-plugin-annotation": "^3.0.1",
     "deck.gl": "^8.9.34",
     "mapbox-gl": "^3.1.2",
     "next": "^14.1.0",
@@ -22,10 +23,10 @@
     "weatherlayers-gl": "^2024.2.1"
   },
   "devDependencies": {
-    "autoprefixer": "^10.0.1",
+    "autoprefixer": "^10.4.17",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
-    "postcss": "^8",
+    "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1"
   }
 }
