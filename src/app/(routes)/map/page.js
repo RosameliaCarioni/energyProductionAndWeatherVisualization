@@ -2,6 +2,7 @@
 
 //import MapComponent from "@/components/MapComponent";
 // Dynamically import the MapComponent with SSR disabled
+import dynamic from 'next/dynamic';
 const MapComponentWithNoSSR = dynamic(() => import('@/components/MapComponent'), {
   ssr: false, // This line is key to making sure the import is client-side only
 });
