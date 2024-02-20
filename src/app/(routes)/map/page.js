@@ -56,13 +56,14 @@ export default function Map() {
 
   return (
     <div>
-      <div className="map-page-container">
-        <div className="nav-margin flex column">
+      <div className="ml-24 grid grid-col-2">
+        <div>
           {selectedPlant && (
-            <div>
-              <h1>{selectedPlant.name}</h1>
+            <div className="py-5">
+              <p>DETAIL VIEW</p>
+              <h1 className="text-blue text-none">{selectedPlant.name}</h1>
               <div className="mb-8">
-                <h2 className="text-xl font-bold mb-4">Energy Output</h2>
+                <p className="text-xl font-bold mb-4">Energy Output</p>
                 <GraphComponent
                   graphValues={energyData}
                   chartTitle="Energy Output [MW]"
@@ -71,7 +72,7 @@ export default function Map() {
                 />
               </div>
               <div>
-                <h2 className="text-xl font-bold mb-4">Windspeed</h2>
+                <p className="text-xl font-bold mb-4">Windspeed</p>
                 <GraphComponent
                   graphValues={windData}
                   chartTitle="Windspeed [m/s]"
@@ -82,7 +83,8 @@ export default function Map() {
             </div>
           )}
           {!selectedPlant && (
-            <div>
+            <div className="py-5">
+              <p>LIST VIEW</p>
               <SimpleListOfFarmsComponent
                 plantsArray={plantsArray}
                 hoverInfo={hoverInfo}
