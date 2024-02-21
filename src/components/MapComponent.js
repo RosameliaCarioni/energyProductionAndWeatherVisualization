@@ -31,7 +31,8 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
     particleMaxAge: 25,
     particlePalette: windSpeedPalette,
     particleOpacity: 0.8,
-    patricleSpeedFactor: 3,
+    patricleSpeedFactor: 5,
+    imageSmoothing: 5,
     // raster layer
     rasterOpacity: 0.1,
     // common properties for all layers
@@ -78,14 +79,16 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
       const datetime = datetimes[0];
       const { image, image2, imageWeight, imageType, imageUnscale, bounds } = await client.loadDatasetData(dataset, datetime);
 
+      const rebaseWindImage = await WeatherLayers.loadTextureData('./assets/weather-images/20211125_wind.png');
+
       const deckOverlay = new MapboxOverlay({
         interleaved: true,
         layers: [
           new WeatherLayers.ParticleLayer({
             id: 'particle',
             // data properties
-            image,
-            image2,
+            image: rebaseWindImage,
+            // image2,
             imageWeight,
             imageType,
             imageUnscale,
@@ -97,7 +100,7 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
             speedFactor: WLConfig.patricleSpeedFactor,
             extensions: WLConfig.extensions,
             clipBounds: WLConfig.clipBounds,
-            imageSmoothing: 10
+            imageSmoothing: WLConfig.imageSmoothing
           }),
           // new WeatherLayers.RasterLayer({
           //   id: 'raster',
