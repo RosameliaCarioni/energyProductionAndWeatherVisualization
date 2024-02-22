@@ -63,6 +63,10 @@ function MapComponent({
     }
   };
 
+  const handleMoveStart = () => {
+    onSelectPlant(undefined);
+  };
+
   const handlePlantHover = (plant) => {
     onHoverPlant(plant);
   };
@@ -136,6 +140,7 @@ function MapComponent({
       <MapGL
         {...viewState}
         onMove={(evt) => setViewState(evt.viewState)}
+        onMoveStart={handleMoveStart}
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/iv24/clsq58r47006b01pk05dpavbj"
         projection={"mercator"}
