@@ -2,28 +2,34 @@
 
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
-import * as WeatherLayersClient from 'weatherlayers-gl/client';
-import * as WeatherLayers from 'weatherlayers-gl';
-import { MapboxOverlay } from '@deck.gl/mapbox';
-import { ClipExtension } from '@deck.gl/extensions';
-import MapGL, { Popup, Marker } from 'react-map-gl';
+import * as WeatherLayersClient from "weatherlayers-gl/client";
+import * as WeatherLayers from "weatherlayers-gl";
+import { MapboxOverlay } from "@deck.gl/mapbox";
+import { ClipExtension } from "@deck.gl/extensions";
+import MapGL, { Popup, Marker } from "react-map-gl";
 
-
-function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHoverPlant, hoverInfo}) {
+function MapComponent({
+  onSelectPlant,
+  selectedPlant,
+  children,
+  plantsArray,
+  onHoverPlant,
+  hoverInfo,
+}) {
   const [viewState, setViewState] = useState({
-    latitude: 60.4720,
+    latitude: 60.472,
     longitude: 8.4689,
     zoom: 3,
   });
   const popupRef = useRef(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
-  
+
   const windSpeedPalette = [
-    [0, '#ffffff'], // white
+    [0, "#ffffff"], // white
     // [10, '#85ff73'], // green
     // [12, '#f6ff73'], // yellow
     // [17, '#ffde73'], // orange
-    [30, '#f76060'] // red
+    [30, "#f76060"], // red
   ];
   const WLConfig = {
     // particle layer
@@ -33,6 +39,7 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
     particleOpacity: 0.8,
     patricleSpeedFactor: 5,
     imageSmoothing: 5,
+    imageUnscale: [-127, 128],
     // raster layer
     rasterOpacity: 0.1,
     // common properties for all layers
@@ -44,7 +51,7 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
     // markerWidth: '30px',
     // markerHeight: '30px',
     // markerBgSize: '100%',
-  }
+  };
 
   const handleMarkerClick = (plant) => {
     if (selectedPlant && plant.id === selectedPlant.id) {
@@ -58,41 +65,35 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
 
   const handlePlantHover = (plant) => {
     onHoverPlant(plant);
-  }
-  
+  };
 
   const onMapLoad = useCallback(async (event) => {
     const map = event.target;
 
-    const weatherLayersToken = process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN;
+    const weatherLayersToken =
+      process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN;
 
     const client = new WeatherLayersClient.Client({
       accessToken: weatherLayersToken,
     });
 
-    //const dataset = 'gfs/wind_100m_above_ground';
-    //const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
-
     try {
-      // const { title, unitFormat, attribution, referenceDatetimeRange, palette } = await client.loadDataset(dataset);
-      //const datetimes = await client.loadDatasetSlice(dataset, datetimeRange);
-      //const datetime = datetimes[0];
-      //const { image, image2, imageWeight, imageType, imageUnscale, bounds } = await client.loadDatasetData(dataset, datetime);
-
-      const rebaseWindImage = await WeatherLayers.loadTextureData('./assets/weather-images/20211125_wind.png');
+      const rebaseWindImage = await WeatherLayers.loadTextureData(
+        "./assets/weather-images/20211125_wind.png"
+      );
 
       const deckOverlay = new MapboxOverlay({
         interleaved: true,
         layers: [
           new WeatherLayers.ParticleLayer({
-            id: 'particle',
+            id: "particle",
             // data properties
             image: rebaseWindImage,
             // image2,
             //imageWeight,
-            //imageType,
-            //imageUnscale,
-            bounds : [-180, -90, 180, 90],
+            // imageType: "VECTOR",
+            imageUnscale: WLConfig.imageUnscale,
+            bounds: [-180, -90, 180, 90],
             width: WLConfig.particleWidth,
             maxAge: WLConfig.particleMaxAge,
             palette: WLConfig.particlePalette,
@@ -100,7 +101,7 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
             speedFactor: WLConfig.patricleSpeedFactor,
             extensions: WLConfig.extensions,
             clipBounds: WLConfig.clipBounds,
-            imageSmoothing: WLConfig.imageSmoothing
+            imageSmoothing: WLConfig.imageSmoothing,
           }),
           // new WeatherLayers.RasterLayer({
           //   id: 'raster',
@@ -129,21 +130,20 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
   useEffect(() => {
     popupRef.current?.trackPointer();
   }, []);
-    
 
   return (
     <div className="relative w-full h-full">
       <MapGL
-      {...viewState}
-        onMove={evt => setViewState(evt.viewState)}
-        style={{width: '100%', height: '100%'}}
+        {...viewState}
+        onMove={(evt) => setViewState(evt.viewState)}
+        style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/iv24/clsq58r47006b01pk05dpavbj"
         projection={"mercator"}
         mapboxAccessToken={mapboxToken}
-        onViewportChange={nextViewport => setViewport(nextViewport)}
+        onViewportChange={(nextViewport) => setViewport(nextViewport)}
         onLoad={onMapLoad}
       >
-        {plantsArray.map(plant => (
+        {plantsArray.map((plant) => (
           <Marker
             key={plant.id}
             latitude={plant.latitude}
@@ -151,14 +151,23 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
             anchor="bottom"
           >
             <div
-              onMouseEnter={() =>{
-                handlePlantHover(plant)
+              onMouseEnter={() => {
+                handlePlantHover(plant);
               }}
               onMouseLeave={() => handlePlantHover(undefined)}
               onClick={() => handleMarkerClick(plant)}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
-              <img src ={(selectedPlant && selectedPlant.id == plant.id) || (hoverInfo && hoverInfo.id == plant.id) ? "/assets/pin_selected.svg" : "/assets/pin.svg"} alt="Marker" style={{ width: '30px', height: '30px'}}/>
+              <img
+                src={
+                  (selectedPlant && selectedPlant.id == plant.id) ||
+                  (hoverInfo && hoverInfo.id == plant.id)
+                    ? "/assets/pin_selected.svg"
+                    : "/assets/pin.svg"
+                }
+                alt="Marker"
+                style={{ width: "30px", height: "30px" }}
+              />
             </div>
           </Marker>
         ))}
@@ -175,12 +184,28 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
             offset={30}
             maxWidth="500px"
           >
-            <div className="p-4 rounded-lg max-w-xs text-sm" style={{ backgroundColor: '#272727' }}>
+            <div
+              className="p-4 rounded-lg max-w-xs text-sm"
+              style={{ backgroundColor: "#272727" }}
+            >
               <h1 className="text-lg font-bold mb-2">{hoverInfo.name}</h1>
-              <p className="mb-1">Capacity: <span className="font-semibold">{hoverInfo.capacity_kw} kw</span></p>
-              <p className="mb-1">Latitude: <span className="font-semibold">{hoverInfo.latitude}</span></p>
-              <p className="mb-1">Longitude: <span className="font-semibold">{hoverInfo.longitude}</span></p>
-              <p>ID: <span className="font-semibold">{hoverInfo.id}</span></p>
+              <p className="mb-1">
+                Capacity:{" "}
+                <span className="font-semibold">
+                  {hoverInfo.capacity_kw} kw
+                </span>
+              </p>
+              <p className="mb-1">
+                Latitude:{" "}
+                <span className="font-semibold">{hoverInfo.latitude}</span>
+              </p>
+              <p className="mb-1">
+                Longitude:{" "}
+                <span className="font-semibold">{hoverInfo.longitude}</span>
+              </p>
+              <p>
+                ID: <span className="font-semibold">{hoverInfo.id}</span>
+              </p>
             </div>
           </Popup>
         )}
@@ -191,6 +216,6 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
       </MapGL>
     </div>
   );
-};
+}
 
 export default MapComponent;
