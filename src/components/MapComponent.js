@@ -70,14 +70,14 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
       accessToken: weatherLayersToken,
     });
 
-    const dataset = 'gfs/wind_100m_above_ground';
-    const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
+    //const dataset = 'gfs/wind_100m_above_ground';
+    //const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
 
     try {
       // const { title, unitFormat, attribution, referenceDatetimeRange, palette } = await client.loadDataset(dataset);
-      const datetimes = await client.loadDatasetSlice(dataset, datetimeRange);
-      const datetime = datetimes[0];
-      const { image, image2, imageWeight, imageType, imageUnscale, bounds } = await client.loadDatasetData(dataset, datetime);
+      //const datetimes = await client.loadDatasetSlice(dataset, datetimeRange);
+      //const datetime = datetimes[0];
+      //const { image, image2, imageWeight, imageType, imageUnscale, bounds } = await client.loadDatasetData(dataset, datetime);
 
       const rebaseWindImage = await WeatherLayers.loadTextureData('./assets/weather-images/20211125_wind.png');
 
@@ -89,10 +89,10 @@ function MapComponent({onSelectPlant, selectedPlant, children, plantsArray, onHo
             // data properties
             image: rebaseWindImage,
             // image2,
-            imageWeight,
-            imageType,
-            imageUnscale,
-            bounds,
+            //imageWeight,
+            //imageType,
+            //imageUnscale,
+            bounds : [-180, -90, 180, 90],
             width: WLConfig.particleWidth,
             maxAge: WLConfig.particleMaxAge,
             palette: WLConfig.particlePalette,
