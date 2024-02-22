@@ -2,10 +2,13 @@
 
 //import MapComponent from "@/components/MapComponent";
 // Dynamically import the MapComponent with SSR disabled
-import dynamic from 'next/dynamic';
-const MapComponentWithNoSSR = dynamic(() => import('@/components/MapComponent'), {
-  ssr: false, // This line is key to making sure the import is client-side only
-});
+import dynamic from "next/dynamic";
+const MapComponentWithNoSSR = dynamic(
+  () => import("@/components/MapComponent"),
+  {
+    ssr: false, // This line is key to making sure the import is client-side only
+  }
+);
 import GraphComponent from "@/components/GraphComponent";
 import { getProduction } from "@/utils/getFarmsProduction";
 import { getWindSpeed } from "@/utils/getWindSpeed";
@@ -13,41 +16,50 @@ import TimeSliderComponent from "@/components/TimeSliderComponent";
 import SimpleListOfFarmsComponent from "@/components/SimpleListOfFarmsComponent";
 import "../../../output.css";
 import { useState, useEffect } from "react";
-import {getFarmsMeta} from "@/utils/getFarmsMetaData"
+import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 
 export default function Map() {
-  const [energyData, setEnergyData] = useState(null);
-  const [windData, setWindData] = useState(null);
-  const [selectedPlant, setSelectedPlant] = useState(null);
+  const [energyData, setEnergyData] = useState(undefined);
+  const [windData, setWindData] = useState(undefined);
+  const [selectedPlant, setSelectedPlant] = useState(undefined);
   const [selectedTime, setSelectedTime] = useState(12);
   const [selectedDate, setSelectedDate] = useState(new Date("2021-06-19"));
   const [plantsArray, setPlants] = useState([]);
-  const [hoverInfo, setHoverInfo] = useState(null);
+  const [hoverInfo, setHoverInfo] = useState(undefined);
 
   const handleTimeChange = (newTime) => {
     setSelectedTime(newTime);
   };
   const handleDateChange = (newDate) => {
     const date = new Date(newDate);
-    console.log(date)
     setSelectedDate(date);
   };
   const handlePlantSelect = (plant) => {
+    setEnergyData(undefined);
+    setWindData(undefined);
     setSelectedPlant(plant);
   };
   const handlePlantHover = (plant) => {
     setHoverInfo(plant);
-  }
-
+  };
 
   useEffect(() => {
     async function fetchData() {
-      
       if (!selectedPlant || !selectedDate) return;
-      const energy = await getProduction(selectedPlant.id, selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate());
+      const energy = await getProduction(
+        selectedPlant.id,
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 1,
+        selectedDate.getDate()
+      );
       setEnergyData(energy);
 
-      const wind = await getWindSpeed(selectedPlant.id, selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate());
+      const wind = await getWindSpeed(
+        selectedPlant.id,
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 1,
+        selectedDate.getDate()
+      );
       setWindData(wind);
     }
     const fetchPlants = async () => {
@@ -56,7 +68,7 @@ export default function Map() {
     };
     fetchPlants();
 
-      fetchData();
+    fetchData();
   }, [selectedPlant, selectedDate]);
 
   return (
@@ -102,21 +114,20 @@ export default function Map() {
 
         <div>
           <MapComponentWithNoSSR
-              className="mr-2"
-              onSelectPlant={handlePlantSelect}
-              selectedPlant={selectedPlant}
-              plantsArray={plantsArray}
-              onHoverPlant={handlePlantHover}
-              hoverInfo={hoverInfo}
-            >
-              <TimeSliderComponent
-                onTimeChange={handleTimeChange}
-                onDateChange={handleDateChange}
-              />
-            </MapComponentWithNoSSR>
+            className="mr-2"
+            onSelectPlant={handlePlantSelect}
+            selectedPlant={selectedPlant}
+            plantsArray={plantsArray}
+            onHoverPlant={handlePlantHover}
+            hoverInfo={hoverInfo}
+          >
+            <TimeSliderComponent
+              onTimeChange={handleTimeChange}
+              onDateChange={handleDateChange}
+            />
+          </MapComponentWithNoSSR>
         </div>
       </div>
     </div>
-
   );
 }
