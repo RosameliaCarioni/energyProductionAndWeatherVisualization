@@ -70,7 +70,7 @@ function GraphComponent({
     //y-values:
     datasets: [
       {
-        label: chartTitle || "No Data",
+        label: !isLoading ? chartTitle : "Loading data...",
         data: !isLoading ? graphValues : Array(24).fill(0),
         borderColor: !isLoading ? "rgb(135, 211, 184)" : "rgb(30, 30, 30)",
         backgroundColor: "rgb(135, 211, 184, 0.25)",
