@@ -189,10 +189,6 @@ function MapComponent({
             offset={30}
             maxWidth="500px"
           >
-            <div
-              className="p-4 rounded-lg max-w-xs text-sm"
-              style={{ backgroundColor: "#272727" }}
-            >
               <h1 className="text-lg font-bold mb-2">{hoverInfo.name}</h1>
               <p className="mb-1">
                 Capacity:{" "}
@@ -211,7 +207,6 @@ function MapComponent({
               <p>
                 ID: <span className="font-semibold">{hoverInfo.id}</span>
               </p>
-            </div>
           </Popup>
         )}
 
