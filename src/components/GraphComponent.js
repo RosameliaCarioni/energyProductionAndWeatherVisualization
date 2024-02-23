@@ -79,7 +79,7 @@ function GraphComponent({
   };
   const options = {
     maintainAspectRatio: false,
-
+    stepped: true,
     scales: {
       y: {
         grid: {
