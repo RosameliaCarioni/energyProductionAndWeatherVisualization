@@ -197,16 +197,16 @@ function MapComponent({
               <p className="mb-1">
                 Capacity:{" "}
                 <span className="font-semibold">
-                  {hoverInfo.capacity_kw} kw
+                  {hoverInfo.capacity_kw / 1000} MW
                 </span>
               </p>
               <p className="mb-1">
                 Latitude:{" "}
-                <span className="font-semibold">{hoverInfo.latitude}</span>
+                <span className="font-semibold">{Number(hoverInfo.latitude).toFixed(2)}</span>
               </p>
               <p className="mb-1">
                 Longitude:{" "}
-                <span className="font-semibold">{hoverInfo.longitude}</span>
+                <span className="font-semibold">{Number(hoverInfo.longitude).toFixed(2)}</span>
               </p>
               <p>
                 ID: <span className="font-semibold">{hoverInfo.id}</span>

@@ -26,7 +26,7 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, hoverInfo, onHo
                           onMouseLeave={() => handlePlantHover(undefined)}
                     >
                         <span className="font-medium">{plant.name}{' '}</span>
-                        <span className="text-gray-500">{' '}{plant.capacity_kw} KW</span>
+                        <span className="text-gray-500">{' '}{plant.capacity_kw / 1000} MW</span>
                     </li>
                 ))}
             </ul>
