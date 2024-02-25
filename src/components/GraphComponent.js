@@ -36,7 +36,7 @@ function GraphComponent({
   selectedTime,
   selectedDate,
 }) {
-  const hasData = graphValues && graphValues.length > 0;
+  const [isLoading, setIsLoading] = useState(true);
   const selectedLabel = `PH${selectedTime}`;
   const chartData = {
     //x-axis:
@@ -70,16 +70,16 @@ function GraphComponent({
     //y-values:
     datasets: [
       {
-        label: chartTitle || "No Data",
-        data: hasData ? graphValues : Array(24).fill(0),
-        borderColor: "rgb(135, 211, 184)",
+        label: !isLoading ? chartTitle : "Loading data...",
+        data: !isLoading ? graphValues : Array(24).fill(0),
+        borderColor: !isLoading ? "rgb(135, 211, 184)" : "rgb(30, 30, 30)",
         backgroundColor: "rgb(135, 211, 184, 0.25)",
       },
     ],
   };
   const options = {
     maintainAspectRatio: false,
-
+    stepped: true,
     scales: {
       y: {
         grid: {
@@ -88,7 +88,7 @@ function GraphComponent({
         ticks: {
           color: "rgb(214,214,214)",
         },
-        beginAtZero: true
+        beginAtZero: true,
       },
       x: {
         grid: {
@@ -111,7 +111,7 @@ function GraphComponent({
           line1: {
             type: "line",
             yMin: 0,
-            yMax: 'max',
+            yMax: "max",
             xMin: chartData.labels.indexOf(selectedLabel),
             xMax: chartData.labels.indexOf(selectedLabel),
             //colors controlling the timeslider
@@ -123,9 +123,30 @@ function GraphComponent({
     },
   };
 
+  useEffect(() => {
+    if (graphValues && graphValues.length > 0) {
+      setIsLoading(false);
+    } else {
+      console.log("loading");
+      setIsLoading(true);
+    }
+  }, [graphValues]);
+
+  if (isLoading) {
+    return (
+      <div className="animate-pulse graph">
+        <Line data={chartData} options={options} />
+      </div>
+    );
+  }
+
   return (
     <div className="graph">
-      <Line data={chartData} options={options} />
+      {isLoading ? (
+        renderSkeletonLoader()
+      ) : (
+        <Line data={chartData} options={options} />
+      )}
     </div>
   );
 }
