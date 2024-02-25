@@ -17,6 +17,7 @@ import SimpleListOfFarmsComponent from "@/components/SimpleListOfFarmsComponent"
 import "../../../output.css";
 import { useState, useEffect } from "react";
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
+import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
@@ -123,6 +124,7 @@ export default function Map() {
             selectedDate={selectedDate}
             selectedTime = {selectedTime}
           >
+            <EnergyProductionLegendComponent/>
             <TimeSliderComponent
               onTimeChange={handleTimeChange}
               onDateChange={handleDateChange}
