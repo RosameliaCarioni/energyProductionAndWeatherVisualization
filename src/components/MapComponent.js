@@ -7,6 +7,9 @@ import * as WeatherLayers from "weatherlayers-gl";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { ClipExtension } from "@deck.gl/extensions";
 import MapGL, { Popup, Marker } from "react-map-gl";
+import MarkerIcon from "./MarkerIcon";
+import { getProductionInHour } from "@/utils/getFarmsProduction";
+
 
 function MapComponent({
   onSelectPlant,
@@ -15,6 +18,8 @@ function MapComponent({
   plantsArray,
   onHoverPlant,
   hoverInfo,
+  selectedDate,
+  selectedTime,
 }) {
   const [viewState, setViewState] = useState({
     latitude: 60.472,
@@ -23,6 +28,8 @@ function MapComponent({
   });
   const popupRef = useRef(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+  const [energyData, setEnergyData] = useState(null); // Initialize state to hold your data
+
 
   const windSpeedPalette = [
     [0, "#ffffff"], // white
@@ -31,6 +38,7 @@ function MapComponent({
     // [17, '#ffde73'], // orange
     [30, "#f76060"], // red
   ];
+
   const WLConfig = {
     // particle layer
     particleWidth: 2,
@@ -131,9 +139,65 @@ function MapComponent({
     }
   }, []);
 
+  const getMarkerColorFilter = (plant) => {
+    const key=plant.id; 
+    const current_energy = energyData[key];
+    const casted_energy = Number(current_energy); 
+    const capacity = plant.capacity_kw/1000; 
+    const ratio = current_energy / capacity; 
+    //const ratio = 9.57;
+    //return '#ff0000'; 
+   // Linearly interpolate the color components
+   console.log('plant id: ',plant.id,  '  energy: ', casted_energy, '  capacity: ', capacity, ' ratio: ', ratio)
+
+   
+   if (ratio > 1){
+    return '#44ce1b';
+   } else if ( ratio > 0.8){
+    return '#3BCA6D'; 
+   }else if (ratio > 0.6){
+    return '#bbdb44'; 
+   } else if (ratio > 0.4){
+    return '#7e379'; 
+   }else if (ratio > 0.2){
+    return '#f2a134'; 
+   } else{
+    return '#e51f1f';
+   }
+  } 
+
+    
+
   useEffect(() => {
     popupRef.current?.trackPointer();
-  }, []);
+    
+    async function fetchData() {
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.getMonth() + 1;
+        const day = selectedDate.getDate();
+       
+
+        const energyPromises = plantsArray.map(async (item) => {  
+            try {
+                const energy = await getProductionInHour(item.id, year, month, day, selectedTime);
+                return energy;
+            } catch (error) {
+                console.error(`Failed to fetch energy data for plant ${item.id}`, error);
+                return [0]; // Return 0 for this plant if there's an error
+            }
+        });
+
+        // Resolve all promises and set the state
+        Promise.all(energyPromises).then(energyResults => {
+            setEnergyData(energyResults);
+        });
+
+    }
+
+    if (selectedDate) {
+        fetchData();
+    }
+}, [selectedDate, selectedTime]);
 
   return (
     <div className="relative w-full h-full">
@@ -163,16 +227,20 @@ function MapComponent({
               onClick={() => handleMarkerClick(plant)}
               style={{ cursor: "pointer" }}
             >
-              <img
-                src={
-                  (selectedPlant && selectedPlant.id == plant.id) ||
-                  (hoverInfo && hoverInfo.id == plant.id)
-                    ? "/assets/pin_selected.svg"
-                    : "/assets/pin.svg"
-                }
-                alt="Marker"
-                style={{ width: "30px", height: "30px" }}
-              />
+              {
+              (selectedPlant && selectedPlant.id === plant.id) ||
+              (hoverInfo && hoverInfo.id === plant.id) ? (
+                <img
+                  src="/assets/pin_selected.svg"
+                  alt="Selected Marker"
+                  style={{ width: "30px", height: "30px" }}
+                />
+              ) : (
+                <MarkerIcon getMarkerColorFilter={() => getMarkerColorFilter(plant)} />
+              )
+            }
+
+              
             </div>
           </Marker>
         ))}
