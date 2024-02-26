@@ -247,21 +247,23 @@ return (
       ))}
 
       {hoverInfo && (
-        <Popup
-          latitude={hoverInfo.latitude}
-          longitude={hoverInfo.longitude}
-          closeButton={false}
-          closeOnClick={false}
-          ref={popupRef}
-          anchor="top"
-          offsetTop={-30}
-        >
-          <div className="popup-content">
-            <h1>{hoverInfo.name}</h1>
-            <p>Capacity: {hoverInfo.capacity_kw} kW</p>
-            <p>ID: {hoverInfo.id}</p>
-          </div>
-        </Popup>
+        <div>
+          <Popup
+            latitude={hoverInfo.latitude}
+            longitude={hoverInfo.longitude}
+            closeButton={false}
+            closeOnClick={false}
+            ref={popupRef}
+            anchor="top"
+            offsetTop={-30}
+            >
+            <div>
+              <h1>{hoverInfo.name}</h1>
+              <p>Capacity: {hoverInfo.capacity_kw / 1000} MW</p>
+              <p>Current ice-loss: x%</p>
+            </div>
+          </Popup>
+        </div>
       )}
 
       <div className="absolute inset-x-0 bottom-0 p-4 flex justify-center">
