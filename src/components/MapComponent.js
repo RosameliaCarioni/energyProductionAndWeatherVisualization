@@ -140,8 +140,6 @@ function MapComponent({
   }, []);
 
   const getMarkerColor = (plantID, capacity_kw) => {
-    console.log('plant ',plantID)
-    console.log('energz ',energyData)
     if (energyData == null) {
       return 0
     } 
