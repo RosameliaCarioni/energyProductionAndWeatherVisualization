@@ -3,7 +3,8 @@
  * @returns {Promise<Object>} A promise that resolves to an object containing the farm data.
  */
 
-import energy_production from '@/data/energy_production_data.json'
+//import energy_production from '@/data/energy_production_data.json'
+import energy_production from '@/data/farms_data.json'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
