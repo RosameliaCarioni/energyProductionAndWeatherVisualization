@@ -10,18 +10,19 @@ const MapComponentWithNoSSR = dynamic(
   }
 );
 import GraphComponent from "@/components/GraphComponent";
-import { getProduction } from "@/utils/getFarmsProduction";
-import { getWindSpeed } from "@/utils/getWindSpeed";
+import { getProduction, getEnergyAfterIceLoss, getWindSpeed} from "@/utils/getFarmsProduction";
 import TimeSliderComponent from "@/components/TimeSliderComponent";
 import SimpleListOfFarmsComponent from "@/components/SimpleListOfFarmsComponent";
 import "../../../output.css";
 import { useState, useEffect } from "react";
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
+import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
   const [windData, setWindData] = useState(undefined);
+  const [icelossData, setEnergyAfterIcelossData] = useState(undefined); 
   const [selectedPlant, setSelectedPlant] = useState(undefined);
   const [selectedTime, setSelectedTime] = useState(12);
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
@@ -47,6 +48,7 @@ export default function Map() {
   useEffect(() => {
     async function fetchData() {
       if (!selectedPlant || !selectedDate) return;
+
       const energy = await getProduction(
         selectedPlant.id,
         selectedDate.getFullYear(),
@@ -54,6 +56,14 @@ export default function Map() {
         selectedDate.getDate()
       );
       setEnergyData(energy);
+
+      const energyAfterIceloss = await getEnergyAfterIceLoss(
+        selectedPlant.id,
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 1,
+        selectedDate.getDate()
+      );
+      setEnergyAfterIcelossData(energyAfterIceloss);
 
       const wind = await getWindSpeed(
         selectedPlant.id,
@@ -81,9 +91,10 @@ export default function Map() {
               <p>DETAIL VIEW</p>
               <h1 className="text-blue text-none">{selectedPlant.name}</h1>
               <div className="mb-8">
-                <p className="text-xl font-bold mb-4">Energy Output</p>
-                <GraphComponent
-                  graphValues={energyData}
+                <p className="text-xl font-bold mb-4">Energy and Iceloss Output</p>
+                <GraphIcelossComponenet
+                  energyData={energyData}
+                  icelossData={icelossData}
                   chartTitle="Energy Output [MW]"
                   selectedTime={selectedTime}
                   selectedDate={selectedDate}

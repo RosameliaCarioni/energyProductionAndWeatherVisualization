@@ -11,7 +11,7 @@ import { getWindSpeed } from "@/utils/getFarmsProduction";
 import { getEnergyAfterIceLoss } from '@/utils/getFarmsProduction';
 import { getRelativeHumidity } from '@/utils/getFarmsProduction';
 import { getWindDirection } from '@/utils/getFarmsProduction';
-
+import GraphIcelossComponenet from './GraphIcelossComponent';
 
 
 export default function ListOfFarms(props) {
@@ -134,9 +134,10 @@ export default function ListOfFarms(props) {
                     <div className='flex '>
                       {/* Energy Output Graph */}
                       {console.log("DATA ",energyData)}
-                      <GraphComponent 
-                          graphValues={energyData && energyData[index] ? energyData[index] : new Array(24).fill(0)} 
-                          chartTitle="Energy Output"
+                      <GraphIcelossComponenet 
+                          energyData={energyData && energyData[index] ? energyData[index] : new Array(24).fill(0)} 
+                          icelossData={energyAfterIceLoss && energyAfterIceLoss[index] ? energyAfterIceLoss[index] : new Array(24).fill(0)} 
+                          chartTitle="Energy and Iceloss"
                       />
       
                       {/* Wind Data Graph */}
