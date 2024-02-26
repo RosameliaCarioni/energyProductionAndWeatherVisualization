@@ -17,13 +17,14 @@ import SimpleListOfFarmsComponent from "@/components/SimpleListOfFarmsComponent"
 import "../../../output.css";
 import { useState, useEffect } from "react";
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
+import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
   const [windData, setWindData] = useState(undefined);
   const [selectedPlant, setSelectedPlant] = useState(undefined);
   const [selectedTime, setSelectedTime] = useState(12);
-  const [selectedDate, setSelectedDate] = useState(new Date("2021-06-19"));
+  const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
   const [plantsArray, setPlants] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(undefined);
 
@@ -120,7 +121,10 @@ export default function Map() {
             plantsArray={plantsArray}
             onHoverPlant={handlePlantHover}
             hoverInfo={hoverInfo}
+            selectedDate={selectedDate}
+            selectedTime = {selectedTime}
           >
+            <EnergyProductionLegendComponent/>
             <TimeSliderComponent
               onTimeChange={handleTimeChange}
               onDateChange={handleDateChange}
