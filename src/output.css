@@ -972,3 +972,9 @@ input[type="date"] {
   color: #272727; /* Set the desired text color */
   padding: 0px 10px;
 }
+
+/* Assuming `.mapboxgl-popup` is the class name used by ReactMapGL */
+.mapboxgl-popup-content {
+  background: rgba(0, 0, 0, 0.8) !important; /* Force dark background */
+  color: white !important; /* Force white text */
+}
