@@ -52,7 +52,6 @@ export default function Map() {
     const inputValue = event.target.value;
     setSearchInput(inputValue);
 
-    // Filter plantsArray based on the search input
     const filteredArray = plantsArray.filter((plant) =>
       plant.name.toLowerCase().includes(inputValue.toLowerCase())
     );
@@ -104,7 +103,7 @@ export default function Map() {
           {selectedPlant && (
             <div className="py-5">
               <p>DETAIL VIEW</p>
-              <h1 className="text-blue text-none">{selectedPlant.name}</h1>
+              <h1 className="font-blue text-none">{selectedPlant.name}</h1>
               <div className="mb-8">
                 <p className="text-xl font-bold mb-4">Energy and Iceloss Output</p>
                 <GraphIcelossComponenet
@@ -145,7 +144,7 @@ export default function Map() {
           )}
         </div>
 
-        <div>
+        <div className="w-full">
           <MapComponentWithNoSSR
             className="mr-2"
             onSelectPlant={handlePlantSelect}
@@ -156,11 +155,13 @@ export default function Map() {
             selectedDate={selectedDate}
             selectedTime = {selectedTime}
           >
-            <EnergyProductionLegendComponent/>
-            <TimeSliderComponent
-              onTimeChange={handleTimeChange}
-              onDateChange={handleDateChange}
-            />
+            <div className="flex flex-col items-end w-full">
+              <EnergyProductionLegendComponent/>
+              <TimeSliderComponent
+                onTimeChange={handleTimeChange}
+                onDateChange={handleDateChange}
+              />
+            </div>
           </MapComponentWithNoSSR>
         </div>
       </div>

@@ -42,9 +42,9 @@ const EnergyProductionLegendComponent = () => {
   const gradientString = `linear-gradient(to right, ${gradientColors.join(', ')})`;
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', width: '100%', height: '20px', background: gradientString }}>
+    <div className="mb-2" style={{ display: 'flex', alignItems: 'center', width: '50%', height: '30px', background: gradientString }}>
       {gradientColors.map((color, index) => (
-        <span key={index} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black', fontSize: '12px' }}>
+        <span key={index} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black', fontSize: '10px', lineHeight: '1' }}>
           {/* Conditional rendering for the label based on the index */}
           {index === 0 && 'Not Producing'}
           {index === 1 && 'Very Low'}
