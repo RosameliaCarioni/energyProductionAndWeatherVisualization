@@ -44,6 +44,9 @@ export default function Map() {
   const handlePlantHover = (plant) => {
     setHoverInfo(plant);
   };
+  const handleClickClose = () => {
+    setSelectedPlant(undefined);
+  }
 
   const [searchInput, setSearchInput] = useState('');
   const [filteredPlantsArray, setFilteredPlantsArray] = useState(plantsArray);
@@ -102,7 +105,11 @@ export default function Map() {
         <div className="overflow-y">
           {selectedPlant && (
             <div className="py-5">
+              <div className="flex justify-between items-center w-full">
               <p>DETAIL VIEW</p>
+              <button className="mr-4" onClick={handleClickClose}>CLOSE</button>
+            </div>
+
               <h1 className="font-blue text-none">{selectedPlant.name}</h1>
               <div className="mb-8">
                 <p className="text-xl font-bold mb-4">Energy and Iceloss Output</p>
