@@ -45,6 +45,25 @@ export default function Map() {
     setHoverInfo(plant);
   };
 
+  /* SEARCH */ 
+
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredPlantsArray, setFilteredPlantsArray] = useState(plantsArray);
+
+  const handleSearchInputChange = (event) => {
+    const inputValue = event.target.value;
+    setSearchInput(inputValue);
+
+    // Filter plantsArray based on the search input
+    const filteredArray = plantsArray.filter((plant) =>
+      plant.name.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    setFilteredPlantsArray(filteredArray);
+  };
+
+    /* SEARCH */ 
+
   useEffect(() => {
     async function fetchData() {
       if (!selectedPlant || !selectedDate) return;
@@ -114,8 +133,14 @@ export default function Map() {
           {!selectedPlant && (
             <div className="py-5">
               <p>LIST VIEW</p>
+              <input
+                type="text"
+                placeholder="Search by plant name"
+                value={searchInput}
+                onChange={handleSearchInputChange}
+              />
               <SimpleListOfFarmsComponent
-                plantsArray={plantsArray}
+                plantsArray={searchInput ? filteredPlantsArray : plantsArray}
                 hoverInfo={hoverInfo}
                 onSelectPlant={handlePlantSelect}
                 onHoverPlant={handlePlantHover}
