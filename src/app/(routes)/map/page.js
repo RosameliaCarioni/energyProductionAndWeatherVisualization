@@ -45,8 +45,6 @@ export default function Map() {
     setHoverInfo(plant);
   };
 
-  /* SEARCH */ 
-
   const [searchInput, setSearchInput] = useState('');
   const [filteredPlantsArray, setFilteredPlantsArray] = useState(plantsArray);
 
@@ -61,8 +59,6 @@ export default function Map() {
 
     setFilteredPlantsArray(filteredArray);
   };
-
-    /* SEARCH */ 
 
   useEffect(() => {
     async function fetchData() {

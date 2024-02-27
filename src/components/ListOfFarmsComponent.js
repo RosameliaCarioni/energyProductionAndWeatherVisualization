@@ -121,12 +121,27 @@ export default function ListOfFarms(props) {
       }
   }, [props.date]);
   
+    const [searchInput, setSearchInput] = useState('');
+
+    const handleSearchInputChange = event => {
+        setSearchInput(event.target.value);
+    };
+
+    const filteredData = data?.filter(item =>
+        item.name.toLowerCase().includes(searchInput.toLowerCase())
+    );
 
     console.log("Energy Array",energyData)
 
     return (
         <div className="flex flex-col gap-5 py-5" as="main">
-            {data?.map((item, index) => (
+            <input
+                type="text"
+                placeholder="Search by plant name"
+                value={searchInput}
+                onChange={handleSearchInputChange}
+              />
+            {filteredData?.map((item, index) => (
                 <div key={item.id} className="overflow-hidden"> {/* Use item.id as key if it's unique */}
                     {/* Display the name in a text box */}
                     <h2 className='text-none font-normal'>{item.name}</h2>
