@@ -39,6 +39,7 @@ export default function Map() {
   const handlePlantSelect = (plant) => {
     setEnergyData(undefined);
     setWindData(undefined);
+    setEnergyAfterIcelossData(undefined);
     setSelectedPlant(plant);
   };
   const handlePlantHover = (plant) => {
