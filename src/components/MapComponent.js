@@ -49,7 +49,7 @@ function MapComponent({
     imageSmoothing: 5,
     imageUnscale: [-127, 128],
     // raster layer
-    rasterOpacity: 0.1,
+    rasterOpacity: 0.5,
     // common properties for all layers
     extensions: [new ClipExtension()],
     clipBounds: [-23.5, 29.5, 45.0, 70.5],
@@ -106,7 +106,6 @@ function MapComponent({
             //imageWeight,
             // imageType: "VECTOR",
             imageUnscale: WLConfig.imageUnscale,
-            bounds: [-180, -90, 180, 90],
             width: WLConfig.particleWidth,
             maxAge: WLConfig.particleMaxAge,
             palette: WLConfig.particlePalette,
@@ -120,17 +119,22 @@ function MapComponent({
           // new WeatherLayers.RasterLayer({
           //   id: 'raster',
           //   // data properties
-          //   image,
-          //   image2,
-          //   imageWeight,
-          //   imageType,
-          //   imageUnscale,
-          //   bounds,
-          //   // style properties
-          //   palette,
+          //   image: rebaseWindImage,
+          //   imageUnscale: WLConfig.imageUnscale,
+          //   palette: [
+          //     [0, [128, 255, 255]],  // Light blue for calm winds (0 m/s)
+          //     [5, [0, 128, 0]],      // Green for light breeze (5 m/s)
+          //     [10, [255, 255, 0]],   // Yellow for gentle breeze (10 m/s)
+          //     [15, [255, 165, 0]],   // Orange for moderate breeze (15 m/s)
+          //     [20, [255, 0, 0]],     // Red for strong winds (20 m/s)
+          //     [25, [128, 0, 128]],   // Purple for very strong winds (25 m/s)
+          //   ],
+            
           //   opacity: WLConfig.rasterOpacity,
           //   extensions: WLConfig.extensions,
           //   clipBounds: WLConfig.clipBounds,
+          //   bounds: WLConfig.bounds,
+          //   imageSmoothing: WLConfig.imageSmoothing,
           // }),
         ],
       });
