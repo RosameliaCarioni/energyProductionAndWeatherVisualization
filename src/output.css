@@ -660,6 +660,10 @@ video {
   margin-right: 6rem;
 }
 
+.ml-2 {
+  margin-left: 1rem;
+}
+
 .ml-4 {
   margin-left: 2rem;
 }
@@ -811,6 +815,11 @@ video {
   padding: 1rem;
 }
 
+.px-2 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -879,6 +888,10 @@ video {
 
 .font-semibold {
   font-weight: 600;
+}
+
+.font-black {
+  color: #272727;
 }
 
 .font-blue {

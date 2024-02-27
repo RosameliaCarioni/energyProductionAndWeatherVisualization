@@ -140,6 +140,7 @@ export default function ListOfFarms(props) {
                 placeholder="Search by plant name"
                 value={searchInput}
                 onChange={handleSearchInputChange}
+                className="font-black px-2 mb-4 w-33"
               />
             {filteredData?.map((item, index) => (
                 <div key={item.id} className="overflow-hidden"> {/* Use item.id as key if it's unique */}
