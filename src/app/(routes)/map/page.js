@@ -128,11 +128,13 @@ export default function Map() {
           {!selectedPlant && (
             <div className="py-5">
               <p>LIST VIEW</p>
+              <h1>All Farms</h1>
               <input
                 type="text"
                 placeholder="Search by plant name"
                 value={searchInput}
                 onChange={handleSearchInputChange}
+                className="font-black px-2 mb-4"
               />
               <SimpleListOfFarmsComponent
                 plantsArray={searchInput ? filteredPlantsArray : plantsArray}
