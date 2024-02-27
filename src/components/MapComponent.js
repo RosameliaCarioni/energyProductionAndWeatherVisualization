@@ -198,6 +198,17 @@ function MapComponent({
     }
 }, [selectedDate, selectedTime]);
 
+function formatCoordinates(coordinate, type) {
+  const degrees = Math.abs(coordinate);
+  const direction = coordinate >= 0 ? (type === 'latitude' ? 'N' : 'E') : (type === 'latitude' ? 'S' : 'W');
+
+  // Use toFixed(4) to get 4 decimal places for the degrees
+  const formattedCoordinate = degrees.toFixed(4);
+
+  // Return the formatted string
+  return `${formattedCoordinate}° ${direction}`;
+}
+
 return (
   <div className="relative w-full h-full">
     <MapGL
@@ -256,9 +267,12 @@ return (
             offsetTop={-30}
             >
             <div>
-              <h1>{hoverInfo.name}</h1>
-              <p>Capacity: {hoverInfo.capacity_kw / 1000} MW</p>
-              <p>Current ice-loss: x%</p>
+              <p className="font-bold text-xxl mb-1">{hoverInfo.name}</p>
+              <p className="text-xs font-thin mb-2">{formatCoordinates(hoverInfo.latitude, 'latitude')}, {formatCoordinates(hoverInfo.longitude, 'longitude')}</p>              
+              <p><b>Capacity:</b> <span className="font-blue">{hoverInfo.capacity_kw / 1000} MW</span></p>
+              <p><b>Current energy output:</b> <span className="font-blue">XX kWh</span></p>
+              <p><b>Current ice-loss:</b> <span className="font-red">x%</span></p>
+              <p><b>Current wind speed:</b> <span className="font-blue">12 m/s</span></p>
             </div>
           </Popup>
         </div>
