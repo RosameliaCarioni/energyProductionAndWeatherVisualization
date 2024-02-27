@@ -52,7 +52,8 @@ function MapComponent({
     rasterOpacity: 0.1,
     // common properties for all layers
     extensions: [new ClipExtension()],
-    clipBounds: [-23.5, 29.5, 45.0, 70.5]
+    clipBounds: [-23.5, 29.5, 45.0, 70.5],
+    bounds: [-23.5, 29.5, 45.0, 70.5]
     // // markers
     // markerClassName: 'custom-marker',
     // markerBgImgUrl: 'url(/assets/pin.svg)',
@@ -113,6 +114,7 @@ function MapComponent({
             speedFactor: WLConfig.patricleSpeedFactor,
             extensions: WLConfig.extensions,
             clipBounds: WLConfig.clipBounds,
+            bounds: WLConfig.bounds,
             imageSmoothing: WLConfig.imageSmoothing,
           }),
           // new WeatherLayers.RasterLayer({
