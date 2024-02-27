@@ -45,6 +45,20 @@ export default function Map() {
     setHoverInfo(plant);
   };
 
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredPlantsArray, setFilteredPlantsArray] = useState(plantsArray);
+
+  const handleSearchInputChange = (event) => {
+    const inputValue = event.target.value;
+    setSearchInput(inputValue);
+
+    const filteredArray = plantsArray.filter((plant) =>
+      plant.name.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    setFilteredPlantsArray(filteredArray);
+  };
+
   useEffect(() => {
     async function fetchData() {
       if (!selectedPlant || !selectedDate) return;
@@ -89,7 +103,7 @@ export default function Map() {
           {selectedPlant && (
             <div className="py-5">
               <p>DETAIL VIEW</p>
-              <h1 className="text-blue text-none">{selectedPlant.name}</h1>
+              <h1 className="font-blue text-none">{selectedPlant.name}</h1>
               <div className="mb-8">
                 <p className="text-xl font-bold mb-4">Energy and Iceloss Output</p>
                 <GraphIcelossComponenet
@@ -114,8 +128,14 @@ export default function Map() {
           {!selectedPlant && (
             <div className="py-5">
               <p>LIST VIEW</p>
+              <input
+                type="text"
+                placeholder="Search by plant name"
+                value={searchInput}
+                onChange={handleSearchInputChange}
+              />
               <SimpleListOfFarmsComponent
-                plantsArray={plantsArray}
+                plantsArray={searchInput ? filteredPlantsArray : plantsArray}
                 hoverInfo={hoverInfo}
                 onSelectPlant={handlePlantSelect}
                 onHoverPlant={handlePlantHover}
@@ -124,7 +144,7 @@ export default function Map() {
           )}
         </div>
 
-        <div>
+        <div className="w-full">
           <MapComponentWithNoSSR
             className="mr-2"
             onSelectPlant={handlePlantSelect}
@@ -135,11 +155,13 @@ export default function Map() {
             selectedDate={selectedDate}
             selectedTime = {selectedTime}
           >
-            <EnergyProductionLegendComponent/>
-            <TimeSliderComponent
-              onTimeChange={handleTimeChange}
-              onDateChange={handleDateChange}
-            />
+            <div className="flex flex-col items-end w-full">
+              <EnergyProductionLegendComponent/>
+              <TimeSliderComponent
+                onTimeChange={handleTimeChange}
+                onDateChange={handleDateChange}
+              />
+            </div>
           </MapComponentWithNoSSR>
         </div>
       </div>
