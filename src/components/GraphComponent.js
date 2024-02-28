@@ -35,36 +35,37 @@ function GraphComponent({
   chartTitle,
   selectedTime,
   selectedDate,
+  yAxisTitle,
 }) {
   const [isLoading, setIsLoading] = useState(true);
-  const selectedLabel = `PH${selectedTime}`;
+  const selectedLabel = `${selectedTime}`;
   const chartData = {
     //x-axis:
     labels: [
-      "PH1",
-      "PH2",
-      "PH3",
-      "PH4",
-      "PH5",
-      "PH6",
-      "PH7",
-      "PH8",
-      "PH9",
-      "PH10",
-      "PH11",
-      "PH12",
-      "PH13",
-      "PH14",
-      "PH15",
-      "PH16",
-      "PH17",
-      "PH18",
-      "PH19",
-      "PH20",
-      "PH21",
-      "PH22",
-      "PH23",
-      "PH24",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
     ],
 
     //y-values:
@@ -89,6 +90,7 @@ function GraphComponent({
           color: "rgb(214,214,214)",
         },
         beginAtZero: true,
+        title: { display: true, text: yAxisTitle, padding: 2 },
       },
       x: {
         grid: {
@@ -96,7 +98,10 @@ function GraphComponent({
         },
         ticks: {
           color: "rgb(214,214,214)",
+          maxRotation: 0,
+          minRotation: 0,
         },
+        title: { display: true, text: "Power Hour", padding: 2 },
       },
     },
     plugins: {

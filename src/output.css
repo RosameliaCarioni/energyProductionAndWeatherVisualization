@@ -988,12 +988,11 @@ body {
 /* Custom classes */
 
 .graph {
-  width: 500px;
   height: 250px;
   background-color: rgb(53 53 53);
 
-  margin: 20px 0px 20px 20px;
-  padding: 20px;
+  margin: 20px 20px 20px 0px;
+  padding: 10px;
   border-radius: 5px;
 
 }

@@ -10,7 +10,11 @@ const MapComponentWithNoSSR = dynamic(
   }
 );
 import GraphComponent from "@/components/GraphComponent";
-import { getProduction, getEnergyAfterIceLoss, getWindSpeed} from "@/utils/getFarmsProduction";
+import {
+  getProduction,
+  getEnergyAfterIceLoss,
+  getWindSpeed,
+} from "@/utils/getFarmsProduction";
 import TimeSliderComponent from "@/components/TimeSliderComponent";
 import SimpleListOfFarmsComponent from "@/components/SimpleListOfFarmsComponent";
 import "../../../output.css";
@@ -22,7 +26,7 @@ import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
   const [windData, setWindData] = useState(undefined);
-  const [icelossData, setEnergyAfterIcelossData] = useState(undefined); 
+  const [icelossData, setEnergyAfterIcelossData] = useState(undefined);
   const [selectedPlant, setSelectedPlant] = useState(undefined);
   const [selectedTime, setSelectedTime] = useState(12);
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
@@ -47,9 +51,9 @@ export default function Map() {
   };
   const handleClickClose = () => {
     setSelectedPlant(undefined);
-  }
+  };
 
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const [filteredPlantsArray, setFilteredPlantsArray] = useState(plantsArray);
 
   const handleSearchInputChange = (event) => {
@@ -107,13 +111,17 @@ export default function Map() {
           {selectedPlant && (
             <div className="py-5">
               <div className="flex justify-between items-center w-full">
-              <p>DETAIL VIEW</p>
-              <button className="mr-4" onClick={handleClickClose}>CLOSE</button>
-            </div>
+                <p>DETAIL VIEW</p>
+                <button className="mr-4" onClick={handleClickClose}>
+                  CLOSE
+                </button>
+              </div>
 
               <h1 className="font-blue text-none">{selectedPlant.name}</h1>
               <div className="mb-8">
-                <p className="text-xl font-bold mb-4">Energy and Iceloss Output</p>
+                <p className="text-xl font-bold mb-4">
+                  Energy and Iceloss Output
+                </p>
                 <GraphIcelossComponenet
                   energyData={energyData}
                   icelossData={icelossData}
@@ -123,12 +131,12 @@ export default function Map() {
                 />
               </div>
               <div>
-                <p className="text-xl font-bold mb-4">Windspeed</p>
                 <GraphComponent
                   graphValues={windData}
-                  chartTitle="Windspeed [m/s]"
+                  chartTitle="Windspeed"
                   selectedTime={selectedTime}
                   selectedDate={selectedDate}
+                  yAxisTitle="m/s"
                 />
               </div>
             </div>
@@ -163,10 +171,10 @@ export default function Map() {
             onHoverPlant={handlePlantHover}
             hoverInfo={hoverInfo}
             selectedDate={selectedDate}
-            selectedTime = {selectedTime}
+            selectedTime={selectedTime}
           >
             <div className="flex flex-col items-end w-full">
-              <EnergyProductionLegendComponent/>
+              <EnergyProductionLegendComponent />
               <TimeSliderComponent
                 onTimeChange={handleTimeChange}
                 onDateChange={handleDateChange}
