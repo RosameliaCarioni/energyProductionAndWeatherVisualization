@@ -32,6 +32,10 @@ export default function Map() {
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
   const [plantsArray, setPlants] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(undefined);
+  const [selectedGraphs, setSelectedGraphs] = useState(["ws", "ice"]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const graphTypes = ["ws", "hum", "temp", "ice"];
 
   const handleTimeChange = (newTime) => {
     setSelectedTime(newTime);
@@ -52,6 +56,17 @@ export default function Map() {
   const handleClickClose = () => {
     setSelectedPlant(undefined);
   };
+  const handleGraphSelection = (graph) => {
+    setSelectedGraphs((prevSelectedGraphs) => {
+      if (prevSelectedGraphs.includes(graph)) {
+        return prevSelectedGraphs.filter((g) => g !== graph);
+      } else {
+        return [...prevSelectedGraphs, graph];
+      }
+    });
+  };
+
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const [searchInput, setSearchInput] = useState("");
   const [filteredPlantsArray, setFilteredPlantsArray] = useState(plantsArray);
@@ -117,27 +132,58 @@ export default function Map() {
                 </button>
               </div>
 
-              <h1 className="font-blue text-none">{selectedPlant.name}</h1>
+              <div className="flex justify-between items-center w-full">
+                <h1 className="font-blue text-none">{selectedPlant.name}</h1>
+                <div className="relative mr-4">
+                  <button
+                    onClick={toggleDropdown}
+                    className="px-4 py-2 bg-gray-200"
+                  >
+                    Graph Types
+                  </button>
+                  {isDropdownOpen && (
+                    <div className="absolute mt-1 w-48 bg-white shadow-md z-10">
+                      {graphTypes.map((type) => (
+                        <div key={type} className="flex items-center p-2">
+                          <input
+                            type="checkbox"
+                            id={type}
+                            checked={selectedGraphs.includes(type)}
+                            onChange={() => handleGraphSelection(type)}
+                            className="mr-2"
+                          />
+                          <label htmlFor={type}>{type.toUpperCase()}</label>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
               <div className="mb-8">
                 <p className="text-xl font-bold mb-4">
                   Energy and Iceloss Output
                 </p>
-                <GraphIcelossComponenet
-                  energyData={energyData}
-                  icelossData={icelossData}
-                  chartTitle="Energy Output [MW]"
-                  selectedTime={selectedTime}
-                  selectedDate={selectedDate}
-                />
+                {selectedGraphs.includes("ice") && (
+                  <GraphIcelossComponenet
+                    energyData={energyData}
+                    icelossData={icelossData}
+                    chartTitle="Energy Output [MW]"
+                    selectedTime={selectedTime}
+                    selectedDate={selectedDate}
+                  />
+                )}
               </div>
               <div>
-                <GraphComponent
-                  graphValues={windData}
-                  chartTitle="Windspeed"
-                  selectedTime={selectedTime}
-                  selectedDate={selectedDate}
-                  yAxisTitle="m/s"
-                />
+                {selectedGraphs.includes("ws") && (
+                  <GraphComponent
+                    graphValues={windData}
+                    chartTitle="Windspeed"
+                    selectedTime={selectedTime}
+                    selectedDate={selectedDate}
+                    yAxisTitle="m/s"
+                  />
+                )}
               </div>
             </div>
           )}
