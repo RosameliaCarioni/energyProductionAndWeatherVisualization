@@ -159,7 +159,7 @@ export default function Map() {
             className="mr-2"
             onSelectPlant={handlePlantSelect}
             selectedPlant={selectedPlant}
-            plantsArray={plantsArray}
+            plantsArray={searchInput ? filteredPlantsArray : plantsArray}
             onHoverPlant={handlePlantHover}
             hoverInfo={hoverInfo}
             selectedDate={selectedDate}
