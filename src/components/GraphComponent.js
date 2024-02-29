@@ -120,7 +120,7 @@ function GraphComponent({
             xMin: chartData.labels.indexOf(selectedLabel),
             xMax: chartData.labels.indexOf(selectedLabel),
             //colors controlling the timeslider
-            borderColor: "rgba(255, 99, 132)",
+            borderColor: "rgba(255, 0, 0)",
             borderWidth: 3,
           },
         },

@@ -161,16 +161,14 @@ export default function Map() {
               </div>
 
               <div className="mb-8">
-                <p className="text-xl font-bold mb-4">
-                  Energy and Iceloss Output
-                </p>
                 {selectedGraphs.includes("ice") && (
                   <GraphIcelossComponenet
                     energyData={energyData}
                     icelossData={icelossData}
-                    chartTitle="Energy Output [MW]"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
+                    maxCapacity={selectedPlant.capacity_kw}
+                    yAxisTitle="MW"
                   />
                 )}
               </div>
@@ -182,6 +180,28 @@ export default function Map() {
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     yAxisTitle="m/s"
+                  />
+                )}
+              </div>
+              <div>
+                {selectedGraphs.includes("hum") && (
+                  <GraphComponent
+                    graphValues={windData}
+                    chartTitle="Humidity"
+                    selectedTime={selectedTime}
+                    selectedDate={selectedDate}
+                    yAxisTitle="RH"
+                  />
+                )}
+              </div>
+              <div>
+                {selectedGraphs.includes("temp") && (
+                  <GraphComponent
+                    graphValues={windData}
+                    chartTitle="Temperature"
+                    selectedTime={selectedTime}
+                    selectedDate={selectedDate}
+                    yAxisTitle="°C"
                   />
                 )}
               </div>
