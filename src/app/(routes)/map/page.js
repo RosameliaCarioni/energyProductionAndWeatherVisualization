@@ -142,9 +142,9 @@ export default function Map() {
                     Graph Types
                   </button>
                   {isDropdownOpen && (
-                    <div className="absolute mt-1 w-48 bg-white shadow-md z-10">
+                    <div className="absolute mt-1 w-48 bg-dark shadow-md z-10 p-3">
                       {graphTypes.map((type) => (
-                        <div key={type} className="flex items-center p-2">
+                        <div key={type} className="flex items-center">
                           <input
                             type="checkbox"
                             id={type}
