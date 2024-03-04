@@ -199,11 +199,11 @@ function MapComponent({
     if (energyData == null) {
       return 0;
     }
-    const current_energy = energyData[plantID];
+    const current_energy = energyData[plantID-1];
     const casted_energy = Number(current_energy);
     const capacity = capacity_kw / 1000; // From KW to MW
     const ratio = casted_energy / capacity;
-    //console.log('plant id: ', plantID,  '  capacity: ', typeof(capacity), 'ratio: ', ratio)
+    //console.log('In marker ',' plant id: ', plantID,  '  capacity: ', capacity, 'current production: ', current_energy, ' date: ', selectedDate, ' time: ', selectedTime, ' ratio: ', ratio)
 
     if (ratio >= 1) { 
       return "#44ce1b";

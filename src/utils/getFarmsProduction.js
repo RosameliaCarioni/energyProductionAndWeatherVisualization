@@ -19,7 +19,9 @@ import { endpoint } from '@/utils/endpoint'
       throw new Error('Failed to fetch data about farm location given id: ',id, ', Year: ',Year, ', Month: ', Month, ', Day: ', Day)
     }
     const formatted_data = await response.json()
+    //console.log('plant_id: ', id, " Year: ", Year, " Month: ", Month, " Day: ", Day, " Hour: ", Hour)
     const energyProductions = formatted_data.farms.filter(item => item.Hour === Hour.toString()).map(item => item.EnergyProduction);
+    //console.log("energz production ", energyProductions)
     return energyProductions
   }
 
