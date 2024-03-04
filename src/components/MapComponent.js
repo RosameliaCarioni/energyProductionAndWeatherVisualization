@@ -26,6 +26,7 @@ function MapComponent({
     zoom: 3,
   });
   const popupRef = useRef(null);
+  const mapRef = useRef(null); // create a ref for the map
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const [energyData, setEnergyData] = useState(null); // Initialize state to hold your data
 
@@ -82,19 +83,33 @@ function MapComponent({
     humUnscale: [0, 100],
   };
 
-  const handleMarkerClick = (plant) => {
-    if (selectedPlant && plant.id === selectedPlant.id) {
-      // Deselect the currently selected plant
+  const handleMarkerClick = (plant, event) => {
+    // Prevent the map click event from firing when a marker is clicked
+    event.stopPropagation();
+    
+    if (selectedPlant && plant.id === selectedPlant.id) { // deselects it 
       onSelectPlant(undefined);
-    } else {
-      // Select the clicked plant
+    } else { // selects a plant 
       onSelectPlant(plant);
+
     }
   };
 
-  const handleMoveStart = () => {
-    onSelectPlant(undefined);
+  const handleMapClick = (event) => {
+    // Use the map reference to check if the click was on the canvas
+    if (mapRef.current && mapRef.current.getMap()) {
+      const map = mapRef.current.getMap();
+      const canvas = map.getCanvas();
+      if (event.target === map) { // clicked on map - deselect farm 
+        onSelectPlant(undefined);
+      }
+    }
   };
+  
+
+  //const handleMoveStart = () => {
+  //  onSelectPlant(undefined);
+  //};
 
   const handlePlantHover = (plant) => {
     onHoverPlant(plant);
@@ -199,13 +214,12 @@ function MapComponent({
     if (energyData == null) {
       return 0;
     }
-    const current_energy = energyData[plantID-1];
+    const current_energy = energyData[plantID - 1];
     const casted_energy = Number(current_energy);
     const capacity = capacity_kw / 1000; // From KW to MW
     const ratio = casted_energy / capacity;
     //console.log('In marker ',' plant id: ', plantID,  '  capacity: ', capacity, 'current production: ', current_energy, ' date: ', selectedDate, ' time: ', selectedTime, ' ratio: ', ratio)
-
-    if (ratio >= 1) { 
+    if (ratio >= 1) {
       return "#44ce1b";
     } else if (ratio > 0.8) {
       return "#3BCA6D";
@@ -266,8 +280,8 @@ function MapComponent({
           ? "N"
           : "E"
         : type === "latitude"
-        ? "S"
-        : "W";
+          ? "S"
+          : "W";
 
     // Use toFixed(4) to get 4 decimal places for the degrees
     const formattedCoordinate = degrees.toFixed(4);
@@ -280,13 +294,15 @@ function MapComponent({
     <div className="relative w-full h-full">
       <MapGL
         {...viewState}
+        ref = {mapRef}
         onMove={(evt) => setViewState(evt.viewState)}
-        onMoveStart={handleMoveStart}
+        //onMoveStart={handleMoveStart}
+        onClick={handleMapClick} // Use the new handler for map clicks
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/iv24/clsq58r47006b01pk05dpavbj"
         projection={"mercator"}
         mapboxAccessToken={mapboxToken}
-        onViewportChange={(nextViewport) => setViewport(nextViewport)}
+        //onViewportChange={(nextViewport) => setViewport(nextViewport)}
         onLoad={onMapLoad}
       >
         {plantsArray.map((plant) => (
@@ -297,15 +313,13 @@ function MapComponent({
             anchor="bottom"
           >
             <div
-              onMouseEnter={() => {
-                handlePlantHover(plant);
-              }}
+              onMouseEnter={() => handlePlantHover(plant)}
               onMouseLeave={() => handlePlantHover(undefined)}
-              onClick={() => handleMarkerClick(plant)}
+              onClick={(event) => handleMarkerClick(plant, event)} // Pass the event to the click handler
               style={{ cursor: "pointer" }}
             >
               {(selectedPlant && selectedPlant.id === plant.id) ||
-              (hoverInfo && hoverInfo.id === plant.id) ? (
+                (hoverInfo && hoverInfo.id === plant.id) ? (
                 <img
                   src="/assets/pin_selected.svg"
                   style={{ width: "30px", height: "30px" }}
