@@ -205,7 +205,7 @@ function MapComponent({
     const ratio = casted_energy / capacity;
     //console.log('plant id: ', plantID,  '  capacity: ', typeof(capacity), 'ratio: ', ratio)
 
-    if (ratio > 1) {
+    if (ratio >= 1) { 
       return "#44ce1b";
     } else if (ratio > 0.8) {
       return "#3BCA6D";
