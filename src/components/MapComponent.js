@@ -28,7 +28,13 @@ function MapComponent({
   const popupRef = useRef(null);
   const mapRef = useRef(null); // create a ref for the map
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+  const [map, setMap] = useState(null);
   const [energyData, setEnergyData] = useState(null); // Initialize state to hold your data
+  const [activeLayers, setActiveLayers] = useState({
+    wind: true,
+    temp: false,
+    hum: false
+  });
 
   const windSpeedPalette = [
     [0, [204, 229, 255]], // light blue
@@ -111,13 +117,22 @@ function MapComponent({
   //  onSelectPlant(undefined);
   //};
 
+
+  //const handleMoveStart = () => {
+  //  onSelectPlant(undefined);
+  //};
+
   const handlePlantHover = (plant) => {
     onHoverPlant(plant);
   };
 
   const onMapLoad = useCallback(async (event) => {
-    const map = event.target;
+    const newMap = event.target;
+    setMap(newMap);
 
+  }, []);
+
+  const setWeatherLayers = async (activeWeatherImages) => {
     const weatherLayersToken =
       process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN;
 
@@ -127,88 +142,102 @@ function MapComponent({
 
     try {
       const rebaseWindImage = await WeatherLayers.loadTextureData(
-        "./assets/weather-images/20211125_wind.png"
+        activeWeatherImages.wind
       );
 
       const rebaseTempImage = await WeatherLayers.loadTextureData(
-        "./assets/weather-images/20211125_temp.png"
+        activeWeatherImages.temp
       );
 
       const rebaseHumImage = await WeatherLayers.loadTextureData(
-        "./assets/weather-images/20211125_relative_humidity.png"
+        activeWeatherImages.hum
       );
 
       const deckOverlay = new MapboxOverlay({
         interleaved: true,
-        layers: [
-          // new WeatherLayers.RasterLayer({
-          //   id: "raster",
-          //   // data properties
-          //   image: rebaseWindImage,
-          //   imageType: "VECTOR",
-          //   imageUnscale: WLConfig.imageUnscale,
-          //   palette: WLConfig.palette,
-
-          //   opacity: WLConfig.rasterOpacity,
-          //   extensions: WLConfig.extensions,
-          //   clipBounds: WLConfig.clipBounds,
-          //   bounds: WLConfig.bounds,
-          //   imageSmoothing: WLConfig.imageSmoothing,
-          // }),
-          new WeatherLayers.ParticleLayer({
-            id: "particle",
-            // data properties
-            image: rebaseWindImage,
-            // image2,
-            //imageWeight,
-            // imageType: "VECTOR",
-            imageUnscale: WLConfig.imageUnscale,
-            width: WLConfig.particleWidth,
-            maxAge: WLConfig.particleMaxAge,
-            palette: WLConfig.palette,
-            opacity: WLConfig.particleOpacity,
-            speedFactor: WLConfig.particleSpeedFactor,
-            extensions: WLConfig.extensions,
-            clipBounds: WLConfig.clipBounds,
-            bounds: WLConfig.bounds,
-            imageSmoothing: WLConfig.imageSmoothing,
-          }),
-          // new WeatherLayers.RasterLayer({
-          //   id: "raster",
-          //   // data properties
-          //   image: rebaseTempImage,
-          //   // imageType: "VECTOR",
-          //   imageUnscale: WLConfig.tempUnscale,
-          //   palette: WLConfig.tempPalette,
-
-          //   opacity: WLConfig.rasterOpacity,
-          //   extensions: WLConfig.extensions,
-          //   clipBounds: WLConfig.clipBounds,
-          //   bounds: WLConfig.bounds,
-          //   imageSmoothing: WLConfig.imageSmoothing,
-          // }),
-          new WeatherLayers.RasterLayer({
-            id: "raster",
-            // data properties
-            image: rebaseHumImage,
-            // imageType: "VECTOR",
-            imageUnscale: WLConfig.humUnscale,
-            palette: WLConfig.humPalette,
-
-            opacity: WLConfig.rasterOpacity,
-            extensions: WLConfig.extensions,
-            clipBounds: WLConfig.clipBounds,
-            bounds: WLConfig.bounds,
-            imageSmoothing: WLConfig.imageSmoothing,
-          }),
-        ],
+        layers: []
       });
 
       map.addControl(deckOverlay);
+      const layers = [
+        ...(activeLayers.wind ? [
+          new WeatherLayers.RasterLayer({
+          id: "raster",
+          // data properties
+          image: rebaseWindImage,
+          imageType: "VECTOR",
+          imageUnscale: WLConfig.imageUnscale,
+          palette: WLConfig.palette,
+
+          opacity: WLConfig.rasterOpacity,
+          extensions: WLConfig.extensions,
+          clipBounds: WLConfig.clipBounds,
+          bounds: WLConfig.bounds,
+          imageSmoothing: WLConfig.imageSmoothing,
+        })
+      ] : []),
+      ...(activeLayers.wind ? [
+        new WeatherLayers.ParticleLayer({
+          id: "particle",
+          // data properties
+          image: rebaseWindImage,
+          // image2,
+          //imageWeight,
+          // imageType: "VECTOR",
+          imageUnscale: WLConfig.imageUnscale,
+          width: WLConfig.particleWidth,
+          maxAge: WLConfig.particleMaxAge,
+          palette: WLConfig.palette,
+          opacity: WLConfig.particleOpacity,
+          speedFactor: WLConfig.particleSpeedFactor,
+          extensions: WLConfig.extensions,
+          clipBounds: WLConfig.clipBounds,
+          bounds: WLConfig.bounds,
+          imageSmoothing: WLConfig.imageSmoothing,
+        })
+      ] : []),
+      ...(activeLayers.temp ? [
+        new WeatherLayers.RasterLayer({
+          id: "raster",
+          // data properties
+          image: rebaseTempImage,
+          // imageType: "VECTOR",
+          imageUnscale: WLConfig.tempUnscale,
+          palette: WLConfig.tempPalette,
+
+          opacity: WLConfig.rasterOpacity,
+          extensions: WLConfig.extensions,
+          clipBounds: WLConfig.clipBounds,
+          bounds: WLConfig.bounds,
+          imageSmoothing: WLConfig.imageSmoothing,
+        })
+      ] : []),
+      ...(activeLayers.hum ? [
+        new WeatherLayers.RasterLayer({
+          id: "raster",
+          // data properties
+          image: rebaseHumImage,
+          // imageType: "VECTOR",
+          imageUnscale: WLConfig.humUnscale,
+          palette: WLConfig.humPalette,
+
+          opacity: WLConfig.rasterOpacity,
+          extensions: WLConfig.extensions,
+          clipBounds: WLConfig.clipBounds,
+          bounds: WLConfig.bounds,
+          imageSmoothing: WLConfig.imageSmoothing,
+        })
+      ] : []),
+      ];
+
+
+      deckOverlay.setProps({
+        layers: layers
+      });
     } catch (error) {
-      console.error("Failed to load weather data:", error);
+      console.error("Something went wrong when adding weather layers or retrieving image(s): ", error);
     }
-  }, []);
+  }
 
   const getMarkerColor = (plantID, capacity_kw) => {
     if (energyData == null) {
@@ -235,42 +264,55 @@ function MapComponent({
   };
 
   useEffect(() => {
-    popupRef.current?.trackPointer();
+    if(map) {
+      popupRef.current?.trackPointer();
+      
+      const prefix = "./assets/weather_data/";
+      const numTemp = parseInt(selectedTime, 10) - 1;
+      const number = numTemp < 10 ? `0${numTemp}` : `${numTemp}`;
+      const activeWeatherImages = {
+        wind: prefix + "wind/wind_20211125" + number + ".png",
+        temp: prefix + "temperature/temperature_20211125" + number + ".png",
+        hum: prefix + "humidity/humidity_20211125" + number + ".png"
+      };
 
-    async function fetchData() {
-      const year = selectedDate.getFullYear();
-      const month = selectedDate.getMonth() + 1;
-      const day = selectedDate.getDate();
+      setWeatherLayers(activeWeatherImages);
 
-      const energyPromises = plantsArray.map(async (item) => {
-        try {
-          const energy = await getProductionInHour(
-            item.id,
-            year,
-            month,
-            day,
-            selectedTime
-          );
-          return energy;
-        } catch (error) {
-          console.error(
-            `Failed to fetch energy data for plant ${item.id}`,
-            error
-          );
-          return [0]; // Return 0 for this plant if there's an error
-        }
-      });
+      async function fetchData() {
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.getMonth() + 1;
+        const day = selectedDate.getDate();
 
-      // Resolve all promises and set the state
-      Promise.all(energyPromises).then((energyResults) => {
-        setEnergyData(energyResults);
-      });
+        const energyPromises = plantsArray.map(async (item) => {
+          try {
+            const energy = await getProductionInHour(
+              item.id,
+              year,
+              month,
+              day,
+              selectedTime
+            );
+            return energy;
+          } catch (error) {
+            console.error(
+              `Failed to fetch energy data for plant ${item.id}`,
+              error
+            );
+            return [0]; // Return 0 for this plant if there's an error
+          }
+        });
+
+        // Resolve all promises and set the state
+        Promise.all(energyPromises).then((energyResults) => {
+          setEnergyData(energyResults);
+        });
+      }
+
+      if (selectedDate) {
+        fetchData();
+      }
     }
-
-    if (selectedDate) {
-      fetchData();
-    }
-  }, [selectedDate, selectedTime]);
+  }, [selectedDate, selectedTime, map]);
 
   function formatCoordinates(coordinate, type) {
     const degrees = Math.abs(coordinate);

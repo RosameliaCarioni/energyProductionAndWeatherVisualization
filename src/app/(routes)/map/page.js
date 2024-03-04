@@ -28,7 +28,7 @@ export default function Map() {
   const [windData, setWindData] = useState(undefined);
   const [icelossData, setEnergyAfterIcelossData] = useState(undefined);
   const [selectedPlant, setSelectedPlant] = useState(undefined);
-  const [selectedTime, setSelectedTime] = useState(12);
+  const [selectedTime, setSelectedTime] = useState(1);
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
   const [plantsArray, setPlants] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(undefined);

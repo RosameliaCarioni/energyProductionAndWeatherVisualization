@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function TimeSlider({ onTimeChange, onDateChange }) {
-  const [value, setValue] = useState(12);
+  const [value, setValue] = useState(1);
   const [selectedDate, setSelectedDate] = useState("2021-11-25");
 
   const sliderWidth = '500px';
