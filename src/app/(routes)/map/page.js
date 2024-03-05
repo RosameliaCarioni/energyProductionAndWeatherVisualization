@@ -23,6 +23,8 @@ import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
 import EnergyAfterIceLossLegendComponent from "@/components/EnergyAfterIceLossLegendComponent";
 import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
+import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent"
+
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
@@ -36,7 +38,7 @@ export default function Map() {
   const [selectedGraphs, setSelectedGraphs] = useState(["ws", "ice"]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentSwitchOption, setCurrentSwitchOption] = useState('Energy Production');
-
+  const [selectedLayer, setSelectedLayer] = useState(["WindSpeed"]);
 
   const graphTypes = ["ws", "hum", "temp", "ice"];
 
@@ -44,6 +46,10 @@ export default function Map() {
     setCurrentSwitchOption(option);
   };
 
+
+  const handleLayerChange = (newLayer) => {
+    setSelectedLayer(newLayer);
+  };
   const handleTimeChange = (newTime) => {
     setSelectedTime(newTime);
   };
@@ -247,6 +253,7 @@ export default function Map() {
             selectedDate={selectedDate}
             selectedTime={selectedTime}
             onSwitchChange={handleSwitchChange}
+            selectedLayer={selectedLayer}
           >
             <div className="flex flex-col items-end w-full">
               {currentSwitchOption === 'Energy Production' ? (
@@ -259,6 +266,7 @@ export default function Map() {
                 onDateChange={handleDateChange}
               />
             </div>
+            <SelectWeatherDisplayComponent onLayerChange={handleLayerChange}/>
           </MapComponentWithNoSSR>
         </div>
       </div>

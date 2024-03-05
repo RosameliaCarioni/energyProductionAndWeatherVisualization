@@ -23,7 +23,7 @@ function TimeSlider({ onTimeChange, onDateChange }) {
   }
 
   // Generate labels for every third hour
-  const labels = Array.from({ length: 8 }, (_, i) => i * 3);
+  const labels = Array.from({ length: 24 }, (_, i) => i );
   return (
     <div className='bg-dark p-4 rounded-md flex h-70p'>
       {/* Date Picker */}
@@ -47,9 +47,10 @@ function TimeSlider({ onTimeChange, onDateChange }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5px', position: 'absolute', width: '100%', left: 0 }}>
           {labels.map(label => (
             <span key={label} style={{ userSelect: 'none', position: 'absolute', left: `calc(${(label / 24) * 100}% + 10px)`, transform: 'translateX(-50%)' }}>
-              PH{label+1}
+              {label+1}
             </span>
           ))}
+          <span style={{ userSelect: 'none', position: 'absolute', right: '-30px' }}>[PH]</span>
         </div>
       </div>
     </div>

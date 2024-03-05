@@ -13,7 +13,7 @@ const EnergyAfterIceLossLegendComponent = () => {
   return (
     <div style={{ width: '50%', backgroundColor: '#000', padding: '10px', borderRadius: '5px' }}>
       <div style={{ marginBottom: '10px', fontSize: '16px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
-        Percentage of Energy loss due to Icing
+        Percentage Of Energy Loss Due To Icing
       </div>
       <div className="legend-container" style={{ display: 'flex', alignItems: 'center', height: '30px' }}>
         {options.map((option, index) => (
