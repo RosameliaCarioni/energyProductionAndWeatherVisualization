@@ -9,6 +9,8 @@ import { ClipExtension } from "@deck.gl/extensions";
 import MapGL, { Popup, Marker } from "react-map-gl";
 import MarkerIconComponent from "./MarkerIconComponent";
 import { getProductionInHour } from "@/utils/getFarmsProduction";
+import EnergyIceLossSwitchButton from './EnergyIceLossSwitchButton';
+
 
 function MapComponent({
   onSelectPlant,
@@ -25,6 +27,8 @@ function MapComponent({
     longitude: 8.4689,
     zoom: 3,
   });
+
+  const [switchOption, setSwitchOption] = useState('Energy Production');
   const popupRef = useRef(null);
   const mapRef = useRef(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -97,7 +101,7 @@ function MapComponent({
   const handleMarkerClick = (plant, event) => {
     // Prevent the map click event from firing when a marker is clicked
     event.stopPropagation();
-    
+
     if (selectedPlant && plant.id === selectedPlant.id) { // deselects it 
       onSelectPlant(undefined);
     } else { // selects a plant 
@@ -157,61 +161,61 @@ function MapComponent({
       const layers = [
         ...(activeLayers.wind ? [
           new WeatherLayers.RasterLayer({
-          id: "raster",
-          image: rebaseWindImage,
-          imageType: "VECTOR",
-          imageUnscale: WLConfig.imageUnscale,
-          palette: WLConfig.palette,
+            id: "raster",
+            image: rebaseWindImage,
+            imageType: "VECTOR",
+            imageUnscale: WLConfig.imageUnscale,
+            palette: WLConfig.palette,
 
-          opacity: WLConfig.rasterOpacity,
-          extensions: WLConfig.extensions,
-          clipBounds: WLConfig.clipBounds,
-          bounds: WLConfig.bounds,
-          imageSmoothing: WLConfig.imageSmoothing,
-        })
-      ] : []),
+            opacity: WLConfig.rasterOpacity,
+            extensions: WLConfig.extensions,
+            clipBounds: WLConfig.clipBounds,
+            bounds: WLConfig.bounds,
+            imageSmoothing: WLConfig.imageSmoothing,
+          })
+        ] : []),
         ...(activeLayers.wind ? [
-        new WeatherLayers.ParticleLayer({
-          id: "particle",
-          image: rebaseWindImage,
-          imageUnscale: WLConfig.imageUnscale,
-          width: WLConfig.particleWidth,
-          maxAge: WLConfig.particleMaxAge,
-          palette: WLConfig.palette,
-          opacity: WLConfig.particleOpacity,
-          speedFactor: WLConfig.particleSpeedFactor,
-          extensions: WLConfig.extensions,
-          clipBounds: WLConfig.clipBounds,
-          bounds: WLConfig.bounds,
-          imageSmoothing: WLConfig.imageSmoothing,
-        })
-      ] : []),
+          new WeatherLayers.ParticleLayer({
+            id: "particle",
+            image: rebaseWindImage,
+            imageUnscale: WLConfig.imageUnscale,
+            width: WLConfig.particleWidth,
+            maxAge: WLConfig.particleMaxAge,
+            palette: WLConfig.palette,
+            opacity: WLConfig.particleOpacity,
+            speedFactor: WLConfig.particleSpeedFactor,
+            extensions: WLConfig.extensions,
+            clipBounds: WLConfig.clipBounds,
+            bounds: WLConfig.bounds,
+            imageSmoothing: WLConfig.imageSmoothing,
+          })
+        ] : []),
         ...(activeLayers.temp ? [
-        new WeatherLayers.RasterLayer({
-          id: "raster",
-          image: rebaseTempImage,
-          imageUnscale: WLConfig.tempUnscale,
-          palette: WLConfig.tempPalette,
-          opacity: WLConfig.rasterOpacity,
-          extensions: WLConfig.extensions,
-          clipBounds: WLConfig.clipBounds,
-          bounds: WLConfig.bounds,
-          imageSmoothing: WLConfig.imageSmoothing,
-        })
-      ] : []),
+          new WeatherLayers.RasterLayer({
+            id: "raster",
+            image: rebaseTempImage,
+            imageUnscale: WLConfig.tempUnscale,
+            palette: WLConfig.tempPalette,
+            opacity: WLConfig.rasterOpacity,
+            extensions: WLConfig.extensions,
+            clipBounds: WLConfig.clipBounds,
+            bounds: WLConfig.bounds,
+            imageSmoothing: WLConfig.imageSmoothing,
+          })
+        ] : []),
         ...(activeLayers.hum ? [
-        new WeatherLayers.RasterLayer({
-          id: "raster",
-          image: rebaseHumImage,
-          imageUnscale: WLConfig.humUnscale,
-          palette: WLConfig.humPalette,
-          opacity: WLConfig.rasterOpacity,
-          extensions: WLConfig.extensions,
-          clipBounds: WLConfig.clipBounds,
-          bounds: WLConfig.bounds,
-          imageSmoothing: WLConfig.imageSmoothing,
-        })
-      ] : []),
+          new WeatherLayers.RasterLayer({
+            id: "raster",
+            image: rebaseHumImage,
+            imageUnscale: WLConfig.humUnscale,
+            palette: WLConfig.humPalette,
+            opacity: WLConfig.rasterOpacity,
+            extensions: WLConfig.extensions,
+            clipBounds: WLConfig.clipBounds,
+            bounds: WLConfig.bounds,
+            imageSmoothing: WLConfig.imageSmoothing,
+          })
+        ] : []),
       ];
 
 
@@ -223,7 +227,25 @@ function MapComponent({
     }
   }
 
+  // handle switch changes of energy and ice loss 
+  const handleSwitchChange = (option) => {
+    setSwitchOption(option);
+  };
+
   const getMarkerColor = (plantID, capacity_kw) => {
+    if (switchOption == 'Ice Loss'){
+      return markerIceLoss(plantID);
+    }else if(switchOption == 'Energy Production'){
+      return markerEnergyProduction(plantID, capacity_kw)
+    }
+  };
+
+  const markerIceLoss = (plantID) => {
+    // TODO: implement logic 
+    return '#00BFFF';
+  };
+  
+  const markerEnergyProduction = (plantID, capacity_kw) => {
     if (energyData == null) {
       return 0;
     }
@@ -245,11 +267,12 @@ function MapComponent({
       return "#e51f1f";
     }
   };
+  
 
   useEffect(() => {
-    if(map) {
+    if (map) {
       popupRef.current?.trackPointer();
-      
+
       const prefix = "./assets/weather_data/";
       const numTemp = parseInt(selectedTime, 10) - 1;
       const number = numTemp < 10 ? `0${numTemp}` : `${numTemp}`;
@@ -319,7 +342,7 @@ function MapComponent({
     <div className="relative w-full h-full">
       <MapGL
         {...viewState}
-        ref = {mapRef}
+        ref={mapRef}
         onMove={(evt) => setViewState(evt.viewState)}
         //onMoveStart={handleMoveStart}
         onClick={handleMapClick} // Use the new handler for map clicks
@@ -402,6 +425,9 @@ function MapComponent({
 
         <div className="absolute inset-x-0 bottom-0 p-4 flex justify-center">
           {children}
+        </div>
+        <div className="absolute top-0 right-0 m-4">
+          <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange}/>
         </div>
       </MapGL>
     </div>
