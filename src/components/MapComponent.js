@@ -243,7 +243,6 @@ function MapComponent({
       console.log(plantID, 'Invalid energy value:', energy);
       return '#3BCA6D'; 
     }
-    console.log('id: ', plantID, ' energy: ', energy, ' iceLoss: ', energyIceLoss)
 
     const ratio = 1 -(energyIceLoss / energy); // the ratio represents the percentage of energy lost due to icing
 
@@ -304,8 +303,6 @@ useEffect(() => {
     });
 
     setActiveLayers(newActiveLayers);
-    //console.log("activeLayers ",activeLayers)
-    //console.log("new activeLayers: ",newActiveLayers)
     
   }
 }, [selectedLayer, map]);
