@@ -21,6 +21,7 @@ import "../../../output.css";
 import { useState, useEffect } from "react";
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
+import EnergyAfterIceLossLegendComponent from "@/components/EnergyAfterIceLossLegendComponent";
 import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
 
 export default function Map() {
@@ -34,8 +35,14 @@ export default function Map() {
   const [hoverInfo, setHoverInfo] = useState(undefined);
   const [selectedGraphs, setSelectedGraphs] = useState(["ws", "ice"]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [currentSwitchOption, setCurrentSwitchOption] = useState('Energy Production');
+
 
   const graphTypes = ["ws", "hum", "temp", "ice"];
+
+  const handleSwitchChange = (option) => {
+    setCurrentSwitchOption(option);
+  };
 
   const handleTimeChange = (newTime) => {
     setSelectedTime(newTime);
@@ -44,6 +51,7 @@ export default function Map() {
     const date = new Date(newDate);
     setSelectedDate(date);
   };
+
   const handlePlantSelect = (plant) => {
     setEnergyData(undefined);
     setWindData(undefined);
@@ -238,9 +246,14 @@ export default function Map() {
             hoverInfo={hoverInfo}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
+            onSwitchChange={handleSwitchChange}
           >
             <div className="flex flex-col items-end w-full">
-              <EnergyProductionLegendComponent />
+              {currentSwitchOption === 'Energy Production' ? (
+                <EnergyProductionLegendComponent />
+              ) : (
+                <EnergyAfterIceLossLegendComponent />
+              )}
               <TimeSliderComponent
                 onTimeChange={handleTimeChange}
                 onDateChange={handleDateChange}
