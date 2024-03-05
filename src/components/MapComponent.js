@@ -26,10 +26,10 @@ function MapComponent({
     zoom: 3,
   });
   const popupRef = useRef(null);
-  const mapRef = useRef(null); // create a ref for the map
+  const mapRef = useRef(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const [map, setMap] = useState(null);
-  const [energyData, setEnergyData] = useState(null); // Initialize state to hold your data
+  const [energyData, setEnergyData] = useState(null);
   const [activeLayers, setActiveLayers] = useState({
     wind: true,
     temp: false,
@@ -89,6 +89,11 @@ function MapComponent({
     humUnscale: [0, 100],
   };
 
+  const deckOverlay = new MapboxOverlay({
+    interleaved: true,
+    layers: []
+  });
+
   const handleMarkerClick = (plant, event) => {
     // Prevent the map click event from firing when a marker is clicked
     event.stopPropagation();
@@ -111,16 +116,6 @@ function MapComponent({
       }
     }
   };
-  
-
-  //const handleMoveStart = () => {
-  //  onSelectPlant(undefined);
-  //};
-
-
-  //const handleMoveStart = () => {
-  //  onSelectPlant(undefined);
-  //};
 
   const handlePlantHover = (plant) => {
     onHoverPlant(plant);
@@ -140,6 +135,11 @@ function MapComponent({
       accessToken: weatherLayersToken,
     });
 
+    // only add overlay once
+    if (!map.hasControl(deckOverlay)) {
+      map.addControl(deckOverlay);
+    }
+
     try {
       const rebaseWindImage = await WeatherLayers.loadTextureData(
         activeWeatherImages.wind
@@ -153,17 +153,11 @@ function MapComponent({
         activeWeatherImages.hum
       );
 
-      const deckOverlay = new MapboxOverlay({
-        interleaved: true,
-        layers: []
-      });
-
       map.addControl(deckOverlay);
       const layers = [
         ...(activeLayers.wind ? [
           new WeatherLayers.RasterLayer({
           id: "raster",
-          // data properties
           image: rebaseWindImage,
           imageType: "VECTOR",
           imageUnscale: WLConfig.imageUnscale,
@@ -176,14 +170,10 @@ function MapComponent({
           imageSmoothing: WLConfig.imageSmoothing,
         })
       ] : []),
-      ...(activeLayers.wind ? [
+        ...(activeLayers.wind ? [
         new WeatherLayers.ParticleLayer({
           id: "particle",
-          // data properties
           image: rebaseWindImage,
-          // image2,
-          //imageWeight,
-          // imageType: "VECTOR",
           imageUnscale: WLConfig.imageUnscale,
           width: WLConfig.particleWidth,
           maxAge: WLConfig.particleMaxAge,
@@ -196,15 +186,12 @@ function MapComponent({
           imageSmoothing: WLConfig.imageSmoothing,
         })
       ] : []),
-      ...(activeLayers.temp ? [
+        ...(activeLayers.temp ? [
         new WeatherLayers.RasterLayer({
           id: "raster",
-          // data properties
           image: rebaseTempImage,
-          // imageType: "VECTOR",
           imageUnscale: WLConfig.tempUnscale,
           palette: WLConfig.tempPalette,
-
           opacity: WLConfig.rasterOpacity,
           extensions: WLConfig.extensions,
           clipBounds: WLConfig.clipBounds,
@@ -212,15 +199,12 @@ function MapComponent({
           imageSmoothing: WLConfig.imageSmoothing,
         })
       ] : []),
-      ...(activeLayers.hum ? [
+        ...(activeLayers.hum ? [
         new WeatherLayers.RasterLayer({
           id: "raster",
-          // data properties
           image: rebaseHumImage,
-          // imageType: "VECTOR",
           imageUnscale: WLConfig.humUnscale,
           palette: WLConfig.humPalette,
-
           opacity: WLConfig.rasterOpacity,
           extensions: WLConfig.extensions,
           clipBounds: WLConfig.clipBounds,
@@ -232,7 +216,7 @@ function MapComponent({
 
 
       deckOverlay.setProps({
-        layers: layers
+        layers
       });
     } catch (error) {
       console.error("Something went wrong when adding weather layers or retrieving image(s): ", error);
@@ -247,7 +231,6 @@ function MapComponent({
     const casted_energy = Number(current_energy);
     const capacity = capacity_kw / 1000; // From KW to MW
     const ratio = casted_energy / capacity;
-    //console.log('In marker ',' plant id: ', plantID,  '  capacity: ', capacity, 'current production: ', current_energy, ' date: ', selectedDate, ' time: ', selectedTime, ' ratio: ', ratio)
     if (ratio >= 1) {
       return "#44ce1b";
     } else if (ratio > 0.8) {
