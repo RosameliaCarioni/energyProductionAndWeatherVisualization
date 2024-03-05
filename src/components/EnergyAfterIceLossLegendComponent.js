@@ -1,7 +1,6 @@
 import React from 'react';
 
 const EnergyAfterIceLossLegendComponent = () => {
-  // Define the color stops for the discrete options
   const options = [
     { color: '#3BCA6D', label: '0% - 30%' }, // Minimal energy loss
     { color: '#bbdb44', label: '31% - 50%' }, // Low energy loss
