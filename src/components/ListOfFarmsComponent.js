@@ -14,7 +14,9 @@ import { getWindDirection } from '@/utils/getFarmsProduction';
 import GraphIcelossComponenet from './GraphIcelossComponent';
 
 
-export default function ListOfFarms(props) {
+export default function ListOfFarms({date, selectedPriceArea}) {
+    //const { date, selectedPriceArea } = props;  // Destructure date and selectedPriceArea from props
+
     
     const [data, setData] = useState(null); // Initialize state to hold your data
     const [energyData, setEnergyData] = useState(null);
@@ -27,13 +29,19 @@ export default function ListOfFarms(props) {
     useEffect(() => {
       async function fetchData() {
           const metaResult = await getFarmsMeta();
-          setData(metaResult);
+          // Filter metaResult based on selectedPriceArea (which can contain multiple areas)
+        const filteredMetaResult = selectedPriceArea && selectedPriceArea.length > 0
+        ? metaResult.filter(item => selectedPriceArea.includes(item.price_area))
+        : metaResult;
+          setData(filteredMetaResult);
   
-          const parts = props.date.split('-');
+          const parts = date.split('-');
           const year = parseInt(parts[0], 10);
           const month = parseInt(parts[1], 10);
           const day = parseInt(parts[2], 10);
-  
+
+        
+          
           const energyPromises = metaResult.map(async (item) => {
               try {
                   const energy = await getProduction(item.id, year, month, day);
@@ -116,10 +124,10 @@ export default function ListOfFarms(props) {
         });
       }
   
-      if (props.date) {
+      if (date, selectedPriceArea) {
           fetchData();
       }
-  }, [props.date]);
+  }, [date, selectedPriceArea]);
   
     const [searchInput, setSearchInput] = useState('');
 
@@ -131,7 +139,7 @@ export default function ListOfFarms(props) {
         item.name.toLowerCase().includes(searchInput.toLowerCase())
     );
 
-    console.log("Energy Array",energyData)
+    //console.log("Energy Array",energyData)
 
     return (
         <div className="flex flex-col gap-5 py-5" as="main">
@@ -149,7 +157,6 @@ export default function ListOfFarms(props) {
   
                     <div className='flex '>
                       {/* Energy Output Graph */}
-                      {console.log("DATA ",energyData)}
                       <GraphIcelossComponenet 
                           energyData={energyData && energyData[index] ? energyData[index] : new Array(24).fill(0)} 
                           icelossData={energyAfterIceLoss && energyAfterIceLoss[index] ? energyAfterIceLoss[index] : new Array(24).fill(0)} 

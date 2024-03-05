@@ -27,7 +27,7 @@ function MapComponent({
   const [viewState, setViewState] = useState({
     latitude: 60.472,
     longitude: 8.4689,
-    zoom: 3.8,
+    zoom: 4,
   });
 
   const [switchOption, setSwitchOption] = useState('Energy Production');
