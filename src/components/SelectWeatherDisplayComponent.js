@@ -21,7 +21,10 @@ function ButtonComponent({ onLayerChange }) {
   }, [selectedButtons, onLayerChange]);
 
   return (
-    <div>
+    <div style={{ width: '50%', backgroundColor: '#000', padding: '10px', borderRadius: '5px' }}>
+      <div style={{ marginBottom: '10px', fontSize: '16px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
+        Selected Weather Layers
+      </div>
       {['Temperature', 'WindSpeed', 'RelativeHumidity'].map((buttonName) => (
         <button
           key={buttonName}

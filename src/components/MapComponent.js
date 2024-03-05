@@ -27,7 +27,7 @@ function MapComponent({
   const [viewState, setViewState] = useState({
     latitude: 60.472,
     longitude: 8.4689,
-    zoom: 3,
+    zoom: 3.8,
   });
 
   const [switchOption, setSwitchOption] = useState('Energy Production');
@@ -37,11 +37,6 @@ function MapComponent({
   const [map, setMap] = useState(null);
   const [energyData, setEnergyData] = useState(null);
   const [energyDataAfterIceLoss, setenergyDataAfterIceLoss] = useState(null);
-  const [activeLayers, setActiveLayers] = useState({
-    wind: true,
-    temp: false,
-    hum: false
-  });
 
   const windSpeedPalette = [
     [0, [204, 229, 255]], // light blue
@@ -134,7 +129,7 @@ function MapComponent({
 
   }, []);
 
-  const setWeatherLayers = async (activeWeatherImages) => {
+  const setWeatherLayers = async (activeWeatherImages, activeWeatherOptions) => {
     const weatherLayersToken =
       process.env.NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN;
 
@@ -162,7 +157,7 @@ function MapComponent({
 
       map.addControl(deckOverlay);
       const layers = [
-        ...(activeLayers.wind ? [
+        ...(activeWeatherOptions.wind ? [
           new WeatherLayers.RasterLayer({
             id: "raster",
             image: rebaseWindImage,
@@ -177,7 +172,7 @@ function MapComponent({
             imageSmoothing: WLConfig.imageSmoothing,
           })
         ] : []),
-        ...(activeLayers.wind ? [
+        ...(activeWeatherOptions.wind ? [
           new WeatherLayers.ParticleLayer({
             id: "particle",
             image: rebaseWindImage,
@@ -193,7 +188,7 @@ function MapComponent({
             imageSmoothing: WLConfig.imageSmoothing,
           })
         ] : []),
-        ...(activeLayers.temp ? [
+        ...(activeWeatherOptions.temp ? [
           new WeatherLayers.RasterLayer({
             id: "raster",
             image: rebaseTempImage,
@@ -206,7 +201,7 @@ function MapComponent({
             imageSmoothing: WLConfig.imageSmoothing,
           })
         ] : []),
-        ...(activeLayers.hum ? [
+        ...(activeWeatherOptions.hum ? [
           new WeatherLayers.RasterLayer({
             id: "raster",
             image: rebaseHumImage,
@@ -291,36 +286,26 @@ function MapComponent({
     }
   };
 
-  // First useEffect to update activeLayers based on selectedLayer
-useEffect(() => {
-  if(map) {
-    // Initialize a new state for active layers
-    const newActiveLayers = {
-      wind: false,
-      temp: false,
-      hum: false,
-    };
-
-    // Iterate over the selectedLayer array and update newActiveLayers accordingly
-    selectedLayer.forEach((layer) => {
-      if (layer === "WindSpeed") {
-        newActiveLayers.wind = true;
-      } else if (layer === "Temperature") {
-        newActiveLayers.temp = true;
-      } else if (layer === "RelativeHumidity") {
-        newActiveLayers.hum = true;
-      }
-    });
-
-    setActiveLayers(newActiveLayers);
-    //console.log("activeLayers ",activeLayers)
-    //console.log("new activeLayers: ",newActiveLayers)
-    
-  }
-}, [selectedLayer, map]);
-
   useEffect(() => {
     if (map) {
+      // Initialize a new state for active layers
+      const newActiveLayers = {
+        wind: false,
+        temp: false,
+        hum: false,
+      };
+
+      // Iterate over the selectedLayer array and update newActiveLayers accordingly
+      selectedLayer.forEach((layer) => {
+        if (layer === "WindSpeed") {
+          newActiveLayers.wind = true;
+        } else if (layer === "Temperature") {
+          newActiveLayers.temp = true;
+        } else if (layer === "RelativeHumidity") {
+          newActiveLayers.hum = true;
+        }
+      });
+
       popupRef.current?.trackPointer();
 
       const prefix = "./assets/weather_data/";
@@ -332,7 +317,7 @@ useEffect(() => {
         hum: prefix + "humidity/humidity_20211125" + number + ".png"
       };
 
-      setWeatherLayers(activeWeatherImages);
+      setWeatherLayers(activeWeatherImages,newActiveLayers);
 
       async function fetchData() {
         const year = selectedDate.getFullYear();
