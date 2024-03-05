@@ -46,7 +46,6 @@ export default function Map() {
     setCurrentSwitchOption(option);
   };
 
-
   const handleLayerChange = (newLayer) => {
     setSelectedLayer(newLayer);
   };
@@ -266,7 +265,7 @@ export default function Map() {
                 onDateChange={handleDateChange}
               />
             </div>
-            <SelectWeatherDisplayComponent onLayerChange={handleLayerChange}/>
+            <SelectWeatherDisplayComponent onLayerChange={handleLayerChange} />
           </MapComponentWithNoSSR>
         </div>
       </div>
