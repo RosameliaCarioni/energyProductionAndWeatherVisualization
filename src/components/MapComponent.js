@@ -9,8 +9,6 @@ import { ClipExtension } from "@deck.gl/extensions";
 import MapGL, { Popup, Marker } from "react-map-gl";
 import MarkerIconComponent from "./MarkerIconComponent";
 import { getProductionInHour, getProductionAfterIceLossInHour } from "@/utils/getFarmsProduction";
-import EnergyIceLossSwitchButton from './EnergyIceLossSwitchButton';
-
 
 function MapComponent({
   onSelectPlant,
@@ -21,7 +19,7 @@ function MapComponent({
   hoverInfo,
   selectedDate,
   selectedTime,
-  onSwitchChange,
+  switchOption,
   selectedLayer,
 }) {
   const [viewState, setViewState] = useState({
@@ -29,8 +27,6 @@ function MapComponent({
     longitude: 8.4689,
     zoom: 3,
   });
-
-  const [switchOption, setSwitchOption] = useState('Energy Production');
   const popupRef = useRef(null);
   const mapRef = useRef(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -230,12 +226,6 @@ function MapComponent({
     }
   }
 
-  // handle switch changes of energy and ice loss 
-  const handleSwitchChange = (option) => {
-    setSwitchOption(option);
-    onSwitchChange(option); // Directly use onSwitchChange without props.
-  };
-
   const getMarkerColor = (plant) => {
     if (switchOption == 'Ice Loss') {
       return markerIceLoss(plant.id);
@@ -253,6 +243,7 @@ function MapComponent({
       console.log(plantID, 'Invalid energy value:', energy);
       return '#3BCA6D'; 
     }
+    console.log('id: ', plantID, ' energy: ', energy, ' iceLoss: ', energyIceLoss)
 
     const ratio = 1 -(energyIceLoss / energy); // the ratio represents the percentage of energy lost due to icing
 
@@ -507,9 +498,6 @@ useEffect(() => {
 
         <div className="absolute inset-x-0 bottom-0 p-4 flex justify-center">
           {children}
-        </div>
-        <div className="absolute top-0 right-0 m-4">
-          <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange} />
         </div>
       </MapGL>
     </div>

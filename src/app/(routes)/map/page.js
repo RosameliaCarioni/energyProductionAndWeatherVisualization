@@ -24,6 +24,7 @@ import EnergyProductionLegendComponent from "@/components/EnergyProductionLegend
 import EnergyAfterIceLossLegendComponent from "@/components/EnergyAfterIceLossLegendComponent";
 import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
 import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent"
+import EnergyIceLossSwitchButton from "@/components/EnergyIceLossSwitchButton";
 
 
 export default function Map() {
@@ -251,9 +252,10 @@ export default function Map() {
             hoverInfo={hoverInfo}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
-            onSwitchChange={handleSwitchChange}
+            switchOption={currentSwitchOption}
             selectedLayer={selectedLayer}
           >
+            <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange} />
             <div className="flex flex-col items-end w-full">
               {currentSwitchOption === 'Energy Production' ? (
                 <EnergyProductionLegendComponent />
