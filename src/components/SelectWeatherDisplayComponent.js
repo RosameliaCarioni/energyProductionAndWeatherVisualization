@@ -1,13 +1,24 @@
-'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function ButtonComponent({onLayerChange}) {
-  const [selectedButton, setSelectedButton] = useState('WindSpeed');
+function ButtonComponent({ onLayerChange }) {
+  // Initialize the selectedButtons state with 'WindSpeed' as a preselected value
+  const [selectedButtons, setSelectedButtons] = useState(['WindSpeed']);
 
   function handleButtonClick(buttonName) {
-    setSelectedButton(buttonName);
-    onLayerChange(buttonName)
+    setSelectedButtons((prevSelectedButtons) => {
+      // Toggle the selection state of the button
+      if (prevSelectedButtons.includes(buttonName)) {
+        return prevSelectedButtons.filter((name) => name !== buttonName);
+      } else {
+        return [...prevSelectedButtons, buttonName];
+      }
+    });
   }
+
+  // Use useEffect to call onLayerChange after selectedButtons state has been updated
+  useEffect(() => {
+    onLayerChange(selectedButtons);
+  }, [selectedButtons, onLayerChange]);
 
   return (
     <div>
@@ -15,7 +26,7 @@ function ButtonComponent({onLayerChange}) {
         <button
           key={buttonName}
           style={{
-            opacity: selectedButton === buttonName ? 1 : 0.5,
+            opacity: selectedButtons.includes(buttonName) ? 1 : 0.5,
             cursor: 'pointer',
             marginBottom: '10px',
           }}

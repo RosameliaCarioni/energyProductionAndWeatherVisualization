@@ -19,6 +19,7 @@ function MapComponent({
   hoverInfo,
   selectedDate,
   selectedTime,
+  selectedLayer,
 }) {
   const [viewState, setViewState] = useState({
     latitude: 60.472,
@@ -246,6 +247,34 @@ function MapComponent({
     }
   };
 
+  // First useEffect to update activeLayers based on selectedLayer
+useEffect(() => {
+  if(map) {
+    // Initialize a new state for active layers
+    const newActiveLayers = {
+      wind: false,
+      temp: false,
+      hum: false,
+    };
+
+    // Iterate over the selectedLayer array and update newActiveLayers accordingly
+    selectedLayer.forEach((layer) => {
+      if (layer === "WindSpeed") {
+        newActiveLayers.wind = true;
+      } else if (layer === "Temperature") {
+        newActiveLayers.temp = true;
+      } else if (layer === "RelativeHumidity") {
+        newActiveLayers.hum = true;
+      }
+    });
+
+    setActiveLayers(newActiveLayers);
+    console.log("activeLayers ",activeLayers)
+    console.log("new activeLayers: ",newActiveLayers)
+    
+  }
+}, [selectedLayer, map]);
+
   useEffect(() => {
     if(map) {
       popupRef.current?.trackPointer();
@@ -295,7 +324,7 @@ function MapComponent({
         fetchData();
       }
     }
-  }, [selectedDate, selectedTime, map]);
+  }, [selectedLayer, selectedDate, selectedTime, map]);
 
   function formatCoordinates(coordinate, type) {
     const degrees = Math.abs(coordinate);

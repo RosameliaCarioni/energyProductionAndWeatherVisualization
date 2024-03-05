@@ -22,6 +22,8 @@ import { useState, useEffect } from "react";
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
 import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
+import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent"
+
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
@@ -34,9 +36,14 @@ export default function Map() {
   const [hoverInfo, setHoverInfo] = useState(undefined);
   const [selectedGraphs, setSelectedGraphs] = useState(["ws", "ice"]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedLayer, setSelectedLayer] = useState(["WindSpeed"]);
 
   const graphTypes = ["ws", "hum", "temp", "ice"];
 
+
+  const handleLayerChange = (newLayer) => {
+    setSelectedLayer(newLayer);
+  };
   const handleTimeChange = (newTime) => {
     setSelectedTime(newTime);
   };
@@ -238,6 +245,7 @@ export default function Map() {
             hoverInfo={hoverInfo}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
+            selectedLayer={selectedLayer}
           >
             <div className="flex flex-col items-end w-full">
               <EnergyProductionLegendComponent />
@@ -246,6 +254,8 @@ export default function Map() {
                 onDateChange={handleDateChange}
               />
             </div>
+            <SelectWeatherDisplayComponent onLayerChange={handleLayerChange}/>
+            { console.log("LAYER ",selectedLayer)}
           </MapComponentWithNoSSR>
         </div>
       </div>
