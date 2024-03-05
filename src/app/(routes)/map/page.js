@@ -23,8 +23,9 @@ import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
 import EnergyAfterIceLossLegendComponent from "@/components/EnergyAfterIceLossLegendComponent";
 import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
-import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent"
+import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent";
 import EnergyIceLossSwitchButton from "@/components/EnergyIceLossSwitchButton";
+import ModelSelectComponent from "@/components/ModelSelectComponent"; 
 
 
 export default function Map() {
@@ -255,6 +256,7 @@ export default function Map() {
             switchOption={currentSwitchOption}
             selectedLayer={selectedLayer}
           >
+             <ModelSelectComponent />
             <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange} />
             <div className="flex flex-col items-end w-full">
               {currentSwitchOption === 'Energy Production' ? (

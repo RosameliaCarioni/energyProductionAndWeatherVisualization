@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent"
+import ModelSelectComponent from "@/components/ModelSelectComponent";
 
 export default function Graphs() {
   //fetching the plant data
@@ -19,6 +20,7 @@ export default function Graphs() {
   return (
     <div>
       <h1>First graph</h1>
+      <ModelSelectComponent />
       { <SelectWeatherDisplayComponent onLayerChange={handleLayerChange} />}
       { console.log("LAYER ",selectedLayer)}
       

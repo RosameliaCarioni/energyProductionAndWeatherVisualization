@@ -236,15 +236,15 @@ function MapComponent({
     // Check if energy is zero or not a number (NaN) - if so: the iceLoss is 0, so the plant is not affected by it 
     if (!energy || isNaN(energy) || energy == 0.0) {
       console.log(plantID, 'Invalid energy value:', energy);
-      return '#3BCA6D'; 
+      return '#3BCA6D';
     }
 
-    const ratio = 1 -(energyIceLoss / energy); // the ratio represents the percentage of energy lost due to icing
+    const ratio = 1 - (energyIceLoss / energy); // the ratio represents the percentage of energy lost due to icing
 
     if (ratio > 0.9) { // loss of energy due to icing is very high 
-      return "#e51f1f"; 
+      return "#e51f1f";
     } else if (ratio > 0.7) {
-      return "#f2a134"; 
+      return "#f2a134";
     } else if (ratio > 0.5) {
       return "#f7e379";
     } else if (ratio > 0.3) {
@@ -307,7 +307,7 @@ function MapComponent({
         hum: prefix + "humidity/humidity_20211125" + number + ".png"
       };
 
-      setWeatherLayers(activeWeatherImages,newActiveLayers);
+      setWeatherLayers(activeWeatherImages, newActiveLayers);
 
       async function fetchData() {
         const year = selectedDate.getFullYear();
