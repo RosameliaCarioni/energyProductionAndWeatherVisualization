@@ -135,30 +135,26 @@ export default function Map() {
       if (!selectedDate || !plants) return;
 
       // Reset aggregateData when selectedDate or plants list changes
-      setAggregateData(new Array(24).fill(0));
+      let localAggregateData = new Array(24).fill(0);
       let capacitySum = 0;
 
-      plants.forEach((plant) => {
+      for (const plant of plants) {
         capacitySum += Number(plant.capacity_kw);
-        getProduction(
+        const energyDataStr = await getProduction(
           plant.id,
           selectedDate.getFullYear(),
           selectedDate.getMonth() + 1,
           selectedDate.getDate()
-        ).then((energyDataStr) => {
-          // Assuming energyDataStr is already an array of strings as per the clarification
-          const energyData = energyDataStr.map(Number); // Convert each string to Number
+        );
 
-          setAggregateData((prevData) => {
-            // No need to check if prevData is empty since it's initialized with zeros
-            const updatedData = prevData.map((sum, index) => {
-              const currentEnergy = energyData[index] || 0; // Use 0 if undefined, though it should always be defined
-              return sum + currentEnergy;
-            });
-            return updatedData;
-          });
+        const energyData = energyDataStr.map(Number);
+        localAggregateData = localAggregateData.map((sum, index) => {
+          const currentEnergy = energyData[index] || 0;
+          return sum + currentEnergy;
         });
-      });
+      }
+
+      setAggregateData(localAggregateData);
       setTotalCapacity(capacitySum);
     }
 
