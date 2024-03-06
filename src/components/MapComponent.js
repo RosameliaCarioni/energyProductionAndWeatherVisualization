@@ -162,68 +162,68 @@ function MapComponent({
       const layers = [
         ...(activeWeatherOptions.wind
           ? [
-              new WeatherLayers.RasterLayer({
-                id: "raster",
-                image: rebaseWindImage,
-                imageType: "VECTOR",
-                imageUnscale: WLConfig.imageUnscale,
-                palette: WLConfig.palette,
+            new WeatherLayers.RasterLayer({
+              id: "raster",
+              image: rebaseWindImage,
+              imageType: "VECTOR",
+              imageUnscale: WLConfig.imageUnscale,
+              palette: WLConfig.palette,
 
-                opacity: WLConfig.rasterOpacity,
-                extensions: WLConfig.extensions,
-                clipBounds: WLConfig.clipBounds,
-                bounds: WLConfig.bounds,
-                imageSmoothing: WLConfig.imageSmoothing,
-              }),
-            ]
+              opacity: WLConfig.rasterOpacity,
+              extensions: WLConfig.extensions,
+              clipBounds: WLConfig.clipBounds,
+              bounds: WLConfig.bounds,
+              imageSmoothing: WLConfig.imageSmoothing,
+            }),
+          ]
           : []),
         ...(activeWeatherOptions.wind
           ? [
-              new WeatherLayers.ParticleLayer({
-                id: "particle",
-                image: rebaseWindImage,
-                imageUnscale: WLConfig.imageUnscale,
-                width: WLConfig.particleWidth,
-                maxAge: WLConfig.particleMaxAge,
-                palette: WLConfig.palette,
-                opacity: WLConfig.particleOpacity,
-                speedFactor: WLConfig.particleSpeedFactor,
-                extensions: WLConfig.extensions,
-                clipBounds: WLConfig.clipBounds,
-                bounds: WLConfig.bounds,
-                imageSmoothing: WLConfig.imageSmoothing,
-              }),
-            ]
+            new WeatherLayers.ParticleLayer({
+              id: "particle",
+              image: rebaseWindImage,
+              imageUnscale: WLConfig.imageUnscale,
+              width: WLConfig.particleWidth,
+              maxAge: WLConfig.particleMaxAge,
+              palette: WLConfig.palette,
+              opacity: WLConfig.particleOpacity,
+              speedFactor: WLConfig.particleSpeedFactor,
+              extensions: WLConfig.extensions,
+              clipBounds: WLConfig.clipBounds,
+              bounds: WLConfig.bounds,
+              imageSmoothing: WLConfig.imageSmoothing,
+            }),
+          ]
           : []),
         ...(activeWeatherOptions.temp
           ? [
-              new WeatherLayers.RasterLayer({
-                id: "raster",
-                image: rebaseTempImage,
-                imageUnscale: WLConfig.tempUnscale,
-                palette: WLConfig.tempPalette,
-                opacity: WLConfig.rasterOpacity,
-                extensions: WLConfig.extensions,
-                clipBounds: WLConfig.clipBounds,
-                bounds: WLConfig.bounds,
-                imageSmoothing: WLConfig.imageSmoothing,
-              }),
-            ]
+            new WeatherLayers.RasterLayer({
+              id: "raster",
+              image: rebaseTempImage,
+              imageUnscale: WLConfig.tempUnscale,
+              palette: WLConfig.tempPalette,
+              opacity: WLConfig.rasterOpacity,
+              extensions: WLConfig.extensions,
+              clipBounds: WLConfig.clipBounds,
+              bounds: WLConfig.bounds,
+              imageSmoothing: WLConfig.imageSmoothing,
+            }),
+          ]
           : []),
         ...(activeWeatherOptions.hum
           ? [
-              new WeatherLayers.RasterLayer({
-                id: "raster",
-                image: rebaseHumImage,
-                imageUnscale: WLConfig.humUnscale,
-                palette: WLConfig.humPalette,
-                opacity: WLConfig.rasterOpacity,
-                extensions: WLConfig.extensions,
-                clipBounds: WLConfig.clipBounds,
-                bounds: WLConfig.bounds,
-                imageSmoothing: WLConfig.imageSmoothing,
-              }),
-            ]
+            new WeatherLayers.RasterLayer({
+              id: "raster",
+              image: rebaseHumImage,
+              imageUnscale: WLConfig.humUnscale,
+              palette: WLConfig.humPalette,
+              opacity: WLConfig.rasterOpacity,
+              extensions: WLConfig.extensions,
+              clipBounds: WLConfig.clipBounds,
+              bounds: WLConfig.bounds,
+              imageSmoothing: WLConfig.imageSmoothing,
+            }),
+          ]
           : []),
       ];
 
@@ -258,17 +258,16 @@ function MapComponent({
 
     const ratio = 1 - energyIceLoss / energy; // the ratio represents the percentage of energy lost due to icing
 
-    if (ratio > 0.9) {
-      // loss of energy due to icing is very high
-      return "#e51f1f";
+    if (ratio > 0.9) { // Loss of energy due to icing is very high
+      return "#fc6e51"; 
     } else if (ratio > 0.7) {
-      return "#f2a134";
+      return "#fcb941"; 
     } else if (ratio > 0.5) {
-      return "#f7e379";
+      return "#fed766"; 
     } else if (ratio > 0.3) {
-      return "#bbdb44";
+      return "#b8e986"; 
     } else {
-      return "#3BCA6D";
+      return "#7bdcb5"; 
     }
   };
 
@@ -282,17 +281,20 @@ function MapComponent({
     const ratio = casted_energy / capacity;
 
     if (ratio > 0.8) {
-      // farm is producing almost a full capacity
-      return "#3BCA6D";
+      // Farm is producing almost at full capacity
+      return "#7bdcb5";
     } else if (ratio > 0.6) {
-      return "#bbdb44";
+      return "#b8e986"; 
     } else if (ratio > 0.4) {
-      return "#f7e379";
+      return "#fed766"; 
     } else if (ratio > 0.2) {
-      return "#f2a134";
+      return "#fcb941"; 
     } else {
-      return "#e51f1f";
+      return "#fc6e51";
     }
+
+
+
   };
 
   useEffect(() => {
@@ -398,8 +400,8 @@ function MapComponent({
           ? "N"
           : "E"
         : type === "latitude"
-        ? "S"
-        : "W";
+          ? "S"
+          : "W";
 
     // Use toFixed(4) to get 4 decimal places for the degrees
     const formattedCoordinate = degrees.toFixed(4);
@@ -437,7 +439,7 @@ function MapComponent({
               style={{ cursor: "pointer" }}
             >
               {(selectedPlant && selectedPlant.id === plant.id) ||
-              (hoverInfo && hoverInfo.id === plant.id) ? (
+                (hoverInfo && hoverInfo.id === plant.id) ? (
                 <img
                   src="/assets/pin_selected.svg"
                   style={{ width: "30px", height: "30px" }}

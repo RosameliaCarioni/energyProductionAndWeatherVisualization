@@ -2,11 +2,12 @@ import React from 'react';
 
 const EnergyAfterIceLossLegendComponent = () => {
   const options = [
-    { color: '#3BCA6D', label: '0% - 30%' }, // Minimal energy loss
-    { color: '#bbdb44', label: '31% - 50%' }, // Low energy loss
-    { color: '#f7e379', label: '51% - 70%' }, // Moderate energy loss
-    { color: '#f2a134', label: '71% - 90%' }, // High energy loss
-    { color: '#e51f1f', label: '91% - 100%' }, // Very high energy loss 
+   
+    { color: '#7bdcb5', label: '0% - 30%' }, // Minimal energy loss 
+    { color: '#b8e986', label: '31% - 50%' }, 
+    { color: '#fed766', label: '51% - 70%' }, 
+    { color: '#fcb941', label: '71% - 90%' }, 
+    { color: '#fc6e51', label: '91% - 100%' }, 
   ];
 
   return (
