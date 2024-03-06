@@ -10,8 +10,8 @@ const EnergyAfterIceLossLegendComponent = () => {
   ];
 
   return (
-    <div className="bg-dark mb-2" style={{ width: '380px', padding: '10px', borderRadius: '5px'}}>
-      <div style={{ marginBottom: '1px', fontSize: '14px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
+    <div className="bg-dark mb-2 custom-border" style={{ width: '380px', padding: '10px'}}>
+      <div className="text-sm" style={{ marginBottom: '1px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
         % Of Energy Loss Due To Icing
       </div>
       <div className="legend-container" style={{ display: 'flex', alignItems: 'center', height: '30px' }}>

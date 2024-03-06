@@ -14,24 +14,28 @@ function ButtonComponent({ onLayerChange }) {
   }, [selectedButtons, onLayerChange]);
 
   return (
-    <div className="bg-dark" style={{ padding: '10px', borderRadius: '5px' }}>
-      <div style={{ marginBottom: '10px', fontSize: '16px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
-        <p className='text-sm'>Selected Weather Layers</p>
+    <div className="bg-dark p-3 mb-2 flex flex-col items-end rounded-md">
+      <div>
+        <p className='text-sm'>Weather Layer</p>
       </div>
-      {['Temperature', 'WindSpeed', 'RelativeHumidity'].map((buttonName) => (
-        <button
-          key={buttonName}
-          style={{
-            opacity: selectedButtons.includes(buttonName) ? 1 : 0.5,
-            cursor: 'pointer',
-            marginBottom: '10px',
-          }}
-          className='text-sm'
-          onClick={() => handleButtonClick(buttonName)}
-        >
-          {buttonName}
-        </button>
-      ))}
+      <div className='flex flex-col items-end'>
+        {['Temperature', 'WindSpeed', 'RelativeHumidity'].map((buttonName) => (
+          <button
+            key={buttonName}
+            style={{
+              color: selectedButtons.includes(buttonName) ? '#5fbeb3' : '#fff',
+              opacity: selectedButtons.includes(buttonName) ? 1 : 0.5,
+              cursor: 'pointer',
+              marginBottom: '5px',
+              marginTop: '5px'
+            }}
+            className='text-xs font-blue'
+            onClick={() => handleButtonClick(buttonName)}
+          >
+            {buttonName}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
