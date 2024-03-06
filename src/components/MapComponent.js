@@ -27,12 +27,13 @@ function MapComponent({
     longitude: 8.4689,
     zoom: 3.8,
   });
+  const cancelRequest = useRef(false);
   const popupRef = useRef(null);
   const mapRef = useRef(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const [map, setMap] = useState(null);
   const [energyData, setEnergyData] = useState(null);
-  const [energyDataAfterIceLoss, setenergyDataAfterIceLoss] = useState(null);
+  const [energyDataAfterIceLoss, setEnergyDataAfterIceLoss] = useState(null);
 
   const windSpeedPalette = [
     [0, [204, 229, 255]], // light blue
@@ -276,8 +277,14 @@ function MapComponent({
     }
   };
 
+
+
+  //////////////////
   useEffect(() => {
-    if (map) {
+    cancelRequest.current = true; // Signal to ignore results of any ongoing async operations
+
+    if (map && selectedDate) {
+      cancelRequest.current = false; // Reset for a new request
       // Initialize a new state for active layers
       const newActiveLayers = {
         wind: false,
@@ -334,8 +341,9 @@ function MapComponent({
           }
         });
 
-        // Resolve all promises and set the state
+        // After fetching data, check if the request is still relevant
         Promise.all(energyPromises).then((energyResults) => {
+          if (cancelRequest.current) return; // Ignore this result because a new request has been made
           setEnergyData(energyResults);
         });
 
@@ -361,21 +369,23 @@ function MapComponent({
 
         // Resolve all promises and set the state
         Promise.all(energyAfterIceLossPromises).then((energyResults) => {
-          setenergyDataAfterIceLoss(energyResults);
+          if (cancelRequest.current) return; // Ignore this result because a new request has been made
+          setEnergyDataAfterIceLoss(energyResults);
         });
-
-
       }
-
-
-
-
-
-      if (selectedDate) {
-        fetchData();
-      }
+      
+      fetchData();
+      return () => {
+        cancelRequest.current = true;
+      };
     }
   }, [selectedLayer, selectedDate, selectedTime, map]);
+
+/////////////////
+
+
+
+
 
   function formatCoordinates(coordinate, type) {
     const degrees = Math.abs(coordinate);

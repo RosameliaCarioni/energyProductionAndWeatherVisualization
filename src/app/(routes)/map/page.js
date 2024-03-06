@@ -28,6 +28,7 @@ import EnergyIceLossSwitchButton from "@/components/EnergyIceLossSwitchButton";
 import ModelSelectComponent from "@/components/ModelSelectComponent"; 
 
 
+
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
   const [windData, setWindData] = useState(undefined);
@@ -41,7 +42,10 @@ export default function Map() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentSwitchOption, setCurrentSwitchOption] = useState('Energy Production');
   const [selectedLayer, setSelectedLayer] = useState(["WindSpeed"]);
+  const [debouncedSelectedTime, setDebouncedSelectedTime] = useState(selectedTime);
 
+
+  
   const graphTypes = ["ws", "hum", "temp", "ice"];
 
   const handleSwitchChange = (option) => {
@@ -275,4 +279,16 @@ export default function Map() {
       </div>
     </div>
   );
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }
