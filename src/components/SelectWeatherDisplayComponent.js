@@ -14,9 +14,9 @@ function ButtonComponent({ onLayerChange }) {
   }, [selectedButtons, onLayerChange]);
 
   return (
-    <div style={{ width: '50%', backgroundColor: '#000', padding: '10px', borderRadius: '5px' }}>
+    <div className="bg-dark" style={{ padding: '10px', borderRadius: '5px' }}>
       <div style={{ marginBottom: '10px', fontSize: '16px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
-        Selected Weather Layers
+        <p className='text-sm'>Selected Weather Layers</p>
       </div>
       {['Temperature', 'WindSpeed', 'RelativeHumidity'].map((buttonName) => (
         <button
@@ -26,6 +26,7 @@ function ButtonComponent({ onLayerChange }) {
             cursor: 'pointer',
             marginBottom: '10px',
           }}
+          className='text-sm'
           onClick={() => handleButtonClick(buttonName)}
         >
           {buttonName}
