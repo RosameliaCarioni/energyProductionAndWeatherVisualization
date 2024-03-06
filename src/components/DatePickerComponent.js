@@ -12,7 +12,7 @@ function DatePickerComponent({ onDateChange }) {
   }
 
   return (
-    <div className="rounded-lg" style={{ display: 'flex', alignItems: 'center'}}>
+    <div className="rounded-lg mb-4 flex items-center">
       {/* Date Picker */}
       <input
         className='datepicker-input rounded-md'

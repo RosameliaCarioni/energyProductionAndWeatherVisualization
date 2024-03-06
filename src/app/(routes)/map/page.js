@@ -30,6 +30,7 @@ import MapLegendComponent from "@/components/MapLegendComponent";
 import humidityLegendData from "@/data/humidity_legend_data.json";
 import temperatureLegendData from "@/data/temperature_legend_data.json";
 import windspeedLegendData from "@/data/windspeed_legend_data.json";
+import SearchComponent from "@/components/SearchComponent";
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
@@ -89,12 +90,11 @@ export default function Map() {
   const [searchInput, setSearchInput] = useState("");
   const [filteredPlantsArray, setFilteredPlantsArray] = useState(plantsArray);
 
-  const handleSearchInputChange = (event) => {
-    const inputValue = event.target.value;
-    setSearchInput(inputValue);
+  const handleSearchInputChange = (searchValue) => {
+    setSearchInput(searchValue);
 
     const filteredArray = plantsArray.filter((plant) =>
-      plant.name.toLowerCase().includes(inputValue.toLowerCase())
+      plant.name.toLowerCase().includes(searchValue.toLowerCase())
     );
 
     setFilteredPlantsArray(filteredArray);
@@ -247,13 +247,7 @@ export default function Map() {
             <div className="py-5">
               <p>LIST VIEW</p>
               <h1>All Farms</h1>
-              <input
-                type="text"
-                placeholder="Search by plant name"
-                value={searchInput}
-                onChange={handleSearchInputChange}
-                className="font-black px-2 mb-4"
-              />
+              <SearchComponent onSearchChange={handleSearchInputChange} />
               <SimpleListOfFarmsComponent
                 plantsArray={searchInput ? filteredPlantsArray : plantsArray}
                 hoverInfo={hoverInfo}
