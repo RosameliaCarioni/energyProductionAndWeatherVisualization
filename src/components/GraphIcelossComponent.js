@@ -42,6 +42,7 @@ function GraphIcelossComponenet({
   const selectedLabel = `${selectedTime}`;
   const chartData = {
     labels: [
+      "0",
       "1",
       "2",
       "3",
@@ -65,7 +66,6 @@ function GraphIcelossComponenet({
       "21",
       "22",
       "23",
-      "24",
     ],
     datasets: [
       {
@@ -73,12 +73,6 @@ function GraphIcelossComponenet({
         data: !isLoading ? energyData : Array(24).fill(0),
         borderColor: !isLoading ? "rgb(135, 211, 184)" : "rgb(30, 30, 30)",
         backgroundColor: "rgb(135, 211, 184, 0.35)",
-      },
-      {
-        label: "Ice Loss",
-        data: !isLoading ? icelossData : Array(24).fill(0),
-        borderColor: "rgb(255, 99, 132)", // Red color for iceloss
-        backgroundColor: "rgb(255, 99, 132, 0.35)",
       },
       {
         label: "Max Capacity",
@@ -107,7 +101,12 @@ function GraphIcelossComponenet({
         ticks: {
           color: "rgb(214,214,214)",
         },
-        title: { display: true, text: "MW", padding: 2 },
+        title: {
+          display: true,
+          text: "MW",
+          padding: 2,
+          color: "rgb(214,214,214)",
+        },
         beginAtZero: true,
       },
       x: {
@@ -120,7 +119,12 @@ function GraphIcelossComponenet({
           minRotation: 0,
         },
 
-        title: { display: true, text: "Power Hour", padding: 2 },
+        title: {
+          display: true,
+          text: "Power Hour",
+          padding: 2,
+          color: "rgb(214,214,214)",
+        },
       },
     },
 
