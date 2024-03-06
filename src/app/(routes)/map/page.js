@@ -22,9 +22,10 @@ import { useState, useEffect } from "react";
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
 import EnergyAfterIceLossLegendComponent from "@/components/EnergyAfterIceLossLegendComponent";
-import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
+import GraphIcelossComponent from "@/components/GraphIcelossComponent";
 import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent";
 import EnergyIceLossSwitchButton from "@/components/EnergyIceLossSwitchButton";
+import ModelSelectComponent from "@/components/ModelSelectComponent";
 import ModelSelectComponent from "@/components/ModelSelectComponent";
 import MapLegendComponent from "@/components/MapLegendComponent";
 import humidityLegendData from "@/data/humidity_legend_data.json";
@@ -41,13 +42,15 @@ export default function Map() {
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
   const [plantsArray, setPlants] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(undefined);
-  const [selectedGraphs, setSelectedGraphs] = useState(["energy", "ice"]);
+  const [selectedGraphs, setSelectedGraphs] = useState(["ws", "ice", "agg"]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentSwitchOption, setCurrentSwitchOption] =
     useState("Energy Production");
   const [selectedLayer, setSelectedLayer] = useState(["WindSpeed"]);
+  const [aggregateData, setAggregateData] = useState(undefined);
+  const [totalCapacity, setTotalCapacity] = useState(0);
 
-  const graphTypes = ["energy", "ice", "ws", "hum", "temp"];
+  const graphTypes = ["ws", "hum", "temp", "ice", "agg"];
 
   const handleSwitchChange = (option) => {
     setCurrentSwitchOption(option);
@@ -77,6 +80,7 @@ export default function Map() {
     setSelectedPlant(undefined);
   };
   const handleGraphSelection = (graph) => {
+    console.log(totalCapacity);
     setSelectedGraphs((prevSelectedGraphs) => {
       if (prevSelectedGraphs.includes(graph)) {
         return prevSelectedGraphs.filter((g) => g !== graph);
@@ -102,7 +106,7 @@ export default function Map() {
   };
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchDataForSelectedPlant() {
       if (!selectedPlant || !selectedDate) return;
 
       const energy = await getProduction(
@@ -129,13 +133,56 @@ export default function Map() {
       );
       setWindData(wind);
     }
-    const fetchPlants = async () => {
+
+    async function fetchAggregateData(plants) {
+      if (!selectedDate || !plants) return;
+
+      // Reset aggregateData when selectedDate or plants list changes
+      setAggregateData(new Array(24).fill(0));
+      let capacitySum = 0;
+      let i = 0;
+
+      plants.forEach((plant) => {
+        console.log(capacitySum);
+        i++;
+        console.log(i);
+        console.log(plant.capacity_kw, typeof plant.capacity_kw);
+        capacitySum += Number(plant.capacity_kw);
+        getProduction(
+          plant.id,
+          selectedDate.getFullYear(),
+          selectedDate.getMonth() + 1,
+          selectedDate.getDate()
+        ).then((energyDataStr) => {
+          // Assuming energyDataStr is already an array of strings as per the clarification
+          const energyData = energyDataStr.map(Number); // Convert each string to Number
+
+          setAggregateData((prevData) => {
+            // No need to check if prevData is empty since it's initialized with zeros
+            const updatedData = prevData.map((sum, index) => {
+              const currentEnergy = energyData[index] || 0; // Use 0 if undefined, though it should always be defined
+              return sum + currentEnergy;
+            });
+            return updatedData;
+          });
+        });
+      });
+      setTotalCapacity(capacitySum);
+    }
+
+    async function fetchPlantsAndAggregateData() {
       const plants = await getFarmsMeta();
       setPlants(plants);
-    };
-    fetchPlants();
 
-    fetchData();
+      // Now passing the freshly fetched plants directly to fetchAggregateData
+      fetchAggregateData(plants);
+    }
+
+    // Fetch metadata for all plants and then fetch and aggregate data for all plants
+    fetchPlantsAndAggregateData();
+
+    // Fetch data for the selected plant
+    fetchDataForSelectedPlant();
   }, [selectedPlant, selectedDate]);
 
   const [weatherData, setWeatherData] = useState([]);
@@ -197,9 +244,22 @@ export default function Map() {
                 </div>
               </div>
 
+              <div>
+                {selectedGraphs.includes("agg") && (
+                  <GraphComponent
+                    energyData={aggregateData}
+                    chartTitle="Aggregate Energy Output"
+                    selectedTime={selectedTime}
+                    selectedDate={selectedDate}
+                    maxCapacity={totalCapacity}
+                    yAxisTitle="MW"
+                  />
+                )}
+              </div>
+
               <div className="mb-8">
-                {selectedGraphs.includes("energy") && (
-                  <GraphIcelossComponenet
+                {selectedGraphs.includes("ice") && (
+                  <GraphComponent
                     energyData={energyData}
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -224,7 +284,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("ws") && (
                   <GraphComponent
-                    graphValues={windData}
+                    energyData={windData}
                     chartTitle="Windspeed"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -237,7 +297,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("hum") && (
                   <GraphComponent
-                    graphValues={windData}
+                    energyData={windData}
                     chartTitle="Humidity"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -250,7 +310,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("temp") && (
                   <GraphComponent
-                    graphValues={windData}
+                    energyData={windData}
                     chartTitle="Temperature"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -266,6 +326,18 @@ export default function Map() {
             <div className="py-5">
               <p>LIST VIEW</p>
               <h1>All Farms</h1>
+              <div>
+                {selectedGraphs.includes("agg") && (
+                  <GraphComponent
+                    energyData={aggregateData}
+                    chartTitle="Aggregate Energy Output"
+                    selectedTime={selectedTime}
+                    selectedDate={selectedDate}
+                    maxCapacity={totalCapacity}
+                    yAxisTitle="MW"
+                  />
+                )}
+              </div>
               <SearchComponent onSearchChange={handleSearchInputChange} />
               <SimpleListOfFarmsComponent
                 plantsArray={searchInput ? filteredPlantsArray : plantsArray}
