@@ -5,14 +5,7 @@ function ButtonComponent({ onLayerChange }) {
   const [selectedButtons, setSelectedButtons] = useState(['WindSpeed']);
 
   function handleButtonClick(buttonName) {
-    setSelectedButtons((prevSelectedButtons) => {
-      // Toggle the selection state of the button
-      if (prevSelectedButtons.includes(buttonName)) {
-        return prevSelectedButtons.filter((name) => name !== buttonName);
-      } else {
-        return [...prevSelectedButtons, buttonName];
-      }
-    });
+    setSelectedButtons([buttonName]);
   }
 
   // Use useEffect to call onLayerChange after selectedButtons state has been updated
