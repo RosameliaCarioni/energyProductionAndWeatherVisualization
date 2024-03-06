@@ -1,5 +1,4 @@
 "use client";
-//import { getProduction } from "@/utils/getFarmsProduction";
 import React, { useState, useEffect } from "react";
 
 import {
@@ -30,56 +29,58 @@ ChartJS.register(
   Colors
 );
 
-function GraphComponent({
-  graphValues,
+function GraphIcelossComponenet({
+  energyData, // New prop for energy data
+  icelossData, // New prop for iceloss data
   chartTitle,
   selectedTime,
   selectedDate,
+  maxCapacity,
   yAxisTitle,
   lineColor,
   lineBackgroundColor,
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const selectedLabel = `${selectedTime}`;
-  const chartData = {
-    //x-axis:
-    labels: [
-      "0",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-      "17",
-      "18",
-      "19",
-      "20",
-      "21",
-      "22",
-      "23",
-    ],
 
-    //y-values:
-    datasets: [
-      {
-        label: !isLoading ? chartTitle : "Loading data...",
-        data: !isLoading ? graphValues : Array(24).fill(0),
-        borderColor: !isLoading ? lineColor : "rgb(30, 30, 30)",
-        backgroundColor: lineBackgroundColor,
-      },
-    ],
+  const datasets = [
+    {
+      label: "Energy Output",
+      data: !isLoading ? energyData : Array(24).fill(0),
+      borderColor: !isLoading ? "rgb(135, 211, 184)" : "rgb(30, 30, 30)",
+      backgroundColor: "rgb(135, 211, 184, 0.35)",
+    },
+  ];
+
+  if (!!maxCapacity) {
+    datasets.push({
+      label: "Max Capacity",
+      data: !isLoading ? Array(24).fill(maxCapacity / 1000) : Array(24).fill(0),
+      borderColor: "rgb(255, 231, 104)", // Yellow color for max capacity
+      backgroundColor: "rgb(255, 231, 104, 0.35)",
+      pointRadius: 0,
+      borderWidth: 1,
+    });
+  }
+
+  // Conditionally add the "Ice Loss" dataset if icelossData is not undefined
+  if (!!icelossData) {
+    datasets.push({
+      label: "Ice Loss",
+      data: !isLoading ? icelossData : Array(24).fill(0),
+      borderColor: "rgb(255, 99, 132)", // Red color for ice loss
+      backgroundColor: "rgb(255, 99, 132, 0.35)",
+    });
+  }
+  const chartData = {
+    labels: Array.from({ length: 24 }, (_, i) => (i + 1).toString()),
+    datasets: datasets,
   };
+  // Options remain unchanged
   const options = {
+    elements: {
+      //point: { pointRadius: 0 },
+    },
     maintainAspectRatio: false,
     stepped: true,
     scales: {
@@ -90,6 +91,7 @@ function GraphComponent({
         ticks: {
           color: "rgb(214,214,214)",
         },
+        title: { display: true, text: "MW", padding: 2 },
         beginAtZero: true,
         title: {
           display: true,
@@ -115,6 +117,7 @@ function GraphComponent({
         },
       },
     },
+
     plugins: {
       legend: {
         labels: {
@@ -140,30 +143,23 @@ function GraphComponent({
   };
 
   useEffect(() => {
-    if (graphValues && graphValues.length > 0) {
+    if (energyData && energyData.length > 0) {
       setIsLoading(false);
     } else {
       console.log("loading");
       setIsLoading(true);
     }
-  }, [graphValues]);
+  }, [energyData, icelossData]);
 
-  if (isLoading) {
-    return (
-      <div className="animate-pulse graph">
-        <Line data={chartData} options={options} />
-      </div>
-    );
-  }
-
+  // Render logic remains unchanged
   return (
     <div className="graph">
       {isLoading ? (
-        renderSkeletonLoader()
+        <div className="animate-pulse">Loading...</div>
       ) : (
         <Line data={chartData} options={options} />
       )}
     </div>
   );
 }
-export default GraphComponent;
+export default GraphIcelossComponenet;
