@@ -22,10 +22,8 @@ import { useState, useEffect } from "react";
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
 import EnergyAfterIceLossLegendComponent from "@/components/EnergyAfterIceLossLegendComponent";
-import GraphIcelossComponent from "@/components/GraphIcelossComponent";
 import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent";
 import EnergyIceLossSwitchButton from "@/components/EnergyIceLossSwitchButton";
-import ModelSelectComponent from "@/components/ModelSelectComponent";
 import ModelSelectComponent from "@/components/ModelSelectComponent";
 import MapLegendComponent from "@/components/MapLegendComponent";
 import humidityLegendData from "@/data/humidity_legend_data.json";
@@ -50,7 +48,7 @@ export default function Map() {
   const [aggregateData, setAggregateData] = useState(undefined);
   const [totalCapacity, setTotalCapacity] = useState(0);
 
-  const graphTypes = ["ws", "hum", "temp", "ice", "agg"];
+  const graphTypes = ["agg", "ws", "hum", "temp", "ice"];
 
   const handleSwitchChange = (option) => {
     setCurrentSwitchOption(option);
@@ -80,7 +78,6 @@ export default function Map() {
     setSelectedPlant(undefined);
   };
   const handleGraphSelection = (graph) => {
-    console.log(totalCapacity);
     setSelectedGraphs((prevSelectedGraphs) => {
       if (prevSelectedGraphs.includes(graph)) {
         return prevSelectedGraphs.filter((g) => g !== graph);
@@ -140,13 +137,8 @@ export default function Map() {
       // Reset aggregateData when selectedDate or plants list changes
       setAggregateData(new Array(24).fill(0));
       let capacitySum = 0;
-      let i = 0;
 
       plants.forEach((plant) => {
-        console.log(capacitySum);
-        i++;
-        console.log(i);
-        console.log(plant.capacity_kw, typeof plant.capacity_kw);
         capacitySum += Number(plant.capacity_kw);
         getProduction(
           plant.id,
@@ -271,7 +263,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("ice") && (
                   <GraphComponent
-                    graphValues={icelossData}
+                    energyData={icelossData}
                     chartTitle="Ice loss"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
