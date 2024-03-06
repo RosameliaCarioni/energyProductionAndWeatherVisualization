@@ -1,6 +1,6 @@
 import React from "react";
 
-function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, hoverInfo, onHoverPlant }) {
+function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, energyData, selectedHour, hoverInfo, onHoverPlant }) {
 
     const handlePlantClick = (plant) => {
         onSelectPlant(plant);
@@ -12,7 +12,7 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, hoverInfo, onHo
     return (
         <div className="list-container mx-auto max-w-4xl rounded-lg shadow mr-4">
             <ul className="divide-y divide-gray-200">
-                {plantsArray?.map((plant) => (
+                {plantsArray?.map((plant, index) => (
                     <li
                         key={plant.id}
                         className={`flex justify-between items-center p-3 transition duration-150 ease-in-out cursor-pointer ${
@@ -25,6 +25,10 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, hoverInfo, onHo
                           onMouseLeave={() => handlePlantHover(undefined)}
                     >
                         <span className="font-medium">{plant.name}{' '}</span>
+                        <span className="text-gray-500">
+                        {/* Ensure energyData and selectedHour are defined and access the correct hour's data */}
+                        {' '}{energyData && energyData[index] && energyData[index] } MW
+                        </span>
                         <span className="text-gray-500">{' '}{plant.capacity_kw / 1000} MW</span>
                     </li>
                 ))}

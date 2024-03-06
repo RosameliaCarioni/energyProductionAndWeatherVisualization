@@ -26,10 +26,12 @@ import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
 import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent";
 import EnergyIceLossSwitchButton from "@/components/EnergyIceLossSwitchButton";
 import ModelSelectComponent from "@/components/ModelSelectComponent"; 
+import FilterPropertiesComponent from "@/components/FilterPropertiesComponent";
 
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
+  const [allEnergyData, setAllEnergyData] = useState(undefined)
   const [windData, setWindData] = useState(undefined);
   const [icelossData, setEnergyAfterIcelossData] = useState(undefined);
   const [selectedPlant, setSelectedPlant] = useState(undefined);
@@ -43,6 +45,33 @@ export default function Map() {
   const [selectedLayer, setSelectedLayer] = useState(["WindSpeed"]);
 
   const graphTypes = ["ws", "hum", "temp", "ice"];
+  // Add a state to keep track of the sorting
+  const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
+  
+
+  // Function to handle the sort order change
+  const handleSortOrderChange = (selectedProperty, order) => {
+    // If the selected model is "Alphabetical", then sort by the plant's name
+    if (selectedProperty === 'Alphabetically') {
+      setSortConfig({ key: 'name', direction: order });
+    }
+    if (selectedProperty === 'Energy Production') {
+      setSortConfig({key : 'production', direction: order})
+    }
+    if (selectedProperty === 'Capacity') {
+      setSortConfig({ key: 'capacity_kw', direction: order });
+    }
+    if (selectedProperty === 'North to South') {
+      setSortConfig({ key: 'latitude', direction: order });
+    }
+    if (selectedProperty === 'West to East') {
+      setSortConfig({ key: 'longitude', direction: order });
+    }
+    if (selectedProperty === 'Energy After Ice Loss') {
+      setSortConfig({ key: 'productionIceLoss', direction: order });
+    }
+    // Implement sorting logic for other cases if needed...
+  };
 
   const handleSwitchChange = (option) => {
     setCurrentSwitchOption(option);
@@ -96,6 +125,116 @@ export default function Map() {
 
     setFilteredPlantsArray(filteredArray);
   };
+
+  useEffect(() => {
+    // Fetch plants and handle sorting whenever sortConfig changes
+    const fetchPlants = async () => {
+      //let plants = await getFarmsMeta();
+      
+    
+      plantsArray.sort((a, b) => {
+          let aValue = a[sortConfig.key];
+          let bValue = b[sortConfig.key];
+        
+          // Check if the sorting is supposed to be numeric
+          if (sortConfig.key !== 'name') { // Assuming 'name' is the key for alphabetic sorting
+            aValue = parseFloat(aValue);
+            bValue = parseFloat(bValue);
+          } else { // For alphabetic sorting, convert to lowercase for case-insensitive comparison
+            aValue = aValue.toLowerCase();
+            bValue = bValue.toLowerCase();
+          }
+        
+          if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+          if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+          return 0;
+        });
+
+      let productionValues = plantsArray.map(plant => plant.production);  
+      setAllEnergyData(productionValues); // Update your state or variable that holds allEnergyData
+      }
+
+      fetchPlants();
+
+    },[sortConfig]);
+    
+
+
+  useEffect(() => {
+    // Define a new function that will fetch energy data for all plants
+    const fetchEnergyDataForAllPlants = async (plants) => {
+      let plantWithProduction = []; // Declare plantWithProduction here to increase its scope
+
+      // Map over the plants and get the energy data for each plant
+      const promises = plants.map(plant => getProduction(
+        plant.id,
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 1,
+        selectedDate.getDate()
+      ));
+  
+      // Resolve all the promises
+      const results = await Promise.all(promises);
+      // Update the state with the fetched energy data
+      const resultsForHour = results.map(plantData => {
+        return plantData[selectedTime] ? parseFloat(plantData[selectedTime]) : null;
+      });
+      setAllEnergyData(resultsForHour);
+      // Check if resultsForHour contains any non-null values
+      if (resultsForHour.some(value => value !== null)) {
+        // Add 'production' field to each plant and create a new array for production values
+        plantWithProduction = plants.map((plant, index) => {
+        // Add the 'production' field to each plant object
+        plant.production = resultsForHour[index];
+        // Return the production value to build the productionValues array
+        return plant;
+      });
+        setPlants(plantWithProduction)
+      }
+    };
+
+    const fetchIceLossDataForAllPlants = async (plants) => {
+      let plantWithIceLoss = []; // Declare plantWithProduction here to increase its scope
+
+      // Map over the plants and get the energy data for each plant
+      const promises = plants.map(plant => getEnergyAfterIceLoss(
+        plant.id,
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 1,
+        selectedDate.getDate()
+      ));
+  
+      // Resolve all the promises
+      const results = await Promise.all(promises);
+      // Update the state with the fetched energy data
+      const resultsForHour = results.map(plantData => {
+        return plantData[selectedTime] ? parseFloat(plantData[selectedTime]) : null;
+      });
+      //setAllIceLossData(resultsForHour);
+      // Check if resultsForHour contains any non-null values
+      if (resultsForHour.some(value => value !== null)) {
+        // Add 'production' field to each plant and create a new array for production values
+        plantWithIceLoss = plants.map((plant, index) => {
+        // Add the 'production' field to each plant object
+        plant.productionIceLoss = resultsForHour[index];
+        // Return the production value to build the productionValues array
+        return plant;
+      });
+        setPlants(plantWithIceLoss)
+      }
+    };
+  
+    const fetchPlants = async () => {
+      const plants = await getFarmsMeta();
+      setPlants(plants);
+      // After fetching the plants, fetch the energy data for all plants
+      fetchEnergyDataForAllPlants(plants);
+      fetchIceLossDataForAllPlants(plants);
+    };
+    
+    // Call the fetchPlants function when the component mounts
+    fetchPlants();
+  }, [selectedDate, selectedTime]); // Dependence on selectedDate to re-fetch if it changes
 
   useEffect(() => {
     async function fetchData() {
@@ -233,8 +372,12 @@ export default function Map() {
                 onChange={handleSearchInputChange}
                 className="font-black px-2 mb-4"
               />
+              <FilterPropertiesComponent onSortOrderChange={handleSortOrderChange}/>
+          
               <SimpleListOfFarmsComponent
                 plantsArray={searchInput ? filteredPlantsArray : plantsArray}
+                energyData={allEnergyData}
+                selectedHour={selectedTime}
                 hoverInfo={hoverInfo}
                 onSelectPlant={handlePlantSelect}
                 onHoverPlant={handlePlantHover}
