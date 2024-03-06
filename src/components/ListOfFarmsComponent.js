@@ -11,7 +11,6 @@ import { getWindSpeed } from "@/utils/getFarmsProduction";
 import { getEnergyAfterIceLoss } from "@/utils/getFarmsProduction";
 import { getRelativeHumidity } from "@/utils/getFarmsProduction";
 import { getWindDirection } from "@/utils/getFarmsProduction";
-import GraphIcelossComponenet from "./GraphIcelossComponent";
 
 export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
   //const { date, selectedPriceArea } = props;  // Destructure date and selectedPriceArea from props
@@ -177,7 +176,7 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
           <h2 className="text-none font-normal">{item.name}</h2>
           <div className="flex ">
             {/* Energy Output Graph */}
-            <GraphIcelossComponenet
+            <GraphComponent
               energyData={
                 energyData && energyData[index]
                   ? energyData[index]

@@ -29,7 +29,7 @@ ChartJS.register(
   Colors
 );
 
-function GraphIcelossComponenet({
+function GraphComponent({
   energyData, // New prop for energy data
   icelossData, // New prop for iceloss data
   chartTitle,
@@ -162,4 +162,4 @@ function GraphIcelossComponenet({
     </div>
   );
 }
-export default GraphIcelossComponenet;
+export default GraphComponent;
