@@ -40,7 +40,11 @@ export default function Map() {
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
   const [plantsArray, setPlants] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(undefined);
-  const [selectedGraphs, setSelectedGraphs] = useState(["ws", "ice", "agg"]);
+  const [selectedGraphs, setSelectedGraphs] = useState([
+    "energy",
+    "ice",
+    "agg",
+  ]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentSwitchOption, setCurrentSwitchOption] =
     useState("Energy Production");
@@ -69,6 +73,8 @@ export default function Map() {
     setEnergyData(undefined);
     setWindData(undefined);
     setEnergyAfterIcelossData(undefined);
+    //SetTemperatureData(undefined);
+    //SetTemperatureData(undefined);
     setSelectedPlant(plant);
   };
   const handlePlantHover = (plant) => {
@@ -235,12 +241,14 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("agg") && (
                   <GraphComponent
-                    GraphValues={aggregateData}
-                    chartTitle="Aggregate Energy Output"
+                    graphValues={aggregateData}
+                    chartTitle="Energy Output, all plants"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     maxCapacity={totalCapacity}
                     yAxisTitle="MW"
+                    lineColor="rgb(95, 190, 179)"
+                    lineBackgroundColor="rgb(95, 190, 179, 0.35)"
                   />
                 )}
               </div>
@@ -252,6 +260,7 @@ export default function Map() {
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     maxCapacity={selectedPlant.capacity_kw}
+                    chartTitle="Energy Output, selected plant"
                     yAxisTitle="MW"
                     lineColor="rgb(95, 190, 179)"
                     lineBackgroundColor="rgb(95, 190, 179, 0.35)"
@@ -325,6 +334,8 @@ export default function Map() {
                     selectedDate={selectedDate}
                     maxCapacity={totalCapacity}
                     yAxisTitle="MW"
+                    lineColor="rgb(95, 190, 179)"
+                    lineBackgroundColor="rgb(95, 190, 179, 0.35)"
                   />
                 )}
               </div>
