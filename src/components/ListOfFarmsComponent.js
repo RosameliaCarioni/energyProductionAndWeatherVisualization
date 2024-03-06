@@ -15,6 +15,14 @@ import { getWindDirection } from "@/utils/getFarmsProduction";
 export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
   //const { date, selectedPriceArea } = props;  // Destructure date and selectedPriceArea from props
 
+  const [data, setData] = useState(null); // Initialize state to hold your data
+  const [energyData, setEnergyData] = useState(null);
+  const [windSpeed, setwindSpeed] = useState(null);
+  const [temperature, setTemperatureData] = useState(null);
+  const [energyAfterIceLoss, setEnergyAfterIceLoss] = useState(null);
+  const [relativeHumidity, setRelativeHumidity] = useState(null);
+  const [windDirection, setWindDirection] = useState(null);
+
   useEffect(() => {
     async function fetchData() {
       const metaResult = await getFarmsMeta();
@@ -161,13 +169,6 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
 
   return (
     <div className="flex flex-col gap-5 py-5" as="main">
-      <input
-        type="text"
-        placeholder="Search by plant name"
-        value={searchInput}
-        onChange={handleSearchInputChange}
-        className="font-black px-2 mb-4 w-33"
-      />
       {filteredData?.map((item, index) => (
         <div key={item.id} className="overflow-hidden">
           {" "}
@@ -185,19 +186,18 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
               chartTitle="Energy and Iceloss"
               maxCapacity={item.capacity_kw}
             />
-            {/* Wind Data Graph */}
+            {/* ice loss Graph */}
             <GraphComponent
               graphValues={
                 energyAfterIceLoss && energyAfterIceLoss[index]
                   ? energyAfterIceLoss[index]
                   : new Array(24).fill(0)
               }
-              chartTitle="Ice Loss"
+              chartTitle="Ice loss"
               yAxisTitle="%"
               lineColor="rgb(255, 99, 132)"
               lineBackgroundColor="rgb(255, 99, 132, 0.35)"
             />
-
             {/* Wind Data Graph */}
             <GraphComponent
               graphValues={
@@ -206,8 +206,8 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
                   : new Array(24).fill(0)
               }
               chartTitle="Wind Speed"
-              lineColor="rgb(199, 218, 242)"
               yAxisTitle="m/s"
+              lineColor="rgb(199, 218, 242)"
               lineBackgroundColor="rgb(199, 218, 242, 0.35)"
             />
 
@@ -219,8 +219,8 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
                   : new Array(24).fill(0)
               }
               chartTitle="Temperature"
-              lineColor="rgb(199, 218, 242)"
               yAxisTitle="°C"
+              lineColor="rgb(199, 218, 242)"
               lineBackgroundColor="rgb(199, 218, 242, 0.35)"
             />
 
@@ -232,8 +232,8 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
                   : new Array(24).fill(0)
               }
               chartTitle="energyAfterIceLoss"
-              lineColor="rgb(199, 218, 242)"
               yAxisTitle="MW"
+              lineColor="rgb(199, 218, 242)"
               lineBackgroundColor="rgb(199, 218, 242, 0.35)"
             />
 
@@ -245,8 +245,8 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
                   : new Array(24).fill(0)
               }
               chartTitle="relativeHumidity"
+              yAxisTitle="RH"
               lineColor="rgb(199, 218, 242)"
-              yAxisTitle="m/s"
               lineBackgroundColor="rgb(199, 218, 242, 0.35)"
             />
 
@@ -258,8 +258,8 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
                   : new Array(24).fill(0)
               }
               chartTitle="windDirection"
-              lineColor="rgb(199, 218, 242)"
               yAxisTitle="?"
+              lineColor="rgb(199, 218, 242)"
               lineBackgroundColor="rgb(199, 218, 242, 0.35)"
             />
           </div>
