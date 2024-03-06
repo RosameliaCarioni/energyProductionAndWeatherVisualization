@@ -282,17 +282,19 @@ export default function Map() {
             switchOption={currentSwitchOption}
             selectedLayer={selectedLayer}
           >
-            <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange} />
             <div className="flex flex-col items-end w-full">
-              {currentSwitchOption === 'Energy Production' ? (
-                <EnergyProductionLegendComponent />
-              ) : (
-                <EnergyAfterIceLossLegendComponent />
-              )}
+              <div className="flex flex-col items-end">
+                <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange} />
+                {currentSwitchOption === 'Energy Production' ? (
+                  <EnergyProductionLegendComponent />
+                ) : (
+                  <EnergyAfterIceLossLegendComponent />
+                )}
+              </div>
               <TimeSliderComponent
-                onTimeChange={handleTimeChange}
-                onDateChange={handleDateChange}
-              />
+                  onTimeChange={handleTimeChange}
+                  onDateChange={handleDateChange}
+                />
             </div>
           </MapComponentWithNoSSR>
         </div>
