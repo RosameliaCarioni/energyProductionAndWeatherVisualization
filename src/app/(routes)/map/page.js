@@ -265,10 +265,10 @@ export default function Map() {
         </div>
 
         <div className="w-full map-col relative">
-          <div className="absolute top-0 right-0 z-50 mt-4 mr-4 p-4 items-end" style={{width: '125px', padding: '0px'}}>
+          <div className="absolute top-0 right-0 z-50 mt-4 mr-4 p-4 flex flex-col items-end" style={{ padding: '0px'}}>
+            <ModelSelectComponent />
             <SelectWeatherDisplayComponent onLayerChange={handleLayerChange} />
             <MapLegendComponent weatherData={weatherData}></MapLegendComponent>
-            <ModelSelectComponent />
           </div>
           <MapComponentWithNoSSR
             className="mr-2"
@@ -284,7 +284,7 @@ export default function Map() {
           >
             <div className="flex flex-col items-end w-full">
               <div className="flex flex-col items-end">
-                <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange} />
+              <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange} />
                 {currentSwitchOption === 'Energy Production' ? (
                   <EnergyProductionLegendComponent />
                 ) : (

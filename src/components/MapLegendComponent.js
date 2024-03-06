@@ -10,15 +10,14 @@ const MapLegendComponent = ({ weatherData }) => {
   console.log(weatherData);
   return (
     <div>
-      <div className="flex flex-col bg-dark rounded-md mt-4 mb-2">
-        <p>{weatherData.title}</p>
+      <div className="flex flex-col items-end bg-dark rounded-md mb-2 p-3">
         {weatherData.data.map((item, index) => (
           <div key={index} className="flex items-center">
+            <div className='text-xs mr-2'>{item.label}</div>
             <div
               className="color-box"
               style={{ backgroundColor: `rgba(255, ${Math.round(255 - item.value * 255)}, 0, 1)` }}
             ></div>
-            <div className='text-xs'>{item.label}</div>
           </div>
         ))}
       </div>
