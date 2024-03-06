@@ -728,6 +728,10 @@ video {
   width: 100%;
 }
 
+.w-half {
+  width: 50%;
+}
+
 .w-33 {
   width: 33%;
 }
@@ -845,6 +849,11 @@ video {
   padding: 1rem;
 }
 
+.px-1 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .px-2 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -930,6 +939,10 @@ video {
 
 .font-red {
   color: #ff7272;
+}
+
+.font-white {
+  color: #fff;
 }
 
 .text-center {
@@ -1090,4 +1103,8 @@ input[type=range]::-webkit-slider-runnable-track {
 /* If you are using an ID to target the input */
 #model-select {
   color: black; /* Set the text color to black */
+}
+
+.priceMapButton:hover {
+  background-color: rgba(95, 190, 179, 0.5) !important; /* Add !important to ensure priority */
 }
