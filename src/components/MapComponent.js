@@ -486,6 +486,10 @@ function MapComponent({
                   <b>Current wind speed:</b>{" "}
                   <span className="font-blue">12 m/s</span>
                 </p>
+                <p>
+                  <b>Price area:</b>{" "}
+                  <span className="font-blue">{hoverInfo.price_area}</span>
+                </p>
               </div>
             </Popup>
           </div>
