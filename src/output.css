@@ -1081,5 +1081,13 @@ input[type=range]::-webkit-slider-runnable-track {
 .color-box {
   width: 20px;
   height: 20px;
-  margin-right: 5px;
+}
+
+.custom-border {
+  border-radius: 0.375rem 0 0.375rem 0.375rem;
+}
+
+/* If you are using an ID to target the input */
+#model-select {
+  color: black; /* Set the text color to black */
 }
