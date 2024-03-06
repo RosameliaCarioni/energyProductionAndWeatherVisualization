@@ -48,7 +48,7 @@ export default function Map() {
   const [aggregateData, setAggregateData] = useState(undefined);
   const [totalCapacity, setTotalCapacity] = useState(0);
 
-  const graphTypes = ["agg", "ws", "hum", "temp", "ice"];
+  const graphTypes = ["agg", "energy", "ws", "hum", "temp", "ice"];
 
   const handleSwitchChange = (option) => {
     setCurrentSwitchOption(option);
