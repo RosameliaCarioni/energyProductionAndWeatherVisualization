@@ -36,15 +36,12 @@ function GraphComponent({
   selectedTime,
   selectedDate,
   yAxisTitle,
-  lineColor,
-  lineBackgroundColor,
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const selectedLabel = `${selectedTime}`;
   const chartData = {
     //x-axis:
     labels: [
-      "0",
       "1",
       "2",
       "3",
@@ -68,6 +65,7 @@ function GraphComponent({
       "21",
       "22",
       "23",
+      "24",
     ],
 
     //y-values:
@@ -75,8 +73,8 @@ function GraphComponent({
       {
         label: !isLoading ? chartTitle : "Loading data...",
         data: !isLoading ? graphValues : Array(24).fill(0),
-        borderColor: !isLoading ? lineColor : "rgb(30, 30, 30)",
-        backgroundColor: lineBackgroundColor,
+        borderColor: !isLoading ? "rgb(135, 211, 184)" : "rgb(30, 30, 30)",
+        backgroundColor: "rgb(135, 211, 184, 0.25)",
       },
     ],
   };
@@ -92,12 +90,7 @@ function GraphComponent({
           color: "rgb(214,214,214)",
         },
         beginAtZero: true,
-        title: {
-          display: true,
-          text: yAxisTitle,
-          padding: 2,
-          color: "rgb(214,214,214)",
-        },
+        title: { display: true, text: yAxisTitle, padding: 2 },
       },
       x: {
         grid: {
@@ -108,12 +101,7 @@ function GraphComponent({
           maxRotation: 0,
           minRotation: 0,
         },
-        title: {
-          display: true,
-          text: "Power Hour",
-          padding: 2,
-          color: "rgb(214,214,214)",
-        },
+        title: { display: true, text: "Power Hour", padding: 2 },
       },
     },
     plugins: {

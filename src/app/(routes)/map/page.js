@@ -25,7 +25,11 @@ import EnergyAfterIceLossLegendComponent from "@/components/EnergyAfterIceLossLe
 import GraphIcelossComponenet from "@/components/GraphIcelossComponent";
 import SelectWeatherDisplayComponent from "@/components/SelectWeatherDisplayComponent";
 import EnergyIceLossSwitchButton from "@/components/EnergyIceLossSwitchButton";
-import ModelSelectComponent from "@/components/ModelSelectComponent";
+import ModelSelectComponent from "@/components/ModelSelectComponent"; 
+import MapLegendComponent from "@/components/MapLegendComponent";
+import humidityLegendData from "@/data/humidity_legend_data.json";
+import temperatureLegendData from "@/data/temperature_legend_data.json";
+import windspeedLegendData from "@/data/windspeed_legend_data.json";
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
@@ -36,13 +40,12 @@ export default function Map() {
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
   const [plantsArray, setPlants] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(undefined);
-  const [selectedGraphs, setSelectedGraphs] = useState(["energy", "ice"]);
+  const [selectedGraphs, setSelectedGraphs] = useState(["ws", "ice"]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [currentSwitchOption, setCurrentSwitchOption] =
-    useState("Energy Production");
+  const [currentSwitchOption, setCurrentSwitchOption] = useState('Energy Production');
   const [selectedLayer, setSelectedLayer] = useState(["WindSpeed"]);
 
-  const graphTypes = ["energy", "ice", "ws", "hum", "temp"];
+  const graphTypes = ["ws", "hum", "temp", "ice"];
 
   const handleSwitchChange = (option) => {
     setCurrentSwitchOption(option);
@@ -134,10 +137,28 @@ export default function Map() {
     fetchData();
   }, [selectedPlant, selectedDate]);
 
+  const [weatherData, setWeatherData] = useState([]);
+
+  useEffect(() => {
+    switch (selectedLayer[0]) {
+      case "RelativeHumidity":
+        setWeatherData(humidityLegendData);
+        break;
+      case "Temperature":
+        setWeatherData(temperatureLegendData);
+        break;
+      case "WindSpeed":
+        setWeatherData(windspeedLegendData);
+        break;
+      default:
+        setWeatherData(windspeedLegendData);
+    }  
+  }, [selectedLayer]);
+
   return (
     <div>
       <div className="ml-16 grid grid-col-2 vh-100">
-        <div className="overflow-y">
+        <div className="overflow-y map-col">
           {selectedPlant && (
             <div className="py-5">
               <div className="flex justify-between items-center w-full">
@@ -176,26 +197,14 @@ export default function Map() {
               </div>
 
               <div className="mb-8">
-                {selectedGraphs.includes("energy") && (
+                {selectedGraphs.includes("ice") && (
                   <GraphIcelossComponenet
                     energyData={energyData}
+                    icelossData={icelossData}
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     maxCapacity={selectedPlant.capacity_kw}
                     yAxisTitle="MW"
-                  />
-                )}
-              </div>
-              <div>
-                {selectedGraphs.includes("ice") && (
-                  <GraphComponent
-                    graphValues={icelossData}
-                    chartTitle="Iceloss"
-                    selectedTime={selectedTime}
-                    selectedDate={selectedDate}
-                    yAxisTitle="%"
-                    lineColor="rgb(255, 99, 132)"
-                    lineBackgroundColor="rgb(255, 99, 132, 0.35)"
                   />
                 )}
               </div>
@@ -207,8 +216,6 @@ export default function Map() {
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     yAxisTitle="m/s"
-                    lineColor="rgb(199, 218, 242)"
-                    lineBackgroundColor="rgb(199, 218, 242, 0.35)"
                   />
                 )}
               </div>
@@ -220,8 +227,6 @@ export default function Map() {
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     yAxisTitle="RH"
-                    lineColor="rgb(199, 218, 242)"
-                    lineBackgroundColor="rgb(199, 218, 242, 0.35)"
                   />
                 )}
               </div>
@@ -233,8 +238,6 @@ export default function Map() {
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     yAxisTitle="°C"
-                    lineColor="rgb(199, 218, 242)"
-                    lineBackgroundColor="rgb(199, 218, 242, 0.35)"
                   />
                 )}
               </div>
@@ -261,7 +264,12 @@ export default function Map() {
           )}
         </div>
 
-        <div className="w-full">
+        <div className="w-full map-col relative">
+          <div className="absolute top-0 right-0 z-50 mt-4 mr-4 p-4 items-end" style={{width: '125px', padding: '0px'}}>
+            <SelectWeatherDisplayComponent onLayerChange={handleLayerChange} />
+            <MapLegendComponent weatherData={weatherData}></MapLegendComponent>
+            <ModelSelectComponent />
+          </div>
           <MapComponentWithNoSSR
             className="mr-2"
             onSelectPlant={handlePlantSelect}
@@ -274,10 +282,9 @@ export default function Map() {
             switchOption={currentSwitchOption}
             selectedLayer={selectedLayer}
           >
-            <ModelSelectComponent />
             <EnergyIceLossSwitchButton onSwitchChange={handleSwitchChange} />
             <div className="flex flex-col items-end w-full">
-              {currentSwitchOption === "Energy Production" ? (
+              {currentSwitchOption === 'Energy Production' ? (
                 <EnergyProductionLegendComponent />
               ) : (
                 <EnergyAfterIceLossLegendComponent />
@@ -287,7 +294,6 @@ export default function Map() {
                 onDateChange={handleDateChange}
               />
             </div>
-            <SelectWeatherDisplayComponent onLayerChange={handleLayerChange} />
           </MapComponentWithNoSSR>
         </div>
       </div>
