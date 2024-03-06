@@ -12,7 +12,7 @@ const SearchComponent = ({ onSearchChange }) => {
   };
 
   return (
-    <div className="mb-4" style={{width: '500px'}}>
+    <div className="mb-4 pr-2">
         <input
             type="text"
             placeholder="Search for plant name..."
