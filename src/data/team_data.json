@@ -3,31 +3,31 @@
         {
             "id": "1",
             "name": "Rosamelia Carioni",
-            "role": "Role",
+            "roles": ["Backend"],
             "image": "/assets/images/meli-bw.png"
         },
         {
             "id": "2",
             "name": "Mischa Tomasz Rauch",
-            "role": "Role",
+            "roles": ["Backend"],
             "image": "/assets/images/mischa-bw.png"
         },
         {
             "id": "3",
             "name": "Samuel Söderberg",
-            "role": "Role",
+            "roles": ["Frontend Engineer"],
             "image": "/assets/images/samuel-bw.png"
         },
         {
             "id": "4",
             "name": "Elin Lundqvist",
-            "role": "Role",
+            "roles": ["Frontend"],
             "image": "/assets/images/elin-bw.png"
         },
         {
             "id": "5",
             "name": "Danina Jansson",
-            "role": "Role",
+            "roles": ["UX/UI Designer", "Frontend"],
             "image": "/assets/images/danina-bw.png"
         }
     ]

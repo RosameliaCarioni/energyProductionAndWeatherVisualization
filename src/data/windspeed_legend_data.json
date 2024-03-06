@@ -1,0 +1,11 @@
+{
+  "title": "Windspeed",
+  "data": [
+    { "value": 0.0, "label": "Windspeed" },
+    { "value": 0.2, "label": "Windspeed" },
+    { "value": 0.4, "label": "Windspeed" },
+    { "value": 0.6, "label": "Windspeed" },
+    { "value": 0.8, "label": "Windspeed" },
+    { "value": 1, "label": "Windspeed" }
+  ]
+}
