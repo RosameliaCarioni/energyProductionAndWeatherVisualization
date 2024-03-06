@@ -178,13 +178,15 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
           <div className="flex ">
             {/* Energy Output Graph */}
             <GraphComponent
-              energyData={
+              graphValues={
                 energyData && energyData[index]
                   ? energyData[index]
                   : new Array(24).fill(0)
               }
-              chartTitle="Energy and Iceloss"
+              chartTitle="Energy Output"
               maxCapacity={item.capacity_kw}
+              lineColor="rgb(95, 190, 179)"
+              lineBackgroundColor="rgb(95, 190, 179, 0.35)"
             />
             {/* ice loss Graph */}
             <GraphComponent

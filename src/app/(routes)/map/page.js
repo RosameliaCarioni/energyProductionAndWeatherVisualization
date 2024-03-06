@@ -235,7 +235,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("agg") && (
                   <GraphComponent
-                    energyData={aggregateData}
+                    GraphValues={aggregateData}
                     chartTitle="Aggregate Energy Output"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -246,20 +246,22 @@ export default function Map() {
               </div>
 
               <div className="mb-8">
-                {selectedGraphs.includes("ice") && (
+                {selectedGraphs.includes("energy") && (
                   <GraphComponent
-                    energyData={energyData}
+                    graphValues={energyData}
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     maxCapacity={selectedPlant.capacity_kw}
                     yAxisTitle="MW"
+                    lineColor="rgb(95, 190, 179)"
+                    lineBackgroundColor="rgb(95, 190, 179, 0.35)"
                   />
                 )}
               </div>
               <div>
                 {selectedGraphs.includes("ice") && (
                   <GraphComponent
-                    energyData={icelossData}
+                    graphValues={icelossData}
                     chartTitle="Ice loss"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -272,7 +274,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("ws") && (
                   <GraphComponent
-                    energyData={windData}
+                    graphValues={windData}
                     chartTitle="Windspeed"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -285,7 +287,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("hum") && (
                   <GraphComponent
-                    energyData={windData}
+                    graphValues={windData}
                     chartTitle="Humidity"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -298,7 +300,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("temp") && (
                   <GraphComponent
-                    energyData={windData}
+                    graphValues={windData}
                     chartTitle="Temperature"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -317,7 +319,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("agg") && (
                   <GraphComponent
-                    energyData={aggregateData}
+                    graphValues={aggregateData}
                     chartTitle="Aggregate Energy Output"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}

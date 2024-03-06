@@ -30,7 +30,7 @@ ChartJS.register(
 );
 
 function GraphComponent({
-  energyData, // New prop for energy data
+  graphValues, // New prop for energy data
   icelossData, // New prop for iceloss data
   chartTitle,
   selectedTime,
@@ -45,10 +45,10 @@ function GraphComponent({
 
   const datasets = [
     {
-      label: "Energy Output",
-      data: !isLoading ? energyData : Array(24).fill(0),
-      borderColor: !isLoading ? "rgb(135, 211, 184)" : "rgb(30, 30, 30)",
-      backgroundColor: "rgb(135, 211, 184, 0.35)",
+      label: chartTitle,
+      data: !isLoading ? graphValues : Array(24).fill(0),
+      borderColor: !isLoading ? lineColor : "rgb(30, 30, 30)",
+      backgroundColor: lineBackgroundColor,
     },
   ];
 
@@ -143,13 +143,13 @@ function GraphComponent({
   };
 
   useEffect(() => {
-    if (energyData && energyData.length > 0) {
+    if (graphValues && graphValues.length > 0) {
       setIsLoading(false);
     } else {
       console.log("loading");
       setIsLoading(true);
     }
-  }, [energyData, icelossData]);
+  }, [graphValues, icelossData]);
 
   // Render logic remains unchanged
   return (
