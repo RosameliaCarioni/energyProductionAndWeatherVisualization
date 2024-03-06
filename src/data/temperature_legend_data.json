@@ -1,0 +1,11 @@
+{
+  "title": "Temperature",
+  "data": [
+    { "value": 0.0, "label": "temp" },
+    { "value": 0.2, "label": "temp" },
+    { "value": 0.4, "label": "temp" },
+    { "value": 0.6, "label": "temp" },
+    { "value": 0.8, "label": "temp" },
+    { "value": 1, "label": "temp" }
+  ]
+}

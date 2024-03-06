@@ -10,13 +10,13 @@ const EnergyAfterIceLossLegendComponent = () => {
   ];
 
   return (
-    <div style={{ width: '50%', backgroundColor: '#000', padding: '10px', borderRadius: '5px' }}>
-      <div style={{ marginBottom: '10px', fontSize: '16px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
-        Percentage Of Energy Loss Due To Icing
+    <div className="bg-dark mb-2" style={{ width: '380px', padding: '10px', borderRadius: '5px'}}>
+      <div style={{ marginBottom: '1px', fontSize: '14px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
+        % Of Energy Loss Due To Icing
       </div>
       <div className="legend-container" style={{ display: 'flex', alignItems: 'center', height: '30px' }}>
         {options.map((option, index) => (
-          <span key={index} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#000', fontSize: '16px', lineHeight: '1', backgroundColor: option.color }}>
+          <span className="text-xs" key={index} style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#000', lineHeight: '1', backgroundColor: option.color }}>
             {option.label}
           </span>
         ))}
