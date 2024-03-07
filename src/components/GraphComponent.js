@@ -66,14 +66,14 @@ function GraphComponent({
   // Conditionally add the "Ice Loss" dataset if icelossData is not undefined
   if (!!icelossData) {
     datasets.push({
-      label: "Ice Loss",
+      label: "Energy output - Ice Loss",
       data: !isLoading ? icelossData : Array(24).fill(0),
       borderColor: "rgb(255, 99, 132)", // Red color for ice loss
       backgroundColor: "rgb(255, 99, 132, 0.35)",
     });
   }
   const chartData = {
-    labels: Array.from({ length: 24 }, (_, i) => (i).toString()),
+    labels: Array.from({ length: 24 }, (_, i) => i.toString()),
     datasets: datasets,
   };
   // Options remain unchanged
