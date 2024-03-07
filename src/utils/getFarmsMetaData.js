@@ -16,6 +16,7 @@ export async function getFarmsMeta() {
     const ids = await getFarmsID()
     const names = await getFarmsName()
     const capacities = await getFarmsCapacity()
+    const priceAreas = await getFarmsPriceArea()
 
     let farmsMetaArray = [];
 
@@ -25,7 +26,8 @@ export async function getFarmsMeta() {
             name: names[i],
             longitude: longitudes[i],
             latitude: latitudes[i],
-            capacity_kw: capacities[i]
+            capacity_kw: capacities[i],
+            price_area: priceAreas[i]
         });
     }
 
@@ -60,4 +62,10 @@ export async function getFarmsCapacity() {
     const response = await getFarmsData()
     const data = await response.json()
     return (data.farms_meta_data).map(item => item.capacity_kw); 
+}
+
+export async function getFarmsPriceArea() {
+    const response = await getFarmsData()
+    const data = await response.json()
+    return (data.farms_meta_data).map(item => item.price_area); 
 }

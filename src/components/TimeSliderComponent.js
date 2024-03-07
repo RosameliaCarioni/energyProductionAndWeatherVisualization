@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function TimeSlider({ onTimeChange, onDateChange }) {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
   const [selectedDate, setSelectedDate] = useState("2021-11-25");
 
   const sliderWidth = '500px';
@@ -38,8 +38,8 @@ function TimeSlider({ onTimeChange, onDateChange }) {
       <div style={{ position: 'relative', width: sliderWidth }}>
         <input
           type="range"
-          min="1"
-          max="24"
+          min="0"
+          max="23"
           value={value}
           onChange={handleChange}
           style={{ width: '100%' }}
@@ -47,7 +47,7 @@ function TimeSlider({ onTimeChange, onDateChange }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5px', position: 'absolute', width: '100%', left: 0 }}>
           {labels.map(label => (
             <span key={label} style={{ userSelect: 'none', position: 'absolute', left: `calc(${(label / 24) * 100}% + 10px)`, transform: 'translateX(-50%)' }}>
-              {label+1}
+              {label}
             </span>
           ))}
           <span style={{ userSelect: 'none', position: 'absolute', right: '-30px' }}>[PH]</span>

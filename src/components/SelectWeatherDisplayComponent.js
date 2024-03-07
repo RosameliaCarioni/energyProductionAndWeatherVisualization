@@ -5,14 +5,7 @@ function ButtonComponent({ onLayerChange }) {
   const [selectedButtons, setSelectedButtons] = useState(['WindSpeed']);
 
   function handleButtonClick(buttonName) {
-    setSelectedButtons((prevSelectedButtons) => {
-      // Toggle the selection state of the button
-      if (prevSelectedButtons.includes(buttonName)) {
-        return prevSelectedButtons.filter((name) => name !== buttonName);
-      } else {
-        return [...prevSelectedButtons, buttonName];
-      }
-    });
+    setSelectedButtons([buttonName]);
   }
 
   // Use useEffect to call onLayerChange after selectedButtons state has been updated
@@ -21,23 +14,28 @@ function ButtonComponent({ onLayerChange }) {
   }, [selectedButtons, onLayerChange]);
 
   return (
-    <div style={{ width: '50%', backgroundColor: '#000', padding: '10px', borderRadius: '5px' }}>
-      <div style={{ marginBottom: '10px', fontSize: '16px', color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
-        Selected Weather Layers
+    <div className="bg-dark p-3 mb-2 flex flex-col items-end rounded-md">
+      <div>
+        <p className='text-sm'>Weather Layer</p>
       </div>
-      {['Temperature', 'WindSpeed', 'RelativeHumidity'].map((buttonName) => (
-        <button
-          key={buttonName}
-          style={{
-            opacity: selectedButtons.includes(buttonName) ? 1 : 0.5,
-            cursor: 'pointer',
-            marginBottom: '10px',
-          }}
-          onClick={() => handleButtonClick(buttonName)}
-        >
-          {buttonName}
-        </button>
-      ))}
+      <div className='flex flex-col items-end'>
+        {['Temperature', 'WindSpeed', 'RelativeHumidity'].map((buttonName) => (
+          <button
+            key={buttonName}
+            style={{
+              color: selectedButtons.includes(buttonName) ? '#5fbeb3' : '#fff',
+              opacity: selectedButtons.includes(buttonName) ? 1 : 0.5,
+              cursor: 'pointer',
+              marginBottom: '5px',
+              marginTop: '5px'
+            }}
+            className='text-xs font-blue'
+            onClick={() => handleButtonClick(buttonName)}
+          >
+            {buttonName}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

@@ -8,7 +8,9 @@ export default function About(){
             <div key={index} className="w-33 px-10 py-5 flex flex-col items-center">
                 <img className="mb-4" src={member.image} alt={member.name}/>
                 <p className='text-uppercase font-bold'>{member.name}</p>
-                <p>Role</p>
+                {member.roles.map((role, roleIndex) => (
+                    <p key={roleIndex}>{role}</p>
+                ))}
             </div>
         ));
       };
@@ -21,6 +23,7 @@ export default function About(){
                         <h1> About the project </h1>
                         <img className="mb-8" src="/assets/images/rebaseXgroup.svg" alt="rebase X IVIS group logo"/>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p></p>
                     </div>
                     <div className="mt-24">
                         <h2>Meet the team</h2>

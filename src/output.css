@@ -612,6 +612,18 @@ video {
   bottom: 0px;
 }
 
+.top-0 {
+  top: 0px;
+}
+
+.left-0 {
+  left: 0px;
+}
+
+.right-0 {
+  right: 0px;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -643,6 +655,10 @@ video {
 
 .mb-16 {
   margin-bottom: 20rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .mt-8 {
@@ -710,6 +726,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-half {
+  width: 50%;
 }
 
 .w-33 {
@@ -829,6 +849,15 @@ video {
   padding: 1rem;
 }
 
+.pr-2 {
+  padding-right: 1rem;
+}
+
+.px-1 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .px-2 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -914,6 +943,10 @@ video {
 
 .font-red {
   color: #ff7272;
+}
+
+.font-white {
+  color: #fff;
 }
 
 .text-center {
@@ -1060,4 +1093,22 @@ input[type=range]::-webkit-slider-runnable-track {
   background: rgb(224, 224, 224);
   border-radius: 14px;
   border: 0.3px solid  rgb(53,53,53);
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+}
+
+.custom-border {
+  border-radius: 0.375rem 0 0.375rem 0.375rem;
+}
+
+/* If you are using an ID to target the input */
+#model-select {
+  color: black; /* Set the text color to black */
+}
+
+.priceMapButton:hover {
+  background-color: rgba(95, 190, 179, 0.5) !important; /* Add !important to ensure priority */
 }

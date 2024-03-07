@@ -5,8 +5,9 @@ export default function WelcomePage(){
     <div>
         <div className='w-full py-12 flex items-center justify-center'>
           <div className='max-w-screen-md flex-col items-center justify-center text-center'>
-            <h1>Welcome page</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <h1>Welcome</h1>
+            <p>Explore a new era of <b>energy asset</b> management.</p>
+            <p><br/>Our platform is designed to empower wind farm operators with comprehensive insights, enabling informed decisions for <b>optimized performance.</b> We seamlessly integrate geospatial insights, energy analytics, and real-time weather data to empower your decision-making.</p>
           </div>
         </div>
         <img className='w-full' src="/assets/images/lineImg.svg" alt="line background"/>

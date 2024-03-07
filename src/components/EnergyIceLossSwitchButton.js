@@ -22,21 +22,22 @@ function EnergyIceLossSwitchButton({onSwitchChange}) {
       <style jsx>{`
         .switch-button {
           display: flex;
-          border: 1px solid #ccc;
-          border-radius: 5px;
           overflow: hidden;
+          width: 250px; 
+          border-radius: 0.375rem 0.375rem 0 0;
         }
         .switch-btn {
           flex: 1;
-          padding: 6px 15px;
+          padding: 5px 5px;
           cursor: pointer;
           background-color: #f0f0f0;
           border: none;
           outline: none;
-          font-size: 20px;
+          font-size: 10px;
+          color: #272727;
         }
         .switch-btn.active {
-          background-color: #007bff;
+          background-color: #272727;
           color: white;
         }
       `}</style>

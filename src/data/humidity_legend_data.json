@@ -1,0 +1,11 @@
+{
+  "title": "Humidity",
+  "data": [
+    { "value": 0.0, "label": "Humidity" },
+    { "value": 0.2, "label": "Humidity" },
+    { "value": 0.4, "label": "Humidity" },
+    { "value": 0.6, "label": "Humidity" },
+    { "value": 0.8, "label": "Humidity" },
+    { "value": 1, "label": "Humidity" }
+  ]
+}
