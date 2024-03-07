@@ -33,9 +33,12 @@ const FilterPropertiesComponent = forwardRef(({ onSortOrderChange }, ref) => {
         <option value="North to South">North to South</option>
         <option value="West to East">West to East</option>
       </select>
-      <button onClick={handleSortOrderChange} className="ml-2">
-        {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
-      </button>
+      <div className='flex mr-4 rounded-md hover-lightgray px-2'>
+        <button onClick={handleSortOrderChange} className="mr-2">
+          {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+        </button>
+        <img src="/assets/icons/sort-w.svg" alt="sorting icon"/>
+      </div>
     </div>
   );
 });
