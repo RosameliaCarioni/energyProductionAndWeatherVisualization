@@ -674,7 +674,6 @@ export default function Map() {
                     chartTitle="Energy loss due to Icing, selected plant"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
-                    maxCapacity={selectedPlant.capacity_kw}
                     yAxisTitle="%"
                     lineColor="rgb(255, 99, 132)"
                     lineBackgroundColor="rgb(255, 99, 132, 0.35)"

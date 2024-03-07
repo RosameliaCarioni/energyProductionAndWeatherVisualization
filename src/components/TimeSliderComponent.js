@@ -6,11 +6,22 @@ function TimeSlider({ onTimeChange, onDateChange }) {
 
   const sliderWidth = '500px';
 
+  // Update component state but don't trigger onTimeChange
   function handleChange(event) {
-    const newValue = event.target.value;
-    setValue(newValue);
+    setValue(event.target.value);
+  }
+
+  // When mouse button is released, trigger onTimeChange
+  function handleMouseUp(event) {
     if (onTimeChange) {
-      onTimeChange(newValue);
+      onTimeChange(event.target.value);
+    }
+  }
+
+  // Also consider keyboard navigation
+  function handleKeyUp(event) {
+    if (onTimeChange) {
+      onTimeChange(event.target.value);
     }
   }
 
@@ -41,7 +52,9 @@ function TimeSlider({ onTimeChange, onDateChange }) {
           min="0"
           max="23"
           value={value}
-          onChange={handleChange}
+          onChange={handleChange} // Update value internally for visual feedback
+          onMouseUp={handleMouseUp} // Trigger external change on mouse up
+          onKeyUp={handleKeyUp} // Also consider keyboard navigation
           style={{ width: '100%' }}
         />
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5px', position: 'absolute', width: '100%', left: 0 }}>
