@@ -1,11 +1,10 @@
 {
-  "title": "Windspeed",
   "data": [
-    { "value": 0.0, "label": "Windspeed" },
-    { "value": 0.2, "label": "Windspeed" },
-    { "value": 0.4, "label": "Windspeed" },
-    { "value": 0.6, "label": "Windspeed" },
-    { "value": 0.8, "label": "Windspeed" },
-    { "value": 1, "label": "Windspeed" }
+    { "value": 1, "label": "Very strong wind", "color": "#DC143C" },
+    { "value": 0.8, "label": "Strong wind", "color": "#FA8072" },
+    { "value": 0.6, "label": "Fresh breeze", "color": "#FFDAB9" },
+    { "value": 0.4, "label": "Moderate wind", "color": "#87CEEB" },
+    { "value": 0.2, "label": "Gentle breeze", "color": "#B2D3E9" },
+    { "value": 0, "label": "Calm" , "color": "#E9ECF0"}
   ]
 }
