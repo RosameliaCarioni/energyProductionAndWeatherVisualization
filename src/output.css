@@ -669,6 +669,10 @@ video {
   margin-top: 6rem;
 }
 
+.mt-30px {
+  margin-top: 29px;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -734,6 +738,10 @@ video {
 
 .w-33 {
   width: 33%;
+}
+
+.w-700px {
+  width: 700px;
 }
 
 .max-w-4xl {
@@ -839,6 +847,10 @@ video {
 
 .bg-dark {
   background-color: #272727;
+}
+
+.bg-lightgray {
+  background-color: #353535;
 }
 
 .p-3 {
@@ -1047,6 +1059,20 @@ body {
 
 /* Custom classes */
 
+.background-effect {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adjust the shadow color and size as needed */
+  opacity: 0.9; /* Adjust the opacity to control the transparency effect */
+  transition: box-shadow 0.3s ease, opacity 0.3s ease; /* Add smooth transitions */
+}
+
+.bottom-border {
+  border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.lightgray-hover:hover {
+  background-color: #353535;
+}
+
 .graph {
   height: 250px;
   background-color: rgb(53 53 53);
@@ -1107,6 +1133,8 @@ input[type=range]::-webkit-slider-runnable-track {
 /* If you are using an ID to target the input */
 #model-select {
   color: black; /* Set the text color to black */
+  padding: 0.3rem;
+  border-radius: 0.375rem; 
 }
 
 .priceMapButton:hover {

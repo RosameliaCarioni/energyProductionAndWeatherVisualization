@@ -14,9 +14,7 @@ const MapLegendComponent = ({ weatherData }) => {
             <div
               className="color-box"
               style={{
-                backgroundColor: `rgba(255, ${Math.round(
-                  255 - item.value * 255
-                )}, 0, 1)`,
+                backgroundColor: `${item.color}`
               }}
             ></div>
           </div>

@@ -10,8 +10,13 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, energyData, sel
         onHoverPlant(plant);
     }
     return (
-        <div className="list-container mx-auto max-w-4xl rounded-lg shadow mr-4">
+        <div className="list-container mx-auto max-w-4xl rounded-lg shadow mr-4 mt-8">
             <ul className="divide-y divide-gray-200">
+                <li className={`flex justify-between items-center p-3 bg-lightgray rounded-md`} >
+                    <span className="font-medium">Plant name{' '}</span>
+                    <span className="font-medium">Energy production</span>
+                    <span className="font-medium">{' '}Capacity</span>
+                </li>
                 {plantsArray?.map((plant, index) => (
                     <li
                         key={plant.id}

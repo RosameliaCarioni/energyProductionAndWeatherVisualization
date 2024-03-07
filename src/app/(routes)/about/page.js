@@ -22,8 +22,7 @@ export default function About(){
                     <div className="flex flex-col items-center justify-center">
                         <h1> About the project </h1>
                         <img className="mb-8" src="/assets/images/rebaseXgroup.svg" alt="rebase X IVIS group logo"/>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <p></p>
+                        <p>For this project, we collaborated with Rebase Energy to create a prototype that displays combined geospatial, weather and energy data for their clients. The aim was to give their clients a platform that visualises this data in a comprehensive way, that helps them understand the energy output of their assets better to make more informed decisions in their day to day work.</p>
                     </div>
                     <div className="mt-24">
                         <h2>Meet the team</h2>

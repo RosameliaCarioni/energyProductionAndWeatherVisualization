@@ -1,11 +1,13 @@
 {
-  "title": "Temperature",
   "data": [
-    { "value": 0.0, "label": "temp" },
-    { "value": 0.2, "label": "temp" },
-    { "value": 0.4, "label": "temp" },
-    { "value": 0.6, "label": "temp" },
-    { "value": 0.8, "label": "temp" },
-    { "value": 1, "label": "temp" }
+    { "value": 1, "label": "Hot", "color": "#DC143C" },
+    { "value": 0.75, "label": "Warm", "color": "#FF4500" },
+    { "value": 0.625, "label": "Mild", "color": "#FFA500" },
+    { "value": 0.5, "label": "Cool", "color": "#FA8072" },
+    { "value": 0, "label": "Freezing Point", "color": "#FFDAB9" },
+    { "value": 0.25, "label": "Chilly", "color": "#FFDAB9" },
+    { "value": 0.5, "label": "Cold", "color": "#87CEEB" },
+    { "value": 0.75, "label": "Very Cold", "color": "#B2D3E9" },
+    { "value": 1, "label": "Extremely Cold", "color": "#E9ECF0" }
   ]
 }
