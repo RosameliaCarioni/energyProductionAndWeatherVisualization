@@ -6,7 +6,6 @@ const FilterPropertiesComponent = forwardRef(({ onSortOrderChange }, ref) => {
 
   useImperativeHandle(ref, () => ({
     resetSelectedProperty() {
-      // Ensure the setter function is correctly called within its scope
       setSelectedProperty('Alphabetically');
       onSortOrderChange('Alphabetically', sortOrder);
     },
@@ -15,14 +14,13 @@ const FilterPropertiesComponent = forwardRef(({ onSortOrderChange }, ref) => {
   const handleChange = (event) => {
     const newSelectedProperty = event.target.value;
     setSelectedProperty(newSelectedProperty);
-    // Trigger the sorting immediately upon changing the selection, using the current sortOrder
     onSortOrderChange(newSelectedProperty, sortOrder);
   };
 
   const handleSortOrderChange = () => {
     const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
     setSortOrder(newSortOrder);
-    onSortOrderChange(selectedProperty, newSortOrder); // Call the passed in function to lift the state up to the parent component
+    onSortOrderChange(selectedProperty, newSortOrder);
   };
 
   return (
@@ -41,5 +39,8 @@ const FilterPropertiesComponent = forwardRef(({ onSortOrderChange }, ref) => {
     </div>
   );
 });
+
+// Explicitly set a displayName for the component
+FilterPropertiesComponent.displayName = 'FilterPropertiesComponent';
 
 export default FilterPropertiesComponent;
