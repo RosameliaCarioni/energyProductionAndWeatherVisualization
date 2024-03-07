@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 
-const FilterPropertiesComponent = ({ onSortOrderChange }) => {
-  const [selectedProperty, setselectedProperty] = useState('Alphabetically');
+const FilterPropertiesComponent = forwardRef(({ onSortOrderChange }, ref) => {
+  const [selectedProperty, setSelectedProperty] = useState('Alphabetically');
   const [sortOrder, setSortOrder] = useState('asc'); // 'asc' for ascending, 'desc' for descending
+
+  useImperativeHandle(ref, () => ({
+    resetSelectedProperty() {
+      // Ensure the setter function is correctly called within its scope
+      setSelectedProperty('Alphabetically');
+      onSortOrderChange('Alphabetically', sortOrder);
+    },
+  }));
 
   const handleChange = (event) => {
     const newSelectedProperty = event.target.value;
-    setselectedProperty(newSelectedProperty);
+    setSelectedProperty(newSelectedProperty);
     // Trigger the sorting immediately upon changing the selection, using the current sortOrder
     onSortOrderChange(newSelectedProperty, sortOrder);
   };
@@ -32,6 +40,6 @@ const FilterPropertiesComponent = ({ onSortOrderChange }) => {
       </button>
     </div>
   );
-}
+});
 
 export default FilterPropertiesComponent;

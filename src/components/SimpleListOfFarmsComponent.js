@@ -27,7 +27,7 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, energyData, sel
                         <span className="font-medium">{plant.name}{' '}</span>
                         <span className="text-gray-500">
                         {/* Ensure energyData and selectedHour are defined and access the correct hour's data */}
-                        {' '}{energyData && energyData[index] && energyData[index] } MW
+                        {' '}{energyData[index] ? energyData[index].toFixed(2) : 'Loading...'} MW
                         </span>
                         <span className="text-gray-500">{' '}{plant.capacity_kw / 1000} MW</span>
                     </li>

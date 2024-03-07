@@ -320,7 +320,7 @@ function MapComponent({
       popupRef.current?.trackPointer();
 
       const prefix = "./assets/weather_data/";
-      const numTemp = parseInt(selectedTime, 10) - 1;
+      const numTemp = parseInt(selectedTime, 10);
       const number = numTemp < 10 ? `0${numTemp}` : `${numTemp}`;
       const activeWeatherImages = {
         wind: prefix + "wind/wind_20211125" + number + ".png",

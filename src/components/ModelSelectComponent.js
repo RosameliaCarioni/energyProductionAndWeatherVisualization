@@ -12,7 +12,7 @@ const ModelSelectComponent = () => {
 
  return (
     <div className='bg-dark rounded-md mb-2 p-3 flex flex-col items-end'>
-      <p className='text-sm mb-2'>Weather source</p>
+      <p className='text-sm mb-2'>Weather model</p>
       <select id="model-select" value={selectedModel} onChange={handleChange}>
         {/* No default "Choose a model" option, starts with "DWD_ICON-EU" */}
         <option value="DWD_ICON-EU">DWD_ICON-EU</option>

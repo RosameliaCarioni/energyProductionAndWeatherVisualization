@@ -18,7 +18,7 @@ import {
 import TimeSliderComponent from "@/components/TimeSliderComponent";
 import SimpleListOfFarmsComponent from "@/components/SimpleListOfFarmsComponent";
 import "../../../output.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getFarmsMeta } from "@/utils/getFarmsMetaData";
 import EnergyProductionLegendComponent from "@/components/EnergyProductionLegendComponent";
 import EnergyAfterIceLossLegendComponent from "@/components/EnergyAfterIceLossLegendComponent";
@@ -38,8 +38,9 @@ export default function Map() {
   const [allEnergyData, setAllEnergyData] = useState(undefined)
   const [windData, setWindData] = useState(undefined);
   const [icelossData, setEnergyAfterIcelossData] = useState(undefined);
+  const [percentageEnergyLossIcing, setPercentageEnergyLossIcing] = useState(undefined);
   const [selectedPlant, setSelectedPlant] = useState(undefined);
-  const [selectedTime, setSelectedTime] = useState(1);
+  const [selectedTime, setSelectedTime] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
   const [plantsArray, setPlants] = useState([]);
   const [hoverInfo, setHoverInfo] = useState(undefined);
@@ -59,7 +60,7 @@ export default function Map() {
   
   // Add a state to keep track of the sorting
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
-  
+  const filterPropertiesRef = useRef(null);
 
   // Function to handle the sort order change
   const handleSortOrderChange = (selectedProperty, order) => {
@@ -104,8 +105,6 @@ export default function Map() {
     setEnergyData(undefined);
     setWindData(undefined);
     setEnergyAfterIcelossData(undefined);
-    //SetTemperatureData(undefined);
-    //SetTemperatureData(undefined);
     setSelectedPlant(plant);
   };
   const handlePlantHover = (plant) => {
@@ -467,6 +466,11 @@ export default function Map() {
     
     // Call the fetchPlants function when the component mounts
     fetchPlants();
+    setSortConfig('Alphabetically');
+    //TODO change the appereance of the filterPropertiesComponent so that it displays Alphabetically
+    // Call the resetSelectedProperty method to reset the selectedProperty to 'Alphabetically'
+    filterPropertiesRef.current?.resetSelectedProperty?.();
+
   }, [selectedDate, selectedTime]); // Dependence on selectedDate to re-fetch if it changes
 
   useEffect(() => {
@@ -541,6 +545,27 @@ export default function Map() {
   }, [selectedPlant, selectedDate]);
 
   const [weatherData, setWeatherData] = useState([]);
+
+  function calculatePercentage(obj1, obj2) {
+    if (obj1 !== undefined && obj2 !== undefined  ) {
+    const result = [];
+    for (const key in obj1) {
+      if (obj1.hasOwnProperty(key) && obj2.hasOwnProperty(key)) {
+        // Ensure the divisor is not 0 to avoid division by zero
+        const divisor = parseFloat(obj2[key]);
+        if (divisor !== 0) {
+          const dividend = parseFloat(obj1[key]);
+          const rate = 1 - (dividend / divisor); // -1 because is the inverted 
+          result[key] = (rate*100).toString();
+        } else {
+          // Handle the case where the divisor is 0, maybe set it to null or some other value
+          result[key] = "0"; // or another appropriate value
+        }
+      }
+    }
+    return result;
+    }
+  }
 
   useEffect(() => {
     switch (selectedLayer[0]) {
@@ -632,9 +657,24 @@ export default function Map() {
                 {selectedGraphs.includes("ice") && (
                   <GraphComponent
                     graphValues={icelossData}
-                    chartTitle="Ice loss"
+                    chartTitle="Energy Output considering Ice loss, selected plant"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
+                    maxCapacity={selectedPlant.capacity_kw}
+                    yAxisTitle="MW"
+                    lineColor="rgb(255, 99, 132)"
+                    lineBackgroundColor="rgb(255, 99, 132, 0.35)"
+                  />
+                )}
+              </div>
+              <div>
+                {selectedGraphs.includes("ice") && (
+                  <GraphComponent
+                    graphValues={calculatePercentage(icelossData,energyData)}
+                    chartTitle="Energy loss due to Icing, selected plant"
+                    selectedTime={selectedTime}
+                    selectedDate={selectedDate}
+                    maxCapacity={selectedPlant.capacity_kw}
                     yAxisTitle="%"
                     lineColor="rgb(255, 99, 132)"
                     lineBackgroundColor="rgb(255, 99, 132, 0.35)"
@@ -701,7 +741,7 @@ export default function Map() {
                 )}
               </div>
               <SearchComponent onSearchChange={handleSearchInputChange} />
-              <FilterPropertiesComponent onSortOrderChange={handleSortOrderChange}/>
+              <FilterPropertiesComponent ref={filterPropertiesRef} onSortOrderChange={handleSortOrderChange} />
               <SimpleListOfFarmsComponent
                 plantsArray={searchInput ? filteredPlantsArray : plantsArray}
                 energyData={allEnergyData}

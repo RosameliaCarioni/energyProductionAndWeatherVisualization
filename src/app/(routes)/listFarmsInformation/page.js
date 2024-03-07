@@ -14,9 +14,8 @@ export default function ListFarmsInformation() {
     setSelectedDate(newDay);
   }
 
-  const handleLayerChange = (newLayer) => {
-    setSelectedPriceArea(newLayer);
-    console.log("selected layer page ",selectedPriceArea)
+  const handlePriceAreaChange = (newPriceArea) => {
+    setSelectedPriceArea(newPriceArea);
   };
 
   const [searchInput, setSearchInput] = useState('');
@@ -31,7 +30,7 @@ export default function ListFarmsInformation() {
       <h1>Wind farms</h1>
       <DatePickerComponent onDateChange={handleDayChange} />
       <SearchComponent onSearchChange={handleSearchInputChange} />
-      <PriceAreaComponent onLayerChange={handleLayerChange} />
+      <PriceAreaComponent onPriceAreaChange={handlePriceAreaChange} />
       <ListOfFarms date={selectedDate} selectedPriceArea={selectedPriceArea} searchInput={searchInput} />
     </div>
   );

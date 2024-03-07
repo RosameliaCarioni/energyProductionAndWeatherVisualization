@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function TimeSlider({ onTimeChange, onDateChange }) {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
   const [selectedDate, setSelectedDate] = useState("2021-11-25");
 
   const sliderWidth = '500px';
@@ -38,8 +38,8 @@ function TimeSlider({ onTimeChange, onDateChange }) {
       <div style={{ position: 'relative', width: sliderWidth }}>
         <input
           type="range"
-          min="1"
-          max="24"
+          min="0"
+          max="23"
           value={value}
           onChange={handleChange}
           style={{ width: '100%' }}

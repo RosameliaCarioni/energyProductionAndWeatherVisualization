@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function PriceAreaComponent({ onLayerChange }) {
+function PriceAreaComponent({ onPriceAreaChange }) {
   const [selectedButtons, setSelectedButtons] = useState([]);
 
   function handleButtonClick(buttonName) {
@@ -14,8 +14,8 @@ function PriceAreaComponent({ onLayerChange }) {
   }
 
   useEffect(() => {
-    onLayerChange(selectedButtons);
-  }, [selectedButtons, onLayerChange]);
+    onPriceAreaChange(selectedButtons);
+  }, [selectedButtons, onPriceAreaChange]);
 
   return (
     <div className="flex">

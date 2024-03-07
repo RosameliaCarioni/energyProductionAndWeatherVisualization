@@ -73,7 +73,7 @@ function GraphComponent({
     });
   }
   const chartData = {
-    labels: Array.from({ length: 24 }, (_, i) => (i + 1).toString()),
+    labels: Array.from({ length: 24 }, (_, i) => (i).toString()),
     datasets: datasets,
   };
   // Options remain unchanged
