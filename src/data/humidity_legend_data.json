@@ -1,11 +1,11 @@
 {
-  "title": "Humidity",
   "data": [
-    { "value": 1, "label": "Saturated", "color": "#FA8072" },
-    { "value": 0.8, "label": "Very High", "color": "#FFDAB9" },
-    { "value": 0.6, "label": "High", "color": "#87CEEB" },
-    { "value": 0.4, "label": "Moderate", "color": "#B2D3E9" },
-    { "value": 0.2, "label": "Dry", "color": "#E9ECF0" },
-    { "value": 0, "label": "Very Dry", "color": "#FAFAFA" }
+    { "value": 1, "label": "100%", "color": "#FA8072" },
+    { "value": 0.8, "label": "80%", "color": "#FFDAB9" },
+    { "value": 0.6, "label": "60%", "color": "#87CEEB" },
+    { "value": 0.4, "label": "40%", "color": "#B2D3E9" },
+    { "value": 0.2, "label": "20%", "color": "#E9ECF0" },
+    { "value": 0, "label": "0%", "color": "#FAFAFA" }
   ]
 }
+
