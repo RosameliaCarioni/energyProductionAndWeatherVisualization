@@ -841,6 +841,10 @@ video {
   background-color: #272727;
 }
 
+.bg-lightgray {
+  background-color: #353535;
+}
+
 .p-3 {
   padding: 0.75rem;
 }
