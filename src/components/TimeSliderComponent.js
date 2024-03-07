@@ -36,7 +36,7 @@ function TimeSlider({ onTimeChange, onDateChange }) {
   // Generate labels for every third hour
   const labels = Array.from({ length: 24 }, (_, i) => i );
   return (
-    <div className='bg-dark p-4 rounded-md flex h-70p'>
+    <div className='bg-dark p-4 rounded-md flex h-70p w-700px'>
       {/* Date Picker */}
       <input
         type="date"
