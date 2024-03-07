@@ -1,10 +1,10 @@
 {
   "data": [
-    { "value": 1, "label": "Very strong wind", "color": "#DC143C" },
-    { "value": 0.8, "label": "Strong wind", "color": "#FA8072" },
-    { "value": 0.6, "label": "Fresh breeze", "color": "#FFDAB9" },
-    { "value": 0.4, "label": "Moderate wind", "color": "#87CEEB" },
-    { "value": 0.2, "label": "Gentle breeze", "color": "#B2D3E9" },
-    { "value": 0, "label": "Calm" , "color": "#E9ECF0"}
+    { "value": 1, "label": "25m/s", "color": "#DC143C" },
+    { "value": 0.8, "label": "20m/s", "color": "#FA8072" },
+    { "value": 0.6, "label": "15m/s", "color": "#FFDAB9" },
+    { "value": 0.4, "label": "10m/s", "color": "#87CEEB" },
+    { "value": 0.2, "label": "5m/s", "color": "#B2D3E9" },
+    { "value": 0, "label": "0m/s" , "color": "#E9ECF0"}
   ]
 }
