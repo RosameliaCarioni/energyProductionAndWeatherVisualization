@@ -6,12 +6,13 @@ import * as WeatherLayersClient from "weatherlayers-gl/client";
 import * as WeatherLayers from "weatherlayers-gl";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { ClipExtension } from "@deck.gl/extensions";
-import MapGL, { Popup, Marker } from "react-map-gl";
+import MapGL, { Popup, Marker, Source, Layer } from "react-map-gl";
 import MarkerIconComponent from "./MarkerIconComponent";
 import {
   getProductionInHour,
   getProductionAfterIceLossInHour,
 } from "@/utils/getFarmsProduction";
+import geojson from "@/data/world.json";
 
 function MapComponent({
   onSelectPlant,
@@ -37,6 +38,7 @@ function MapComponent({
   const [map, setMap] = useState(null);
   const [energyData, setEnergyData] = useState(null);
   const [energyDataAfterIceLoss, setEnergyDataAfterIceLoss] = useState(null);
+  const [polygonHoverInfo, setPolygonHoverInfo] = useState(null);
 
   const windSpeedPalette = [
     [0, [233, 236, 239]], // very light grey, calm
@@ -91,6 +93,26 @@ function MapComponent({
     humUnscale: [0, 100],
   };
 
+  const geojsonLayerStyle = {
+    id: "polygonLayer",
+    type: "fill",
+    paint: {
+      "fill-color": [
+        "case",
+        [
+          "==",
+          ["get", "zoneName"],
+          polygonHoverInfo ? polygonHoverInfo.zoneName : "",
+        ],
+        "#ffa500", // highlight color when hovered
+        "#555555", // default color
+      ],
+      "fill-opacity": 0.8,
+      "fill-outline-color": "#000",
+      "line-width": 4,
+    },
+  };
+
   const deckOverlay = new MapboxOverlay({
     interleaved: true,
     layers: [],
@@ -123,6 +145,22 @@ function MapComponent({
 
   const handlePlantHover = (plant) => {
     onHoverPlant(plant);
+  };
+
+  const onMouseMove = (event) => {
+    const { features, lngLat } = event;
+    const hoveredFeature =
+      features && features.find((f) => f.layer.id === "polygonLayer");
+
+    if (hoveredFeature) {
+      setPolygonHoverInfo({
+        zoneName: hoveredFeature.properties.zoneName,
+        lng: lngLat.lng,
+        lat: lngLat.lat,
+      });
+    } else {
+      setPolygonHoverInfo(null);
+    }
   };
 
   const onMapLoad = useCallback(async (event) => {
@@ -159,72 +197,71 @@ function MapComponent({
         activeWeatherImages.hum
       );
 
-      map.addControl(deckOverlay);
       const layers = [
         ...(activeWeatherOptions.wind
           ? [
-            new WeatherLayers.RasterLayer({
-              id: "raster",
-              image: rebaseWindImage,
-              imageType: "VECTOR",
-              imageUnscale: WLConfig.imageUnscale,
-              palette: WLConfig.palette,
+              new WeatherLayers.RasterLayer({
+                id: "raster",
+                image: rebaseWindImage,
+                imageType: "VECTOR",
+                imageUnscale: WLConfig.imageUnscale,
+                palette: WLConfig.palette,
 
-              opacity: WLConfig.rasterOpacity,
-              extensions: WLConfig.extensions,
-              clipBounds: WLConfig.clipBounds,
-              bounds: WLConfig.bounds,
-              imageSmoothing: WLConfig.imageSmoothing,
-            }),
-          ]
+                opacity: WLConfig.rasterOpacity,
+                extensions: WLConfig.extensions,
+                clipBounds: WLConfig.clipBounds,
+                bounds: WLConfig.bounds,
+                imageSmoothing: WLConfig.imageSmoothing,
+              }),
+            ]
           : []),
         ...(activeWeatherOptions.wind
           ? [
-            new WeatherLayers.ParticleLayer({
-              id: "particle",
-              image: rebaseWindImage,
-              imageUnscale: WLConfig.imageUnscale,
-              width: WLConfig.particleWidth,
-              maxAge: WLConfig.particleMaxAge,
-              palette: WLConfig.palette,
-              opacity: WLConfig.particleOpacity,
-              speedFactor: WLConfig.particleSpeedFactor,
-              extensions: WLConfig.extensions,
-              clipBounds: WLConfig.clipBounds,
-              bounds: WLConfig.bounds,
-              imageSmoothing: WLConfig.imageSmoothing,
-            }),
-          ]
+              new WeatherLayers.ParticleLayer({
+                id: "particle",
+                image: rebaseWindImage,
+                imageUnscale: WLConfig.imageUnscale,
+                width: WLConfig.particleWidth,
+                maxAge: WLConfig.particleMaxAge,
+                palette: WLConfig.palette,
+                opacity: WLConfig.particleOpacity,
+                speedFactor: WLConfig.particleSpeedFactor,
+                extensions: WLConfig.extensions,
+                clipBounds: WLConfig.clipBounds,
+                bounds: WLConfig.bounds,
+                imageSmoothing: WLConfig.imageSmoothing,
+              }),
+            ]
           : []),
         ...(activeWeatherOptions.temp
           ? [
-            new WeatherLayers.RasterLayer({
-              id: "raster",
-              image: rebaseTempImage,
-              imageUnscale: WLConfig.tempUnscale,
-              palette: WLConfig.tempPalette,
-              opacity: WLConfig.rasterOpacity,
-              extensions: WLConfig.extensions,
-              clipBounds: WLConfig.clipBounds,
-              bounds: WLConfig.bounds,
-              imageSmoothing: WLConfig.imageSmoothing,
-            }),
-          ]
+              new WeatherLayers.RasterLayer({
+                id: "raster",
+                image: rebaseTempImage,
+                imageUnscale: WLConfig.tempUnscale,
+                palette: WLConfig.tempPalette,
+                opacity: WLConfig.rasterOpacity,
+                extensions: WLConfig.extensions,
+                clipBounds: WLConfig.clipBounds,
+                bounds: WLConfig.bounds,
+                imageSmoothing: WLConfig.imageSmoothing,
+              }),
+            ]
           : []),
         ...(activeWeatherOptions.hum
           ? [
-            new WeatherLayers.RasterLayer({
-              id: "raster",
-              image: rebaseHumImage,
-              imageUnscale: WLConfig.humUnscale,
-              palette: WLConfig.humPalette,
-              opacity: WLConfig.rasterOpacity,
-              extensions: WLConfig.extensions,
-              clipBounds: WLConfig.clipBounds,
-              bounds: WLConfig.bounds,
-              imageSmoothing: WLConfig.imageSmoothing,
-            }),
-          ]
+              new WeatherLayers.RasterLayer({
+                id: "raster",
+                image: rebaseHumImage,
+                imageUnscale: WLConfig.humUnscale,
+                palette: WLConfig.humPalette,
+                opacity: WLConfig.rasterOpacity,
+                extensions: WLConfig.extensions,
+                clipBounds: WLConfig.clipBounds,
+                bounds: WLConfig.bounds,
+                imageSmoothing: WLConfig.imageSmoothing,
+              }),
+            ]
           : []),
       ];
 
@@ -259,16 +296,17 @@ function MapComponent({
 
     const ratio = 1 - energyIceLoss / energy; // the ratio represents the percentage of energy lost due to icing
 
-    if (ratio > 0.9) { // Loss of energy due to icing is very high
-      return "#fc6e51"; 
+    if (ratio > 0.9) {
+      // Loss of energy due to icing is very high
+      return "#fc6e51";
     } else if (ratio > 0.7) {
-      return "#fcb941"; 
+      return "#fcb941";
     } else if (ratio > 0.5) {
-      return "#fed766"; 
+      return "#fed766";
     } else if (ratio > 0.3) {
-      return "#b8e986"; 
+      return "#b8e986";
     } else {
-      return "#7bdcb5"; 
+      return "#7bdcb5";
     }
   };
 
@@ -285,20 +323,15 @@ function MapComponent({
       // Farm is producing almost at full capacity
       return "#7bdcb5";
     } else if (ratio > 0.6) {
-      return "#b8e986"; 
+      return "#b8e986";
     } else if (ratio > 0.4) {
-      return "#fed766"; 
+      return "#fed766";
     } else if (ratio > 0.2) {
-      return "#fcb941"; 
+      return "#fcb941";
     } else {
       return "#fc6e51";
     }
-
-
-
   };
-
-
 
   //////////////////
   useEffect(() => {
@@ -401,12 +434,6 @@ function MapComponent({
     }
   }, [selectedLayer, selectedDate, selectedTime, map]);
 
-/////////////////
-
-
-
-
-
   function formatCoordinates(coordinate, type) {
     const degrees = Math.abs(coordinate);
     const direction =
@@ -415,8 +442,8 @@ function MapComponent({
           ? "N"
           : "E"
         : type === "latitude"
-          ? "S"
-          : "W";
+        ? "S"
+        : "W";
 
     // Use toFixed(4) to get 4 decimal places for the degrees
     const formattedCoordinate = degrees.toFixed(4);
@@ -439,7 +466,26 @@ function MapComponent({
         mapboxAccessToken={mapboxToken}
         //onViewportChange={(nextViewport) => setViewport(nextViewport)}
         onLoad={onMapLoad}
+        onMouseMove={onMouseMove}
+        onMouseLeave={() => setPolygonHoverInfo(null)}
+        interactiveLayerIds={["polygonLayer"]}
       >
+        <Source id="polygonSource" type="geojson" data={geojson}>
+          <Layer {...geojsonLayerStyle} />
+        </Source>
+        {polygonHoverInfo && (
+          <Popup
+            latitude={polygonHoverInfo.lat}
+            longitude={polygonHoverInfo.lng}
+            closeButton={false}
+            closeOnClick={false}
+            offsetTop={-30}
+          >
+            <div>
+              <p>{polygonHoverInfo.zoneName}</p>
+            </div>
+          </Popup>
+        )}
         {plantsArray.map((plant) => (
           <Marker
             key={plant.id}
@@ -454,7 +500,7 @@ function MapComponent({
               style={{ cursor: "pointer" }}
             >
               {(selectedPlant && selectedPlant.id === plant.id) ||
-                (hoverInfo && hoverInfo.id === plant.id) ? (
+              (hoverInfo && hoverInfo.id === plant.id) ? (
                 <img
                   src="/assets/pin_selected.svg"
                   style={{ width: "30px", height: "30px" }}
