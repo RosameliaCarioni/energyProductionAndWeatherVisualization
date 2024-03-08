@@ -111,6 +111,7 @@ function MapComponent({
       "fill-outline-color": "#000",
       "line-width": 4,
     },
+    beforeId: "waterway-label",
   };
 
   const deckOverlay = new MapboxOverlay({
@@ -473,7 +474,7 @@ function MapComponent({
         <Source id="polygonSource" type="geojson" data={geojson}>
           <Layer {...geojsonLayerStyle} />
         </Source>
-        {polygonHoverInfo && (
+        {polygonHoverInfo && !hoverInfo && (
           <Popup
             latitude={polygonHoverInfo.lat}
             longitude={polygonHoverInfo.lng}
