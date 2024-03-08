@@ -785,7 +785,6 @@ export default function Map() {
             onSelectPlant={handlePlantSelect}
             selectedPlant={selectedPlant}
             plantsArray={searchInput ? filteredPlantsArray : plantsArray}
-            onHoverPlant={handlePlantHover}
             hoverInfo={hoverInfo}
             selectedDate={selectedDate}
             selectedTime={selectedTime}

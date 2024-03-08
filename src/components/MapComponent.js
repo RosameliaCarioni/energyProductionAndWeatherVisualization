@@ -19,7 +19,6 @@ function MapComponent({
   selectedPlant,
   children,
   plantsArray,
-  onHoverPlant,
   hoverInfo,
   selectedDate,
   selectedTime,
@@ -39,6 +38,8 @@ function MapComponent({
   const [energyData, setEnergyData] = useState(null);
   const [energyDataAfterIceLoss, setEnergyDataAfterIceLoss] = useState(null);
   const [polygonHoverInfo, setPolygonHoverInfo] = useState(null);
+  const [hoveredPlant, setHoveredPlant] = useState(null);
+
 
   const windSpeedPalette = [
     [0, [233, 236, 239]], // very light grey, calm
@@ -142,10 +143,6 @@ function MapComponent({
         onSelectPlant(undefined);
       }
     }
-  };
-
-  const handlePlantHover = (plant) => {
-    onHoverPlant(plant);
   };
 
   const onMouseMove = (event) => {
@@ -495,8 +492,8 @@ function MapComponent({
             anchor="bottom"
           >
             <div
-              onMouseEnter={() => handlePlantHover(plant)}
-              onMouseLeave={() => handlePlantHover(undefined)}
+              onMouseEnter={() => setHoveredPlant(plant)}
+              onMouseLeave={() => setHoveredPlant(null)}
               onClick={(event) => handleMarkerClick(plant, event)} // Pass the event to the click handler
               style={{ cursor: "pointer" }}
             >
@@ -516,11 +513,11 @@ function MapComponent({
           </Marker>
         ))}
 
-        {hoverInfo && (
+        {hoveredPlant && (
           <div>
             <Popup
-              latitude={hoverInfo.latitude}
-              longitude={hoverInfo.longitude}
+              latitude={hoveredPlant.latitude}
+              longitude={hoveredPlant.longitude}
               closeButton={false}
               closeOnClick={false}
               ref={popupRef}
@@ -528,15 +525,15 @@ function MapComponent({
               offsetTop={-30}
             >
               <div>
-                <p className="font-bold text-xxl mb-1">{hoverInfo.name}</p>
+                <p className="font-bold text-xxl mb-1">{hoveredPlant.name}</p>
                 <p className="text-xs font-thin mb-2">
-                  {formatCoordinates(hoverInfo.latitude, "latitude")},{" "}
-                  {formatCoordinates(hoverInfo.longitude, "longitude")}
+                  {formatCoordinates(hoveredPlant.latitude, "latitude")},{" "}
+                  {formatCoordinates(hoveredPlant.longitude, "longitude")}
                 </p>
                 <p>
                   <b>Capacity:</b>{" "}
                   <span className="font-blue">
-                    {hoverInfo.capacity_kw / 1000} MW
+                    {hoveredPlant.capacity_kw / 1000} MW
                   </span>
                 </p>
                 <p>
@@ -552,7 +549,7 @@ function MapComponent({
                 </p>
                 <p>
                   <b>Price area:</b>{" "}
-                  <span className="font-blue">{hoverInfo.price_area}</span>
+                  <span className="font-blue">{hoveredPlant.price_area}</span>
                 </p>
               </div>
             </Popup>
