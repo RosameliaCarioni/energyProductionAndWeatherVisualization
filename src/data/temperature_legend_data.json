@@ -1,13 +1,13 @@
 {
   "data": [
-    { "value": 1, "label": "-40°", "color": "#DC143C" },
-    { "value": 0.75, "label": "-30°", "color": "#FF4500" },
-    { "value": 0.625, "label": "-20°", "color": "#FFA500" },
-    { "value": 0.5, "label": "-10°", "color": "#FA8072" },
+    { "value": 1, "label": "40°", "color": "#DC143C" },
+    { "value": 0.75, "label": "30°", "color": "#FF4500" },
+    { "value": 0.625, "label": "20°", "color": "#FFA500" },
+    { "value": 0.5, "label": "10°", "color": "#FA8072" },
     { "value": 0, "label": "0°", "color": "#FFFFFF" },
-    { "value": 0.25, "label": "10°", "color": "#FFDAB9" },
-    { "value": 0.5, "label": "20°", "color": "#87CEEB" },
-    { "value": 0.75, "label": "30°", "color": "#B2D3E9" },
-    { "value": 1, "label": "40°", "color": "#E9ECF0" }
+    { "value": 0.25, "label": "-10°", "color": "#FFDAB9" },
+    { "value": 0.5, "label": "-20°", "color": "#87CEEB" },
+    { "value": 0.75, "label": "-30°", "color": "#B2D3E9" },
+    { "value": 1, "label": "-40°", "color": "#E9ECF0" }
   ]
 }
