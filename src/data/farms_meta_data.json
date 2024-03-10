@@ -6,7 +6,7 @@
             "latitude": "64.2248110423901",
             "longitude": "10.3746175670882",
             "capacity_kw": "57500.0",
-            "price_area": "N03"
+            "price_area": "N02"
         },
         {
             "id": "2",
@@ -62,7 +62,7 @@
             "latitude": "59.140123076773",
             "longitude": "5.02974688433385",
             "capacity_kw": "2300.0", 
-            "price_area": "N05"
+            "price_area": "N02"
         },
         {
             "id": "9",
@@ -110,7 +110,7 @@
             "latitude": "59.9292963959985",
             "longitude": "5.37978343235527",
             "capacity_kw": "150000.0",
-            "price_area": "N05"
+            "price_area": "N02"
         },
         {
             "id": "15",
@@ -182,7 +182,7 @@
             "latitude": "59.3156965510178",
             "longitude": "4.90482538290929",
             "capacity_kw": "1200.0",
-            "price_area": "N05"
+            "price_area": "N02"
         },
         {
             "id": "24",
