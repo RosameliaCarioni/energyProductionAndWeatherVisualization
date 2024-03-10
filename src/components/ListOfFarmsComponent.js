@@ -42,6 +42,8 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
   const [energyAfterIceLoss, setEnergyAfterIceLoss] = useState(null);
   const [relativeHumidity, setRelativeHumidity] = useState(null);
   const [windDirection, setWindDirection] = useState(null);
+  const [totalCapacity, setTotalCapacity] = useState(null);
+  const [aggregateData, setAggregateData] = useState(null)
 
   useEffect(() => {
     async function fetchData() {
@@ -55,10 +57,30 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
           : metaResult;
       setData(filteredMetaResult);
 
+      let localAggregateData = new Array(24).fill(0);
+      let capacitySum = 0;
+
       const parts = date.split("-");
       const year = parseInt(parts[0], 10);
       const month = parseInt(parts[1], 10);
       const day = parseInt(parts[2], 10);
+
+      for (const plant of filteredMetaResult) {
+        capacitySum += Number(plant.capacity_kw);
+        try {
+          const energyDataStr = await getProduction(plant.id, year, month, day);
+          const energyData = energyDataStr.map(Number);
+          localAggregateData = localAggregateData.map((sum, index) => {
+            const currentEnergy = energyData[index] || 0;
+            return sum + currentEnergy;
+          });
+        } catch (error) {
+          console.error(`Failed to fetch energy data for plant ${plant.id}`, error);
+        }
+      }
+  
+      setAggregateData(localAggregateData);
+      setTotalCapacity(capacitySum);
 
       const energyPromises = metaResult.map(async (item) => {
         try {
@@ -189,6 +211,10 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
 
   return (
     <div className="flex flex-col gap-5 py-5" as="main">
+      <div>
+        <GraphComponent graphValues={aggregateData} maxCapacity={totalCapacity} chartTitle={"Aggregated Energy Output"} yAxisTitle={"MW"} lineColor="rgb(95, 190, 179)"
+></GraphComponent>
+      </div>
       {filteredData?.map((item, index) => (
         <div key={item.id} className="overflow-x pr-2 mr-4">
           {" "}
