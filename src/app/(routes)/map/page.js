@@ -14,6 +14,8 @@ import {
   getProduction,
   getEnergyAfterIceLoss,
   getWindSpeed,
+  getRelativeHumidity,
+  getTemperature,
 } from "@/utils/getFarmsProduction";
 import TimeSliderComponent from "@/components/TimeSliderComponent";
 import SimpleListOfFarmsComponent from "@/components/SimpleListOfFarmsComponent";
@@ -36,6 +38,8 @@ export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
   const [allEnergyData, setAllEnergyData] = useState(undefined);
   const [windData, setWindData] = useState(undefined);
+  const [humidityData, setHumidityData] = useState(undefined);
+  const [temperatureData, setTemperatureData] = useState(undefined);
   const [icelossData, setEnergyAfterIcelossData] = useState(undefined);
   const [percentageEnergyLossIcing, setPercentageEnergyLossIcing] =
     useState(undefined);
@@ -107,11 +111,16 @@ export default function Map() {
   const handlePlantSelect = (plant) => {
     setEnergyData(undefined);
     setWindData(undefined);
+    setHumidityData(undefined);
+    setTemperatureData(undefined);
     setEnergyAfterIcelossData(undefined);
     setSelectedPlant(plant);
   };
   const handlePlantHover = (plant) => {
     setHoverInfo(plant);
+    //setenergyData
+    console.log("hej");
+    console.log(plant);
   };
   const handleClickClose = () => {
     setSelectedPlant(undefined);
@@ -200,6 +209,8 @@ export default function Map() {
           ? parseFloat(plantData[selectedTime])
           : null;
       });
+      //console.log(results);
+      //console.log(resultsForHour);
       setAllEnergyData(resultsForHour);
       // Check if resultsForHour contains any non-null values
       if (resultsForHour.some((value) => value !== null)) {
@@ -524,6 +535,22 @@ export default function Map() {
         selectedDate.getDate()
       );
       setWindData(wind);
+
+      const humidity = await getRelativeHumidity(
+        selectedPlant.id,
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 1,
+        selectedDate.getDate()
+      );
+      setHumidityData(humidity);
+
+      const temperature = await getTemperature(
+        selectedPlant.id,
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 1,
+        selectedDate.getDate()
+      );
+      setTemperatureData(temperature);
     }
 
     async function fetchAggregateData(plants) {
@@ -613,28 +640,47 @@ export default function Map() {
         <div className="overflow-y map-col">
           {selectedPlant && (
             <div className="py-5">
-              <div className="flex justify-between items-center w-full">
-                <p>DETAIL VIEW</p>
+              <div className="flex justify-end w-full">
                 <button className="mr-4" onClick={handleClickClose}>
-                  CLOSE
+                  <img
+                    className="w-25"
+                    src="/assets/icons/back-arrow.svg"
+                  ></img>
                 </button>
               </div>
 
-              <div className="flex justify-between items-center w-full">
-                <h1 className="font-blue text-none">{selectedPlant.name}</h1>
-                <div className="relative mr-4 flex flex-col items-end">
+              <div>
+                {selectedGraphs.includes("agg") && (
+                  <>
+                    <h2 className="mt-0 mb-0">All farms</h2>
+                    <GraphComponent
+                      graphValues={aggregateData}
+                      chartTitle="Aggregate Energy Output"
+                      selectedTime={selectedTime}
+                      selectedDate={selectedDate}
+                      maxCapacity={totalCapacity}
+                      yAxisTitle="MW"
+                      lineColor="rgb(95, 190, 179)"
+                      lineBackgroundColor="rgb(95, 190, 179, 0.35)"
+                    />
+                  </>
+                )}
+              </div>
+              <div className="flex justify-between items-end w-ful pr-2">
+                <h1 className=" mt-2 mb-0 font-blue">{selectedPlant.name}</h1>
+                <div>
                   <button
                     onClick={toggleDropdown}
-                    className={`px-4 py-2 bg-gray-200 flex items-center lightgray-hover px-2 rounded-md py-2 z-50 ${buttonClass}`}
+                    className={`  bg-lightgray  flex items-center lightgray-hover px-2 rounded-md py-2 z-50 ${buttonClass}`}
                   >
-                    <span className="mr-2">Graph Types</span>
+                    <span className="mr-2">Choose graphs</span>
                     <img
                       src="/assets/icons/arrow-w.svg"
                       alt="Dropdown Indicator"
                     />
                   </button>
                   {isDropdownOpen && (
-                    <div className="absolute mt-30px w-full bg-lightgray shadow-md z-10 p-3 background-effect bottom-border">
+                    <div className="absolute  bg-lightgray shadow-md z-10  p-3 background-effect bottom-border pr-2">
                       {graphTypes.map((type) => (
                         <div key={type} className="flex items-center">
                           <input
@@ -648,45 +694,29 @@ export default function Map() {
                         </div>
                       ))}
                     </div>
-                  )}
+                  )}{" "}
                 </div>
               </div>
 
-              <div>
-                {selectedGraphs.includes("agg") && (
-                  <GraphComponent
-                    graphValues={aggregateData}
-                    chartTitle="Energy Output, all plants"
-                    selectedTime={selectedTime}
-                    selectedDate={selectedDate}
-                    maxCapacity={totalCapacity}
-                    yAxisTitle="MW"
-                    lineColor="rgb(95, 190, 179)"
-                    lineBackgroundColor="rgb(95, 190, 179, 0.35)"
-                  />
-                )}
-              </div>
+              {selectedGraphs.includes("energy") && (
+                <GraphComponent
+                  graphValues={energyData}
+                  selectedTime={selectedTime}
+                  selectedDate={selectedDate}
+                  maxCapacity={selectedPlant.capacity_kw}
+                  chartTitle="Energy Output w/o Iceloss"
+                  yAxisTitle="MW"
+                  lineColor="rgb(95, 190, 179)"
+                  lineBackgroundColor="rgb(95, 190, 179, 0.35)"
+                  icelossData={icelossData}
+                />
+              )}
 
-              <div className="mb-8">
-                {selectedGraphs.includes("energy") && (
-                  <GraphComponent
-                    graphValues={energyData}
-                    selectedTime={selectedTime}
-                    selectedDate={selectedDate}
-                    maxCapacity={selectedPlant.capacity_kw}
-                    chartTitle="Energy Output, selected plant"
-                    yAxisTitle="MW"
-                    lineColor="rgb(95, 190, 179)"
-                    lineBackgroundColor="rgb(95, 190, 179, 0.35)"
-                    icelossData={icelossData}
-                  />
-                )}
-              </div>
               <div>
                 {selectedGraphs.includes("ice") && (
                   <GraphComponent
                     graphValues={calculatePercentage(icelossData, energyData)}
-                    chartTitle="Energy loss due to Icing, selected plant"
+                    chartTitle="% Energy loss due to Icing "
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
                     yAxisTitle="%"
@@ -711,7 +741,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("hum") && (
                   <GraphComponent
-                    graphValues={windData}
+                    graphValues={humidityData}
                     chartTitle="Humidity"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -724,7 +754,7 @@ export default function Map() {
               <div>
                 {selectedGraphs.includes("temp") && (
                   <GraphComponent
-                    graphValues={windData}
+                    graphValues={temperatureData}
                     chartTitle="Temperature"
                     selectedTime={selectedTime}
                     selectedDate={selectedDate}
@@ -738,9 +768,8 @@ export default function Map() {
           )}
           {!selectedPlant && (
             <div className="py-5">
-              <p>LIST VIEW</p>
-              <h1>All Farms</h1>
-              <div>
+              <h2 className="mt-0 mb-0"> All farms</h2>
+              <div className="mb-8">
                 {selectedGraphs.includes("agg") && (
                   <GraphComponent
                     graphValues={aggregateData}
@@ -786,6 +815,9 @@ export default function Map() {
             selectedPlant={selectedPlant}
             plantsArray={searchInput ? filteredPlantsArray : plantsArray}
             hoverInfo={hoverInfo}
+            windspeed={windData}
+            icelossPercentage={percentageEnergyLossIcing}
+            //energyOutput={results}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
             switchOption={currentSwitchOption}

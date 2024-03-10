@@ -11,6 +11,26 @@ import { getWindSpeed } from "@/utils/getFarmsProduction";
 import { getEnergyAfterIceLoss } from "@/utils/getFarmsProduction";
 import { getRelativeHumidity } from "@/utils/getFarmsProduction";
 import { getWindDirection } from "@/utils/getFarmsProduction";
+function calculatePercentage(obj1, obj2) {
+  if (obj1 !== undefined && obj2 !== undefined) {
+    const result = [];
+    for (const key in obj1) {
+      if (obj1.hasOwnProperty(key) && obj2.hasOwnProperty(key)) {
+        // Ensure the divisor is not 0 to avoid division by zero
+        const divisor = parseFloat(obj2[key]);
+        if (divisor !== 0) {
+          const dividend = parseFloat(obj1[key]);
+          const rate = 1 - dividend / divisor; // -1 because is the inverted
+          result[key] = (rate * 100).toString();
+        } else {
+          // Handle the case where the divisor is 0, maybe set it to null or some other value
+          result[key] = "0"; // or another appropriate value
+        }
+      }
+    }
+    return result;
+  }
+}
 
 export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
   //const { date, selectedPriceArea } = props;  // Destructure date and selectedPriceArea from props
@@ -183,18 +203,24 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
                   ? energyData[index]
                   : new Array(24).fill(0)
               }
-              chartTitle="Energy Output"
               maxCapacity={item.capacity_kw}
               lineColor="rgb(95, 190, 179)"
               lineBackgroundColor="rgb(95, 190, 179, 0.35)"
-            />
-            {/* ice loss Graph */}
-            <GraphComponent
-              graphValues={
+              chartTitle="Energy Output w/o Iceloss"
+              yAxisTitle="MW"
+              icelossData={
                 energyAfterIceLoss && energyAfterIceLoss[index]
                   ? energyAfterIceLoss[index]
                   : new Array(24).fill(0)
-              }
+              } ////////////////////
+            />
+            {/* ice loss Graph */ console.log()}
+
+            <GraphComponent
+              graphValues={calculatePercentage(
+                energyAfterIceLoss,
+                energyAfterIceLoss
+              )}
               chartTitle="Ice loss"
               yAxisTitle="%"
               lineColor="rgb(255, 99, 132)"

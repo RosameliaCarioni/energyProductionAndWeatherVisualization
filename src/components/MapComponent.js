@@ -20,11 +20,20 @@ function MapComponent({
   children,
   plantsArray,
   hoverInfo,
+  windspeed,
+  icelossPercentage,
+  //energyOutput,
   selectedDate,
   selectedTime,
   switchOption,
   selectedLayer,
 }) {
+  // console.log("selected time");
+  // console.log(selectedTime);
+  //console.log("energy output");
+  //console.log(energyOutput);
+  // console.log("hoverinfo");
+  // console.log(hoverInfo);
   const [viewState, setViewState] = useState({
     latitude: 60.472,
     longitude: 8.4689,
@@ -39,7 +48,6 @@ function MapComponent({
   const [energyDataAfterIceLoss, setEnergyDataAfterIceLoss] = useState(null);
   const [polygonHoverInfo, setPolygonHoverInfo] = useState(null);
   const [hoveredPlant, setHoveredPlant] = useState(null);
-
 
   const windSpeedPalette = [
     [0, [233, 236, 239]], // very light grey, calm
@@ -538,10 +546,10 @@ function MapComponent({
                 </p>
                 <p>
                   <b>Current energy output:</b>{" "}
-                  <span className="font-blue">XX kWh</span>
+                  <span className="font-blue">{} MW</span>
                 </p>
                 <p>
-                  <b>Current ice-loss:</b> <span className="font-red">x%</span>
+                  <b>Current ice-loss:</b> <span className="font-red">%</span>
                 </p>
                 <p>
                   <b>Current wind speed:</b>{" "}
