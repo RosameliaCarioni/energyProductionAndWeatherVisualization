@@ -1,6 +1,6 @@
 import React from "react";
 
-function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, energyData, selectedHour, hoverInfo, onHoverPlant }) {
+function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, energyData, hoverInfo, onHoverPlant }) {
 
     const handlePlantClick = (plant) => {
         onSelectPlant(plant);
@@ -31,7 +31,7 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, energyData, sel
                     >
                         <span className="font-medium">{plant.name}{' '}</span>
                         <span className="text-gray-500">
-                        {/* Ensure energyData and selectedHour are defined and access the correct hour's data */}
+                        {/* Ensure energyData are defined and access the correct hour's data */}
                         {' '}{energyData[index] ? energyData[index].toFixed(2) : 'Loading...'} MW
                         </span>
                         <span className="text-gray-500">{' '}{plant.capacity_kw / 1000} MW</span>

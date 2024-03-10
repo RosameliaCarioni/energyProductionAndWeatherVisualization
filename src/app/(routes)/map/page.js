@@ -33,6 +33,7 @@ import temperatureLegendData from "@/data/temperature_legend_data.json";
 import windspeedLegendData from "@/data/windspeed_legend_data.json";
 import SearchComponent from "@/components/SearchComponent";
 import FilterPropertiesComponent from "@/components/FilterPropertiesComponent";
+import PriceAreaComponent from "@/components/PriceAreaComponent";
 
 export default function Map() {
   const [energyData, setEnergyData] = useState(undefined);
@@ -59,6 +60,7 @@ export default function Map() {
   const [selectedLayer, setSelectedLayer] = useState(["WindSpeed"]);
   const [aggregateData, setAggregateData] = useState(undefined);
   const [totalCapacity, setTotalCapacity] = useState(0);
+  const [selectedPriceArea, setSelectedPriceArea] = useState();
 
   const graphTypes = ["agg", "energy", "ws", "hum", "temp", "ice"];
 
@@ -106,6 +108,9 @@ export default function Map() {
   const handleDateChange = (newDate) => {
     const date = new Date(newDate);
     setSelectedDate(date);
+  };
+  const handlePriceAreaChange = (newPriceArea) => {
+    setSelectedPriceArea(newPriceArea);
   };
 
   const handlePlantSelect = (plant) => {
@@ -221,7 +226,13 @@ export default function Map() {
           // Return the production value to build the productionValues array
           return plant;
         });
-        setPlants(plantWithProduction);
+        const filteredMetaResult =
+          selectedPriceArea && selectedPriceArea.length > 0
+            ? plantWithProduction.filter((item) =>
+                selectedPriceArea.includes(item.price_area)
+              )
+            : plantWithProduction;
+        setPlants(filteredMetaResult);
       }
     };
 
@@ -256,13 +267,25 @@ export default function Map() {
           // Return the production value to build the productionValues array
           return plant;
         });
-        setPlants(plantWithIceLoss);
+        const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plantWithIceLoss.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plantWithIceLoss;
+        setPlants(filteredMetaResult);
       }
     };
 
     const fetchPlants = async () => {
       const plants = await getFarmsMeta();
-      setPlants(plants);
+      const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plants.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plants;
+      setPlants(filteredMetaResult);
       // After fetching the plants, fetch the energy data for all plants
       fetchEnergyDataForAllPlants(plants);
       fetchIceLossDataForAllPlants(plants);
@@ -270,7 +293,7 @@ export default function Map() {
 
     // Call the fetchPlants function when the component mounts
     fetchPlants();
-  }, [selectedDate, selectedTime]); // Dependence on selectedDate to re-fetch if it changes
+  }, [selectedDate, selectedTime, selectedPriceArea]); // Dependence on selectedDate to re-fetch if it changes
 
   useEffect(() => {
     // Fetch plants and handle sorting whenever sortConfig changes
@@ -302,7 +325,7 @@ export default function Map() {
     };
 
     fetchPlants();
-  }, [sortConfig]);
+  }, [sortConfig, selectedPriceArea]);
 
   useEffect(() => {
     // Define a new function that will fetch energy data for all plants
@@ -337,7 +360,13 @@ export default function Map() {
           // Return the production value to build the productionValues array
           return plant;
         });
-        setPlants(plantWithProduction);
+        const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plantWithProduction.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plantWithProduction;
+        setPlants(filteredMetaResult);
       }
     };
 
@@ -372,13 +401,25 @@ export default function Map() {
           // Return the production value to build the productionValues array
           return plant;
         });
-        setPlants(plantWithIceLoss);
+        const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plantWithIceLoss.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plantWithIceLoss;
+        setPlants(filteredMetaResult);
       }
     };
 
     const fetchPlants = async () => {
       const plants = await getFarmsMeta();
-      setPlants(plants);
+      const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plants.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plants;
+      setPlants(filteredMetaResult);
       // After fetching the plants, fetch the energy data for all plants
       fetchEnergyDataForAllPlants(plants);
       fetchIceLossDataForAllPlants(plants);
@@ -386,7 +427,7 @@ export default function Map() {
 
     // Call the fetchPlants function when the component mounts
     fetchPlants();
-  }, [selectedDate, selectedTime]); // Dependence on selectedDate to re-fetch if it changes
+  }, [selectedDate, selectedTime, selectedPriceArea]); // Dependence on selectedDate to re-fetch if it changes
 
   useEffect(() => {
     // Fetch plants and handle sorting whenever sortConfig changes
@@ -418,7 +459,7 @@ export default function Map() {
     };
 
     fetchPlants();
-  }, [sortConfig]);
+  }, [sortConfig, selectedPriceArea]);
 
   useEffect(() => {
     // Define a new function that will fetch energy data for all plants
@@ -453,7 +494,13 @@ export default function Map() {
           // Return the production value to build the productionValues array
           return plant;
         });
-        setPlants(plantWithProduction);
+        const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plantWithProduction.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plantWithProduction;
+        setPlants(filteredMetaResult);
       }
     };
 
@@ -488,13 +535,25 @@ export default function Map() {
           // Return the production value to build the productionValues array
           return plant;
         });
-        setPlants(plantWithIceLoss);
+        const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plantWithIceLoss.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plantWithIceLoss;
+        setPlants(filteredMetaResult);
       }
     };
 
     const fetchPlants = async () => {
       const plants = await getFarmsMeta();
-      setPlants(plants);
+      const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plants.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plants;
+      setPlants(filteredMetaResult);
       // After fetching the plants, fetch the energy data for all plants
       fetchEnergyDataForAllPlants(plants);
       fetchIceLossDataForAllPlants(plants);
@@ -506,7 +565,7 @@ export default function Map() {
     //TODO change the appereance of the filterPropertiesComponent so that it displays Alphabetically
     // Call the resetSelectedProperty method to reset the selectedProperty to 'Alphabetically'
     filterPropertiesRef.current?.resetSelectedProperty?.();
-  }, [selectedDate, selectedTime]); // Dependence on selectedDate to re-fetch if it changes
+  }, [selectedDate, selectedTime, selectedPriceArea]); // Dependence on selectedDate to re-fetch if it changes
 
   useEffect(() => {
     async function fetchDataForSelectedPlant() {
@@ -582,10 +641,16 @@ export default function Map() {
 
     async function fetchPlantsAndAggregateData() {
       const plants = await getFarmsMeta();
-      setPlants(plants);
+      const filteredMetaResult =
+        selectedPriceArea && selectedPriceArea.length > 0
+          ? plants.filter((item) =>
+              selectedPriceArea.includes(item.price_area)
+            )
+          : plants;
+      setPlants(filteredMetaResult);
 
       // Now passing the freshly fetched plants directly to fetchAggregateData
-      fetchAggregateData(plants);
+      fetchAggregateData(filteredMetaResult);
     }
 
     // Fetch metadata for all plants and then fetch and aggregate data for all plants
@@ -593,7 +658,7 @@ export default function Map() {
 
     // Fetch data for the selected plant
     fetchDataForSelectedPlant();
-  }, [selectedPlant, selectedDate]);
+  }, [selectedPlant, selectedDate, selectedPriceArea]);
 
   const [weatherData, setWeatherData] = useState([]);
 
@@ -632,7 +697,7 @@ export default function Map() {
       default:
         setWeatherData(windspeedLegendData);
     }
-  }, [selectedLayer]);
+  }, [selectedLayer, selectedPriceArea]);
 
   return (
     <div>
@@ -788,10 +853,10 @@ export default function Map() {
                 ref={filterPropertiesRef}
                 onSortOrderChange={handleSortOrderChange}
               />
+              <PriceAreaComponent onPriceAreaChange={handlePriceAreaChange} />
               <SimpleListOfFarmsComponent
                 plantsArray={searchInput ? filteredPlantsArray : plantsArray}
                 energyData={allEnergyData}
-                selectedHour={selectedTime}
                 hoverInfo={hoverInfo}
                 onSelectPlant={handlePlantSelect}
                 onHoverPlant={handlePlantHover}

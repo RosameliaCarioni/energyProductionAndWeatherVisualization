@@ -7,6 +7,7 @@ const FilterPropertiesComponent = forwardRef(({ onSortOrderChange }, ref) => {
   useImperativeHandle(ref, () => ({
     resetSelectedProperty() {
       setSelectedProperty('Alphabetically');
+      setSortOrder('asc')
       onSortOrderChange('Alphabetically', sortOrder);
     },
   }));
