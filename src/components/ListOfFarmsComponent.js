@@ -170,7 +170,7 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
   return (
     <div className="flex flex-col gap-5 py-5" as="main">
       {filteredData?.map((item, index) => (
-        <div key={item.id} className="overflow-hidden">
+        <div key={item.id} className="overflow-x pr-2 mr-4">
           {" "}
           {/* Use item.id as key if it's unique */}
           {/* Display the name in a text box */}

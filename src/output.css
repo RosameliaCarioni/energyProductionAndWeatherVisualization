@@ -813,6 +813,10 @@ video {
   overflow: auto;
 }
 
+.overflow-x {
+  overflow-x: auto; 
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
