@@ -13,24 +13,27 @@ import { getRelativeHumidity } from "@/utils/getFarmsProduction";
 import { getWindDirection } from "@/utils/getFarmsProduction";
 function calculatePercentage(obj1, obj2) {
   if (obj1 !== undefined && obj2 !== undefined) {
-    const result = [];
-    for (const key in obj1) {
-      if (obj1.hasOwnProperty(key) && obj2.hasOwnProperty(key)) {
-        // Ensure the divisor is not 0 to avoid division by zero
-        const divisor = parseFloat(obj2[key]);
-        if (divisor !== 0) {
-          const dividend = parseFloat(obj1[key]);
-          const rate = 1 - dividend / divisor; // -1 because is the inverted
-          result[key] = (rate * 100).toString();
-        } else {
-          // Handle the case where the divisor is 0, maybe set it to null or some other value
-          result[key] = "0"; // or another appropriate value
+    const result = {};
+    for (const plant in obj1) {
+      if (obj1.hasOwnProperty(plant) && obj2.hasOwnProperty(plant)) {
+        result[plant] = [];
+        for (let i = 0; i < obj1[plant].length; i++) {
+          const divisor = parseFloat(obj2[plant][i]);
+          if (divisor !== 0) {
+            const dividend = parseFloat(obj1[plant][i]);
+            const rate = 1 - dividend / divisor; // -1 because it's the inverted
+            result[plant].push((rate * 100).toFixed(2)); // Added toFixed for precision
+          } else {
+            // Handle the case where the divisor is 0
+            result[plant].push("0"); // or another appropriate value
+          }
         }
       }
     }
     return result;
   }
 }
+
 
 export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
   //const { date, selectedPriceArea } = props;  // Destructure date and selectedPriceArea from props
@@ -245,8 +248,8 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
             <GraphComponent
               graphValues={calculatePercentage(
                 energyAfterIceLoss,
-                energyAfterIceLoss
-              )}
+                energyData
+              )[index]}
               chartTitle="Ice loss"
               yAxisTitle="%"
               lineColor="rgb(255, 99, 132)"
