@@ -18,8 +18,8 @@ function PriceAreaComponent({ onPriceAreaChange }) {
   }, [selectedButtons, onPriceAreaChange]);
 
   return (
-    <div className="flex">
-      <p className="font-bold mb-2 mr-4">Select Price Areas:</p>
+    <div className="flex mt-4">
+      <p className="font-bold mb-2 no-wrap mr-2">Select Price Areas:</p>
       <div>
         {['N01', 'N02', 'N03', 'N04', 'N05'].map((buttonName) => (
           <button
