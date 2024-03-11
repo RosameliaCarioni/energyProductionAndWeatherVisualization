@@ -312,7 +312,7 @@ export default function ListOfFarms({ date, selectedPriceArea, searchInput }) {
                   : new Array(24).fill(0)
               }
               chartTitle="windDirection"
-              yAxisTitle="?"
+              yAxisTitle="Degrees"
               lineColor="rgb(199, 218, 242)"
               lineBackgroundColor="rgb(199, 218, 242, 0.35)"
             />
