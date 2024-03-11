@@ -20,13 +20,13 @@ function MapComponent({
   children,
   plantsArray,
   hoverInfo,
-  windspeed,
   icelossPercentage,
   //energyOutput,
   selectedDate,
   selectedTime,
   switchOption,
   selectedLayer,
+  allEnergyData,
 }) {
   // console.log("selected time");
   // console.log(selectedTime);
@@ -545,15 +545,19 @@ function MapComponent({
                   </span>
                 </p>
                 <p>
-                  <b>Current energy output:</b>{" "}
+                  <b>Energy production: </b>
+                  {allEnergyData && allEnergyData[(hoveredPlant.id)-1] !== undefined 
+                    ? allEnergyData[(hoveredPlant.id)-1].toFixed(2) 
+                    : 'Loading ...'}
+                  {console.log("ICE LOSS ",icelossPercentage)}
                   <span className="font-blue">{} MW</span>
                 </p>
                 <p>
-                  <b>Current ice-loss:</b> <span className="font-red">%</span>
-                </p>
-                <p>
-                  <b>Current wind speed:</b>{" "}
-                  <span className="font-blue">12 m/s</span>
+                  <b>Current ice-loss: </b>
+                  {icelossPercentage && icelossPercentage[(hoveredPlant.id)-1] !== undefined 
+                    ? icelossPercentage[(hoveredPlant.id)-1]
+                    : 'Loading ...'}
+                     <span className="font-red">%</span>
                 </p>
                 <p>
                   <b>Price area:</b>{" "}

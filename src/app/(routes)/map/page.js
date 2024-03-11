@@ -187,7 +187,6 @@ export default function Map() {
       let productionValues = plantsArray.map((plant) => plant.production);
       setAllEnergyData(productionValues); // Update your state or variable that holds allEnergyData
     };
-
     fetchPlants();
   }, [sortConfig]);
 
@@ -678,7 +677,7 @@ export default function Map() {
             result[key] = "0"; // or another appropriate value
           }
         }
-      }
+      }  
       return result;
     }
   }
@@ -880,13 +879,13 @@ export default function Map() {
             selectedPlant={selectedPlant}
             plantsArray={searchInput ? filteredPlantsArray : plantsArray}
             hoverInfo={hoverInfo}
-            windspeed={windData}
             icelossPercentage={percentageEnergyLossIcing}
             //energyOutput={results}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
             switchOption={currentSwitchOption}
             selectedLayer={selectedLayer}
+            allEnergyData={allEnergyData}
           >
             <div className="flex flex-col items-end w-full">
               <div className="flex flex-col items-end">
