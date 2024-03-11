@@ -553,13 +553,6 @@ function MapComponent({
                   <span className="font-blue">{} MW</span>
                 </p>
                 <p>
-                  <b>Current ice-loss: </b>
-                  {icelossPercentage && icelossPercentage[(hoveredPlant.id)-1] !== undefined 
-                    ? icelossPercentage[(hoveredPlant.id)-1]
-                    : 'Loading ...'}
-                     <span className="font-red">%</span>
-                </p>
-                <p>
                   <b>Price area:</b>{" "}
                   <span className="font-blue">{hoveredPlant.price_area}</span>
                 </p>
