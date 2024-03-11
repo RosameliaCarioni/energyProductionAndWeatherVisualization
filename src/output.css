@@ -664,6 +664,7 @@ video {
 .mt-0 {
   margin-top: 0rem;
 }
+
 .mt-4 {
   margin-top: 1rem;
 }
@@ -916,6 +917,10 @@ video {
 .py-12 {
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+
+.no-wrap {
+  white-space: nowrap;
 }
 
 .text-lg {
