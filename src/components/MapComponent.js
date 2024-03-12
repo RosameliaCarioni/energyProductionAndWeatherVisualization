@@ -102,6 +102,11 @@ function MapComponent({
     humUnscale: [0, 100],
   };
 
+  const mapBounds = [
+    [-23.5, 29.5],
+    [45.0, 70.5],
+  ];
+
   const geojsonLayerStyle = {
     id: "polygonLayer",
     type: "fill",
@@ -475,6 +480,7 @@ function MapComponent({
         onMouseMove={onMouseMove}
         onMouseLeave={() => setPolygonHoverInfo(null)}
         interactiveLayerIds={["polygonLayer"]}
+        maxBounds={mapBounds}
       >
         <Source id="polygonSource" type="geojson" data={geojson}>
           <Layer {...geojsonLayerStyle} />
@@ -546,10 +552,11 @@ function MapComponent({
                 </p>
                 <p>
                   <b>Energy production: </b>
-                  {allEnergyData && allEnergyData[(hoveredPlant.id)-1] !== undefined 
-                    ? allEnergyData[(hoveredPlant.id)-1].toFixed(2) 
-                    : 'Loading ...'}
-                  {console.log("ICE LOSS ",icelossPercentage)}
+                  {allEnergyData &&
+                  allEnergyData[hoveredPlant.id - 1] !== undefined
+                    ? allEnergyData[hoveredPlant.id - 1].toFixed(2)
+                    : "Loading ..."}
+                  {console.log("ICE LOSS ", icelossPercentage)}
                   <span className="font-blue">{} MW</span>
                 </p>
                 <p>
