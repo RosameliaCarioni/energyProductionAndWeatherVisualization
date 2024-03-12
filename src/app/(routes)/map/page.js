@@ -123,9 +123,6 @@ export default function Map() {
   };
   const handlePlantHover = (plant) => {
     setHoverInfo(plant);
-    //setenergyData
-    console.log("hej");
-    console.log(plant);
   };
   const handleClickClose = () => {
     setSelectedPlant(undefined);
@@ -267,11 +264,11 @@ export default function Map() {
           return plant;
         });
         const filteredMetaResult =
-        selectedPriceArea && selectedPriceArea.length > 0
-          ? plantWithIceLoss.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
-          : plantWithIceLoss;
+          selectedPriceArea && selectedPriceArea.length > 0
+            ? plantWithIceLoss.filter((item) =>
+                selectedPriceArea.includes(item.price_area)
+              )
+            : plantWithIceLoss;
         setPlants(filteredMetaResult);
       }
     };
@@ -280,9 +277,7 @@ export default function Map() {
       const plants = await getFarmsMeta();
       const filteredMetaResult =
         selectedPriceArea && selectedPriceArea.length > 0
-          ? plants.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
+          ? plants.filter((item) => selectedPriceArea.includes(item.price_area))
           : plants;
       setPlants(filteredMetaResult);
       // After fetching the plants, fetch the energy data for all plants
@@ -360,11 +355,11 @@ export default function Map() {
           return plant;
         });
         const filteredMetaResult =
-        selectedPriceArea && selectedPriceArea.length > 0
-          ? plantWithProduction.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
-          : plantWithProduction;
+          selectedPriceArea && selectedPriceArea.length > 0
+            ? plantWithProduction.filter((item) =>
+                selectedPriceArea.includes(item.price_area)
+              )
+            : plantWithProduction;
         setPlants(filteredMetaResult);
       }
     };
@@ -401,11 +396,11 @@ export default function Map() {
           return plant;
         });
         const filteredMetaResult =
-        selectedPriceArea && selectedPriceArea.length > 0
-          ? plantWithIceLoss.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
-          : plantWithIceLoss;
+          selectedPriceArea && selectedPriceArea.length > 0
+            ? plantWithIceLoss.filter((item) =>
+                selectedPriceArea.includes(item.price_area)
+              )
+            : plantWithIceLoss;
         setPlants(filteredMetaResult);
       }
     };
@@ -414,9 +409,7 @@ export default function Map() {
       const plants = await getFarmsMeta();
       const filteredMetaResult =
         selectedPriceArea && selectedPriceArea.length > 0
-          ? plants.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
+          ? plants.filter((item) => selectedPriceArea.includes(item.price_area))
           : plants;
       setPlants(filteredMetaResult);
       // After fetching the plants, fetch the energy data for all plants
@@ -494,11 +487,11 @@ export default function Map() {
           return plant;
         });
         const filteredMetaResult =
-        selectedPriceArea && selectedPriceArea.length > 0
-          ? plantWithProduction.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
-          : plantWithProduction;
+          selectedPriceArea && selectedPriceArea.length > 0
+            ? plantWithProduction.filter((item) =>
+                selectedPriceArea.includes(item.price_area)
+              )
+            : plantWithProduction;
         setPlants(filteredMetaResult);
       }
     };
@@ -535,11 +528,11 @@ export default function Map() {
           return plant;
         });
         const filteredMetaResult =
-        selectedPriceArea && selectedPriceArea.length > 0
-          ? plantWithIceLoss.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
-          : plantWithIceLoss;
+          selectedPriceArea && selectedPriceArea.length > 0
+            ? plantWithIceLoss.filter((item) =>
+                selectedPriceArea.includes(item.price_area)
+              )
+            : plantWithIceLoss;
         setPlants(filteredMetaResult);
       }
     };
@@ -548,9 +541,7 @@ export default function Map() {
       const plants = await getFarmsMeta();
       const filteredMetaResult =
         selectedPriceArea && selectedPriceArea.length > 0
-          ? plants.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
+          ? plants.filter((item) => selectedPriceArea.includes(item.price_area))
           : plants;
       setPlants(filteredMetaResult);
       // After fetching the plants, fetch the energy data for all plants
@@ -642,9 +633,7 @@ export default function Map() {
       const plants = await getFarmsMeta();
       const filteredMetaResult =
         selectedPriceArea && selectedPriceArea.length > 0
-          ? plants.filter((item) =>
-              selectedPriceArea.includes(item.price_area)
-            )
+          ? plants.filter((item) => selectedPriceArea.includes(item.price_area))
           : plants;
       setPlants(filteredMetaResult);
 
@@ -677,7 +666,7 @@ export default function Map() {
             result[key] = "0"; // or another appropriate value
           }
         }
-      }  
+      }
       return result;
     }
   }
