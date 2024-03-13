@@ -307,8 +307,7 @@ function MapComponent({
 
     const ratio = 1 - energyIceLoss / energy; // the ratio represents the percentage of energy lost due to icing
 
-    if (ratio > 0.9) {
-      // Loss of energy due to icing is very high
+    if (ratio > 0.9) { // Loss of energy due to icing is very high
       return "#fc6e51";
     } else if (ratio > 0.7) {
       return "#fcb941";
@@ -317,7 +316,7 @@ function MapComponent({
     } else if (ratio > 0.3) {
       return "#b8e986";
     } else {
-      return "#7bdcb5";
+      return "#60a917";
     }
   };
 
@@ -330,9 +329,8 @@ function MapComponent({
     const capacity = capacity_kw / 1000; // From KW to MW
     const ratio = casted_energy / capacity;
 
-    if (ratio > 0.8) {
-      // Farm is producing almost at full capacity
-      return "#7bdcb5";
+    if (ratio > 0.8) {  // Farm is producing almost at full capacity
+      return "#60a917";
     } else if (ratio > 0.6) {
       return "#b8e986";
     } else if (ratio > 0.4) {

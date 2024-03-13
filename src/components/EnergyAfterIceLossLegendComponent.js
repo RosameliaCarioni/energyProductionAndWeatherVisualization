@@ -3,7 +3,7 @@ import React from 'react';
 const EnergyAfterIceLossLegendComponent = () => {
   const options = [
    
-    { color: '#7bdcb5', label: '0% - 30%' }, // Minimal energy loss 
+    { color: '#60a917', label: '0% - 30%' }, // Minimal energy loss 
     { color: '#b8e986', label: '31% - 50%' }, 
     { color: '#fed766', label: '51% - 70%' }, 
     { color: '#fcb941', label: '71% - 90%' }, 

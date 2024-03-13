@@ -7,7 +7,7 @@ const EnergyProductionLegendComponent = () => {
     { color: '#fcb941', label: '21% - 40%' }, 
     { color: '#fed766', label: '41% - 60%' }, 
     { color: '#b8e986', label: '61% - 80%' }, 
-    { color: '#7bdcb5', label: '81% - 100%' }, // Bproducing at full capacity 
+    { color: '#60a917', label: '81% - 100%' }, // Bproducing at full capacity 
 
 
   ];
