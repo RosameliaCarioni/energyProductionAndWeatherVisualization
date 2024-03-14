@@ -3,19 +3,19 @@
         {
             "id": "1",
             "name": "Rosamelia Carioni",
-            "roles": ["Backend"],
+            "roles": ["Back-End Development", "Data Processing"],
             "image": "/assets/images/meli-bw.png"
         },
         {
             "id": "2",
             "name": "Mischa Tomasz Rauch",
-            "roles": ["Backend"],
+            "roles": ["Back-End Development", "Data Processing"],
             "image": "/assets/images/mischa-bw.png"
         },
         {
             "id": "3",
             "name": "Samuel Söderberg",
-            "roles": ["Frontend Engineer"],
+            "roles": ["Frontend Engineer", "Data Visualization & Component Architecture"],
             "image": "/assets/images/samuel-bw.png"
         },
         {
@@ -27,7 +27,7 @@
         {
             "id": "5",
             "name": "Danina Jansson",
-            "roles": ["UX/UI Designer", "Frontend"],
+            "roles": ["UX/UI design, styling", "Front-End Development"],
             "image": "/assets/images/danina-bw.png"
         }
     ]
