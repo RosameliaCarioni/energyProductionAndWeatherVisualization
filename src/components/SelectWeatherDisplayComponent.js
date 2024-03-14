@@ -5,7 +5,9 @@ function ButtonComponent({ onLayerChange }) {
   const [selectedButtons, setSelectedButtons] = useState(['WindSpeed']);
 
   function handleButtonClick(buttonName) {
-    setSelectedButtons([buttonName]);
+    setSelectedButtons(prev => 
+      prev.includes(buttonName) ? [] : [buttonName]
+    );
   }
 
   // Use useEffect to call onLayerChange after selectedButtons state has been updated
