@@ -82,7 +82,7 @@ This project utilizes data from multiple sources. The pre-processing of the data
 Special thanks to our professor [Mario Romero](https://www.linkedin.com/search/results/all/?fetchDeterministicClustersOnly=true&heroEntityKey=urn%3Ali%3Afsd_profile%3AACoAAADoHHcB82kx1734f-HuZhngWj8iIWY8ZXs&keywords=mario%20romero&origin=RICH_QUERY_SUGGESTION&position=0&searchId=99bed06d-720d-4bd8-aa6c-cceb65fb9d20&sid=dit&spellCorrectionEnabled=false) and [Rebase Energy](https://www.rebase.energy/) for the opportunity to work in this project and guidance throughout the process.
 
 ## License
-TODO 
+ 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 
