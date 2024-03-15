@@ -4,6 +4,8 @@ Welcome to the Energy Production and Weather Visualization repository! This proj
 
 For more information and to experience the platform, visit our [website](https://weather-visualization-rebase.vercel.app/).
 
+TODO: add video link 
+
 ## Contributors
 
 This project is the result of the collaborative efforts of a student team with diverse skills and backgrounds. 
@@ -79,7 +81,7 @@ This project utilizes data from multiple sources. The pre-processing of the data
 
 ## Acknowledgments
 
-Special thanks to our professor [Mario Romero](https://www.linkedin.com/search/results/all/?fetchDeterministicClustersOnly=true&heroEntityKey=urn%3Ali%3Afsd_profile%3AACoAAADoHHcB82kx1734f-HuZhngWj8iIWY8ZXs&keywords=mario%20romero&origin=RICH_QUERY_SUGGESTION&position=0&searchId=99bed06d-720d-4bd8-aa6c-cceb65fb9d20&sid=dit&spellCorrectionEnabled=false) and [Rebase Energy](https://www.rebase.energy/) for the opportunity to work in this project and guidance throughout the process.
+Special thanks to our professor [Mario Romero](https://www.linkedin.com/search/results/all/?fetchDeterministicClustersOnly=true&heroEntityKey=urn%3Ali%3Afsd_profile%3AACoAAADoHHcB82kx1734f-HuZhngWj8iIWY8ZXs&keywords=mario%20romero&origin=RICH_QUERY_SUGGESTION&position=0&searchId=99bed06d-720d-4bd8-aa6c-cceb65fb9d20&sid=dit&spellCorrectionEnabled=false), [Sebastian Haglund](https://www.linkedin.com/in/sebaheg/) and [Henrik Kälvegren](https://www.linkedin.com/in/henrik-kälvegren-1129a8147/) from [Rebase Energy](https://www.rebase.energy/) for the opportunity to work in this project and guidance throughout the process.
 
 ## License
  
