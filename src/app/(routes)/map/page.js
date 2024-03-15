@@ -860,7 +860,7 @@ export default function Map() {
           >
             <ModelSelectComponent />
             <SelectWeatherDisplayComponent onLayerChange={handleLayerChange} />
-            <MapLegendComponent weatherData={weatherData}></MapLegendComponent>
+            <MapLegendComponent weatherData={weatherData} visible={selectedLayer.length >= 1}></MapLegendComponent>
           </div>
           <MapComponentWithNoSSR
             className="mr-2"
