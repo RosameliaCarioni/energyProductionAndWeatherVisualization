@@ -6,15 +6,23 @@ For more information and to experience the platform, visit our [website](https:/
 
 ## Contributors
 
-This project is the result of the collaborative efforts of a student team with diverse skills and backgrounds. For more details about the team, visit our [About page](https://weather-visualization-rebase.vercel.app/about).
+This project is the result of the collaborative efforts of a student team with diverse skills and backgrounds. 
+**Group Members:** 
+- Rosamelia Carioni - [Github](https://github.com/RosameliaCarioni)
+- Danina Jansson - [Github](https://github.com/DaninaJansson)
+- Ellin Lundqvist - [Github](https://github.com/elinlqv)
+- Samuel Söderberg - [Github](https://github.com/sasoder)
+- Mischa Rauch - [Github](https://github.com/MischaRauch)
+
+For more details about the team, and contributions visit our [About page](https://weather-visualization-rebase.vercel.app/about).
 
 ## Getting Started
 
--**To generate the API keys needed to run locally this project, follow the following steps:**
+### To generate the API keys needed for local project execution, follow these steps:
 1. Create an account on [MapBox](https://www.mapbox.com/) and [WeatherLayers](https://weatherlayers.com/demo.html) and create access keys for each.
 2. Save these keys with the following names on the project root level in a file called `.env.local` `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN= 'your_mapbox_token'` `NEXT_PUBLIC_WEATHERLAYERS_ACCESS_TOKEN= 'your_weatherlayers_token'`.
 
--**To run the project, follow these steps:** 
+### To run the project:
 1. Clone the repository to your local machine.
 2. Make sure the npm package manager is installed on your machine. 
 3. Install dependencies using `npm install`.
@@ -30,7 +38,21 @@ This project is the result of the collaborative efforts of a student team with d
 
 
 ## Project structure 
-TODO :D 
+### `src`:
+- **App:** Contains the main application logic.
+  - **routes:** URL addresses to pages. Each file within a route directory contains a `page.js` document serving as a page.
+  - **api:** Endpoints for data requests.
+  - **page.js:** Serves as the HomePage.
+  - **styling:** Includes `global.css` for global styles and `layout.js` for layout definitions.
+- **Components:** Folder containing all React components used in the application.
+- **Data:** JSON files containing project data.
+- **Utils:** Contains methods for API data handling and server endpoint configuration.
+
+### `public`:
+- **assets:**
+  - **weather_data:** Images for weather data visualizations, including humidity, temperature, and wind speed.
+  - **images:** Developer team profile pictures.
+  - **icons:** Navigation icons.
 
 ## Data
 
@@ -57,12 +79,11 @@ This project utilizes data from multiple sources. The pre-processing of the data
 
 ## Acknowledgments
 
-Special thanks to Rebase Energy for the collaboration and the opportunity to contribute to this project through innovative data visualization solutions for power traders.
+Special thanks to our professor [Mario Romero](https://www.linkedin.com/search/results/all/?fetchDeterministicClustersOnly=true&heroEntityKey=urn%3Ali%3Afsd_profile%3AACoAAADoHHcB82kx1734f-HuZhngWj8iIWY8ZXs&keywords=mario%20romero&origin=RICH_QUERY_SUGGESTION&position=0&searchId=99bed06d-720d-4bd8-aa6c-cceb65fb9d20&sid=dit&spellCorrectionEnabled=false) and [Rebase Energy](https://www.rebase.energy/) for the opportunity to work in this project and guidance throughout the process.
 
 ## License
-
+TODO 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
 
 
 
