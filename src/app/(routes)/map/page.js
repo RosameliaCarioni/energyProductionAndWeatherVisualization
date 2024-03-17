@@ -51,8 +51,8 @@ export default function Map() {
   const [hoverInfo, setHoverInfo] = useState(undefined);
   const [selectedGraphs, setSelectedGraphs] = useState([
     "energy",
-    "ice",
-    "agg",
+    "ice loss",
+    "aggregated",
   ]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentSwitchOption, setCurrentSwitchOption] =
@@ -62,7 +62,7 @@ export default function Map() {
   const [totalCapacity, setTotalCapacity] = useState(0);
   const [selectedPriceArea, setSelectedPriceArea] = useState();
 
-  const graphTypes = ["agg", "energy", "ws", "hum", "temp", "ice"];
+  const graphTypes = ["aggregated", "energy", "ice loss", "windspeed", "humidity", "temperature"];
 
   // Add a state to keep track of the sorting
   const [sortConfig, setSortConfig] = useState({
@@ -703,7 +703,7 @@ export default function Map() {
               </div>
 
               <div>
-                {selectedGraphs.includes("agg") && (
+                {selectedGraphs.includes("aggregated") && (
                   <>
                     <h2 className="mt-0 mb-0">All farms</h2>
                     <GraphComponent
@@ -766,7 +766,7 @@ export default function Map() {
               )}
 
               <div>
-                {selectedGraphs.includes("ice") && (
+                {selectedGraphs.includes("ice loss") && (
                   <GraphComponent
                     graphValues={calculatePercentage(icelossData, energyData)}
                     chartTitle="% Energy loss due to Icing "
@@ -779,7 +779,7 @@ export default function Map() {
                 )}
               </div>
               <div>
-                {selectedGraphs.includes("ws") && (
+                {selectedGraphs.includes("windspeed") && (
                   <GraphComponent
                     graphValues={windData}
                     chartTitle="Windspeed"
@@ -792,7 +792,7 @@ export default function Map() {
                 )}
               </div>
               <div>
-                {selectedGraphs.includes("hum") && (
+                {selectedGraphs.includes("humidity") && (
                   <GraphComponent
                     graphValues={humidityData}
                     chartTitle="Humidity"
@@ -805,7 +805,7 @@ export default function Map() {
                 )}
               </div>
               <div>
-                {selectedGraphs.includes("temp") && (
+                {selectedGraphs.includes("temperature") && (
                   <GraphComponent
                     graphValues={temperatureData}
                     chartTitle="Temperature"
@@ -823,7 +823,7 @@ export default function Map() {
             <div className="py-5">
               <h2 className="mt-0 mb-0"> All farms</h2>
               <div className="mb-8">
-                {selectedGraphs.includes("agg") && (
+                {selectedGraphs.includes("aggregated") && (
                   <GraphComponent
                     graphValues={aggregateData}
                     chartTitle="Aggregate Energy Output"
