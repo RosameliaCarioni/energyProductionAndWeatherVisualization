@@ -29,12 +29,12 @@ function SimpleListOfFarmsComponent({onSelectPlant, plantsArray, energyData, hov
                           }}
                           onMouseLeave={() => handlePlantHover(undefined)}
                     >
-                        <span className="font-medium">{plant.name}{' '}</span>
-                        <span className="text-gray-500">
+                        <span className="w-33 text-left font-medium">{plant.name}{' '}</span>
+                        <span className="w-33 text-center text-gray-500">
                         {/* Ensure energyData are defined and access the correct hour's data */}
-                        {' '}{energyData[index] ? energyData[index].toFixed(2) : 'Loading...'} MW
+                        {' '}    {energyData[index] !== undefined ? (energyData[index] < 10 ? `0${energyData[index].toFixed(2)}` : energyData[index].toFixed(2)) : 'Loading...'} MW
                         </span>
-                        <span className="text-gray-500">{' '}{plant.capacity_kw / 1000} MW</span>
+                        <span className="w-33 text-right text-gray-500">{' '}{plant.capacity_kw / 1000} MW</span>
                     </li>
                 ))}
             </ul>
