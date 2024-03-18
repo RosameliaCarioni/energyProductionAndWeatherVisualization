@@ -115,7 +115,10 @@ h3 {
   text-transform: uppercase;
   margin-bottom: 1rem;
 }
-h4,
+h4 {
+  font-weight: 700;
+  color: #5fbeb3;
+}
 h5,
 h6 {
   font-size: inherit;
@@ -127,8 +130,8 @@ Reset links to optimize for opt-in styling instead of opt-out.
 */
 
 a {
-  color: inherit;
-  text-decoration: inherit;
+  color: #5fbeb3;
+  text-decoration: underline;
 }
 
 /*
@@ -342,7 +345,6 @@ Removes the default spacing and border for appropriate elements.
 blockquote,
 dl,
 dd,
-h4,
 h5,
 h6,
 hr,
@@ -364,9 +366,15 @@ legend {
 ol,
 ul,
 menu {
-  list-style: none;
   margin: 0;
   padding: 0;
+  text-align: start;
+  margin-top: 20px;
+}
+
+li {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /*
@@ -673,6 +681,10 @@ video {
   margin-top: 2rem;
 }
 
+.mt-12 {
+  margin-top: 4rem;
+}
+
 .mt-24 {
   margin-top: 6rem;
 }
@@ -728,6 +740,10 @@ video {
   height: 100%;
 }
 
+.h-200px {
+  height: 200px; 
+}
+
 .vh-100 {
   height: 100vh;
 }
@@ -749,8 +765,13 @@ video {
 .w-25 {
   width: 25px;
 }
+
 .w-33 {
   width: 33%;
+}
+
+.w-66 {
+  width: 66%;
 }
 
 .w-700px {
@@ -795,6 +816,10 @@ video {
   align-items: flex-end;
 }
 
+.items-start {
+  align-items: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -802,9 +827,15 @@ video {
 .justify-between {
   justify-content: space-between;
 }
+
 .justify-end {
   justify-content: flex-end;
 }
+
+.justify-start {
+  justify-content: flex-start;
+}
+
 .gap-5 {
   gap: 1.25rem;
 }
