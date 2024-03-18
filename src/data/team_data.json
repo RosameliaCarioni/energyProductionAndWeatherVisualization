@@ -27,7 +27,7 @@
         {
             "id": "5",
             "name": "Danina Jansson",
-            "roles": ["UX/UI design, styling", "Front-End Development"],
+            "roles": [ "Front-End Development", "UX/UI Design"],
             "image": "/assets/images/danina-bw.png"
         }
     ]

@@ -7,7 +7,7 @@ export default function About(){
         return team_data.data.map((member, index) => (
             <div key={index} className="w-33 px-10 py-5 flex flex-col items-center">
                 <img className="mb-4" src={member.image} alt={member.name}/>
-                <p className='text-uppercase font-bold'>{member.name}</p>
+                <p className='text-uppercase font-bold font-blue'>{member.name}</p>
                 {member.roles.map((role, roleIndex) => (
                     <p key={roleIndex}>{role}</p>
                 ))}
@@ -22,9 +22,8 @@ export default function About(){
                     <div className="flex flex-col items-center justify-center">
                         <h1> About the project </h1>
                         <img className="mb-8" src="/assets/images/rebaseXgroup.svg" alt="rebase X IVIS group logo"/>
-                        <p>For this project, we collaborated with Rebase Energy to create a prototype that displays combined geospatial, weather and energy data for their clients. The aim was to give their clients a platform that visualises this data in a comprehensive way, that helps them understand the energy output of their assets better to make more informed decisions in their day to day work.</p>
                     </div>
-                    <div className="mt-24">
+                    <div className="mt-4">
                         <h2>Meet the team</h2>
                         <div className="flex flex-wrap justify-center py-5">
                             {renderTeam()}

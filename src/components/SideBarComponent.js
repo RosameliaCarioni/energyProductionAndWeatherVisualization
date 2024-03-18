@@ -37,12 +37,23 @@ export default function SideBarComponent() {
         </div>
       </Link>
 
+      <Link href="/information">
+        <div className="p-3">
+          <img
+            id="information"
+            className="w-full mb-2"
+            src="/assets/icons/about-w.svg"
+            alt="information"
+          />
+        </div>
+      </Link>
+
       <Link href="/about">
         <div className="p-3">
           <img
             id="about"
             className="w-full mb-2"
-            src="/assets/icons/about-w.svg"
+            src="/assets/icons/team-w.svg"
             alt="About"
           />
         </div>
