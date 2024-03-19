@@ -20,11 +20,10 @@ export default function About(){
             <div className="w-full py-12 flex items-center justify-center">
                 <div className="max-w-screen-md flex flex-col items-center justify-center text-center">
                     <div className="flex flex-col items-center justify-center">
-                        <h1> About the project </h1>
+                        <h1> Meet the team </h1>
                         <img className="mb-8" src="/assets/images/rebaseXgroup.svg" alt="rebase X IVIS group logo"/>
                     </div>
                     <div className="mt-4">
-                        <h2>Meet the team</h2>
                         <div className="flex flex-wrap justify-center py-5">
                             {renderTeam()}
                         </div>
