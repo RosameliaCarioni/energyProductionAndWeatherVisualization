@@ -1,34 +1,46 @@
-{ 
-    "data": [
-        {
-            "id": "1",
-            "name": "Rosamelia Carioni",
-            "roles": ["Back-End Development", "Data Processing"],
-            "image": "/assets/images/meli-bw.png"
-        },
-        {
-            "id": "2",
-            "name": "Mischa Tomasz Rauch",
-            "roles": ["Back-End Development", "Data Processing"],
-            "image": "/assets/images/mischa-bw.png"
-        },
-        {
-            "id": "3",
-            "name": "Samuel Söderberg",
-            "roles": ["Frontend Engineer", "Data Visualization & Component Architecture"],
-            "image": "/assets/images/samuel-bw.png"
-        },
-        {
-            "id": "4",
-            "name": "Elin Lundqvist",
-            "roles": ["Front-End Development","User Testing"],
-            "image": "/assets/images/elin-bw.png"
-        },
-        {
-            "id": "5",
-            "name": "Danina Jansson",
-            "roles": [ "Front-End Development", "UX/UI Design"],
-            "image": "/assets/images/danina-bw.png"
-        }
-    ]
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "Rosamelia Carioni",
+      "roles": [
+        "Back-End Development",
+        "Data Processing",
+        "Project Architecture"
+      ],
+      "image": "/assets/images/meli-bw.png"
+    },
+    {
+      "id": "2",
+      "name": "Mischa Tomasz Rauch",
+      "roles": [
+        "Back-End Development",
+        "Data Processing",
+        "Project Architecture"
+      ],
+      "image": "/assets/images/mischa-bw.png"
+    },
+    {
+      "id": "3",
+      "name": "Samuel Söderberg",
+      "roles": [
+        "Front-End Development",
+        "Map Visualization",
+        "Component Architecture"
+      ],
+      "image": "/assets/images/samuel-bw.png"
+    },
+    {
+      "id": "4",
+      "name": "Elin Lundqvist",
+      "roles": ["Front-End Development", "User Testing"],
+      "image": "/assets/images/elin-bw.png"
+    },
+    {
+      "id": "5",
+      "name": "Danina Jansson",
+      "roles": ["Front-End Development", "UX/UI Design"],
+      "image": "/assets/images/danina-bw.png"
+    }
+  ]
 }
