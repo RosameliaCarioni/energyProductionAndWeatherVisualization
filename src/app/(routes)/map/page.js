@@ -16,6 +16,7 @@ import {
   getWindSpeed,
   getRelativeHumidity,
   getTemperature,
+  getWindDirection,
 } from "@/utils/getFarmsProduction";
 import TimeSliderComponent from "@/components/TimeSliderComponent";
 import SimpleListOfFarmsComponent from "@/components/SimpleListOfFarmsComponent";
@@ -44,6 +45,7 @@ export default function Map() {
   const [icelossData, setEnergyAfterIcelossData] = useState(undefined);
   const [percentageEnergyLossIcing, setPercentageEnergyLossIcing] =
     useState(undefined);
+  const [windDirectionData, setWindDirectionData] = useState(undefined);
   const [selectedPlant, setSelectedPlant] = useState(undefined);
   const [selectedTime, setSelectedTime] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date("2021-11-25"));
@@ -62,7 +64,15 @@ export default function Map() {
   const [totalCapacity, setTotalCapacity] = useState(0);
   const [selectedPriceArea, setSelectedPriceArea] = useState();
 
-  const graphTypes = ["aggregated", "energy", "ice loss", "windspeed", "humidity", "temperature"];
+  const graphTypes = [
+    "aggregated",
+    "energy",
+    "ice loss",
+    "windspeed",
+    "humidity",
+    "temperature",
+    "wind direction",
+  ];
 
   // Add a state to keep track of the sorting
   const [sortConfig, setSortConfig] = useState({
@@ -119,6 +129,7 @@ export default function Map() {
     setHumidityData(undefined);
     setTemperatureData(undefined);
     setEnergyAfterIcelossData(undefined);
+    setWindDirectionData(undefined);
     setSelectedPlant(plant);
   };
   const handlePlantHover = (plant) => {
@@ -600,6 +611,13 @@ export default function Map() {
         selectedDate.getDate()
       );
       setTemperatureData(temperature);
+      const windDirection = await getWindDirection(
+        selectedPlant.id,
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 1,
+        selectedDate.getDate()
+      );
+      setWindDirectionData(windDirection);
     }
 
     async function fetchAggregateData(plants) {
@@ -682,6 +700,7 @@ export default function Map() {
       case "WindSpeed":
         setWeatherData(windspeedLegendData);
         break;
+
       default:
         setWeatherData(windspeedLegendData);
     }
@@ -817,6 +836,19 @@ export default function Map() {
                   />
                 )}
               </div>
+              <div>
+                {selectedGraphs.includes("wind direction") && (
+                  <GraphComponent
+                    graphValues={windDirectionData}
+                    chartTitle="Wind Direction"
+                    selectedTime={selectedTime}
+                    selectedDate={selectedDate}
+                    yAxisTitle="degrees"
+                    lineColor="rgb(199, 218, 242)"
+                    lineBackgroundColor="rgb(199, 218, 242, 0.35)"
+                  />
+                )}
+              </div>
             </div>
           )}
           {!selectedPlant && (
@@ -836,6 +868,7 @@ export default function Map() {
                   />
                 )}
               </div>
+
               <SearchComponent onSearchChange={handleSearchInputChange} />
               <FilterPropertiesComponent
                 ref={filterPropertiesRef}
@@ -860,7 +893,10 @@ export default function Map() {
           >
             <ModelSelectComponent />
             <SelectWeatherDisplayComponent onLayerChange={handleLayerChange} />
-            <MapLegendComponent weatherData={weatherData} visible={selectedLayer.length >= 1}></MapLegendComponent>
+            <MapLegendComponent
+              weatherData={weatherData}
+              visible={selectedLayer.length >= 1}
+            ></MapLegendComponent>
           </div>
           <MapComponentWithNoSSR
             className="mr-2"
