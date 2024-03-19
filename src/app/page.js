@@ -5,7 +5,7 @@ export default function WelcomePage(){
     <div>
         <div className='w-full py-12 flex items-center justify-center'>
           <div className='max-w-screen-md flex-col items-center justify-center text-center'>
-            <h1>Home</h1>
+            <img className="w-full" src="/assets/images/rebaseXgroup.svg" alt="rebase X IVIS group logo"/>
 
             <h2>About</h2>
             <p>For this project, we collaborated with <a href="https://www.rebase.energy/">Rebase Energy</a> to create a visualisation tool that displays combined geospatial, weather and energy data for their clients. The aim is to give their clients a platform that visualises this data in a comprehensive way, to help them understand the energy production of their assets and make more informed decisions in their day to day work when it comes to energy trading.  Through this work we aim to enable energy traders to make well-informed, strategic decisions in real-time, maximizing their market opportunities and minimizing risks. </p>

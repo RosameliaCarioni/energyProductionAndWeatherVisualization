@@ -5,12 +5,13 @@ import team_data from '@/data/team_data.json'
 export default function About(){
     const renderTeam = () => {
         return team_data.data.map((member, index) => (
-            <div key={index} className="w-33 px-10 py-5 flex flex-col items-center">
+            <div key={index} className="w-33 px-8 py-2 flex flex-col items-center">
                 <img className="mb-4" src={member.image} alt={member.name}/>
-                <p className='text-uppercase font-bold font-blue'>{member.name}</p>
+                <p className='text-line-height mb-2 text-uppercase font-bold font-blue'>{member.name}</p>
                 {member.roles.map((role, roleIndex) => (
-                    <p key={roleIndex}>{role}</p>
+                    <p className="text-sm" key={roleIndex}>{role}</p>
                 ))}
+                <a href={member.linkedin}>LinkedIn</a>
             </div>
         ));
       };
@@ -21,7 +22,6 @@ export default function About(){
                 <div className="max-w-screen-md flex flex-col items-center justify-center text-center">
                     <div className="flex flex-col items-center justify-center">
                         <h1> Meet the team </h1>
-                        <img className="mb-8" src="/assets/images/rebaseXgroup.svg" alt="rebase X IVIS group logo"/>
                     </div>
                     <div className="mt-4">
                         <div className="flex flex-wrap justify-center py-5">

@@ -930,9 +930,19 @@ video {
   padding-right: 1.25rem;
 }
 
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+}
+
+.py-2 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .py-5 {
@@ -952,6 +962,10 @@ video {
 
 .no-wrap {
   white-space: nowrap;
+}
+
+.text-line-height {
+  line-height: 1.1rem;
 }
 
 .text-lg {
