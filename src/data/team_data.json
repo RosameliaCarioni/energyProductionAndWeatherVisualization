@@ -8,7 +8,8 @@
         "Data Processing,",
         "Project Architecture"
       ],
-      "image": "/assets/images/meli-bw.png"
+      "image": "/assets/images/meli-bw.png",
+      "linkedin": "https://www.linkedin.com/in/rosamelia-carioni/"
     },
     {
       "id": "2",
@@ -18,7 +19,8 @@
         "Data Processing,",
         "Project Architecture"
       ],
-      "image": "/assets/images/mischa-bw.png"
+      "image": "/assets/images/mischa-bw.png",
+      "linkedin": "https://www.linkedin.com/in/mischa-rauch/"
     },
     {
       "id": "3",
@@ -28,7 +30,8 @@
         "Map Visualization,",
         "Component Architecture"
       ],
-      "image": "/assets/images/samuel-bw.png"
+      "image": "/assets/images/samuel-bw.png",
+      "linkedin": "https://www.linkedin.com/in/samuel-s%C3%B6derberg-949703170/"
     },
     {
       "id": "4",
@@ -36,14 +39,16 @@
       "roles": [
         "Front-End Development,", 
         "User Testing"],
-      "image": "/assets/images/elin-bw.png"
+      "image": "/assets/images/elin-bw.png",
+      "linkedin": "https://www.linkedin.com/in/elin-lundqvist-3432ba1bb/"
     },
     {
       "id": "5",
       "name": "Danina Jansson",
       "roles": ["Front-End Development,", 
       "UX/UI Design"],
-      "image": "/assets/images/danina-bw.png"
+      "image": "/assets/images/danina-bw.png",
+      "linkedin": "https://www.linkedin.com/in/danina-jansson-4681211bb/ "
     }
   ]
 }
