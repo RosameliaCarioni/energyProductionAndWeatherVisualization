@@ -4,17 +4,15 @@ Welcome to the Energy Production and Weather Visualization repository! This proj
 
 For more information and to experience the platform, visit our [website](https://weather-visualization-rebase.vercel.app/).
 
-TODO: add video link 
-
 ## Contributors
 
 This project is the result of the collaborative efforts of a student team with diverse skills and backgrounds. 
 **Group Members:** 
-- Rosamelia Carioni - [Github](https://github.com/RosameliaCarioni)
-- Danina Jansson - [Github](https://github.com/DaninaJansson)
-- Ellin Lundqvist - [Github](https://github.com/elinlqv)
-- Samuel Söderberg - [Github](https://github.com/sasoder)
-- Mischa Rauch - [Github](https://github.com/MischaRauch)
+- Rosamelia Carioni 
+- Danina Jansson
+- Ellin Lundqvist
+- Samuel Söderberg
+- Mischa Rauch
 
 For more details about the team, and contributions visit our [About page](https://weather-visualization-rebase.vercel.app/about).
 
